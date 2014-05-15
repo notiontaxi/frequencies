@@ -8,10 +8,16 @@ https://github.com/frequencies
 "use strict"
 
 define([
-  'text!templates/music-player.html',  
+  'text!templates/effect-list.html',
+  'text!templates/music-player.html',
+  'text!templates/playlist.html',
+  'text!templates/visualization-background.html',  
   'js/test/Test',
   ], function(
-  contentTemplate, 
+  effectList,
+  musicPlayer,
+  playlist,
+  visualization,
   Test 
   ) {
 
@@ -24,28 +30,26 @@ var MusicPlayer, _ref, module,
 // --------------------------------------
 
 
-
     function MusicPlayer(containerIdentifier){   
 
       // render templates
-      $(containerIdentifier).html($(contentTemplate))
+      $(containerIdentifier).append($(effectList))
+      $(containerIdentifier).append($(playlist))
+      $(containerIdentifier).append($(visualization))
+      $(containerIdentifier).append($(musicPlayer))
       
       this.initialize()
       //this.runTests()
     }
 
-
     MusicPlayer.prototype.initialize = function(){
-      
-    }    
+
+    }
 
     MusicPlayer.prototype.runTests = function(){
       var test = new Test()
     
     }
-
-   
-
 
 
 // --------------------------------------
