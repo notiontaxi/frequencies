@@ -1,0 +1,54 @@
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Pixelshift</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An online audio-visualization tool">
+    <meta name="author" content="Florian Wokurka">
+    <link rel="shortcut icon" href="./assets/ico/favicon.png">
+
+    <!-- styles -->
+    <link href="./assets/css/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="page-container">
+
+      <div id='visualisation'>
+        <!-- filled with js -->
+      </div>
+
+      <div id='controls'>
+        <!-- filled with js -->
+      </div>      
+
+      <!-- left and right slider-->
+      <div id="overlay-elements"> </div>
+    </div>
+
+  <!-- dummy element for navigation (have a lok at Router.js) -->
+  <div id="music-player"><a href="#music-player"></a></div>
+
+<!-- LIB  -->
+    <script src="./assets/lib/jquery/jquery-2.1.0.min.js"></script>
+
+    <!-- touch events, orientation support, tab winged for mobile -->
+    <script src="./assets/lib/jquery-mobile/jquery.mobile.custom.min.js"></script>
+
+    <!-- touchmove support for jquery widgets (mouse simulation) -->
+    <script src="./assets/lib/jquery.ui.touch-punch.min.js"></script>
+
+    <!-- for key bindings -->
+    <script src="./assets/lib/mousetrap1.4.6.min.js"></script>
+
+    <!-- for dependency management and lazy loading-->
+    <script src="./assets/lib/require2.1.11.min.js"></script>
+
+<!-- OWN -->
+    <script src="./assets/js/init.js"></script>
+    <script src="./assets/js/Router.js"></script>
+    
+
+  </body>
+</html>
