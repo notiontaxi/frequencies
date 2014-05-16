@@ -43,7 +43,12 @@ var MusicPlayer, _ref, module,
     }
 
     MusicPlayer.prototype.initialize = function(){
-
+      $('.action-toggle-panel').click(
+          function(){
+            var refId = "#"+($(this).attr( "refer" ))
+            $(refId).toggleClass("slide-out")
+          }
+        )
     }
 
     MusicPlayer.prototype.runTests = function(){

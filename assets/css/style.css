@@ -1,25 +1,69 @@
 body {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 0px;
+  margin: 0px;
   background-color: #333333 !important;
   color: #aaaaaa;
   overflow: hidden;
   width: 100%;
 }
-.fade-over-panel {
-  width: 454px;
+#page-container {
+  min-width: 500px;
+}
+#audio-player {
+  width: 94%;
+  position: relative;
+  margin: 5px 3% 5px 3%;
+}
+.music-player-bar {
+  width: 100%;
   position: fixed;
   overflow: hidden;
-  z-index: 1001;
-  top: 13%;
-  height: 86%;
+  z-index: 1000;
+  bottom: 0px;
+  height: 40px;
+  background-color: #888888;
+  opacity: .6;
+}
+.music-player-bar .content {
+  position: relative;
+  left: 27%;
+  width: 46%;
+  height: 100%;
+  background-color: #41978e;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+.fade-over-panel {
+  width: 465px;
+  position: fixed;
+  overflow: hidden;
+  z-index: 1000;
+  bottom: 40px;
+  height: 75%;
+}
+.fade-over-panel.left-sided {
+  left: -402px;
+  -webkit-transition: left 1s;
+  transition: left 1s;
+}
+.fade-over-panel.left-sided.slide-out {
+  left: 0px;
 }
 .fade-over-panel.right-sided {
   left: 100%;
+  margin-left: -63px;
+  -webkit-transition: margin-left 1s;
+  transition: margin-left 1s;
+}
+.fade-over-panel.right-sided.slide-out {
+  margin-left: -465px;
 }
 .fade-over-panel .content {
+  z-index: 1020;
   padding: 0px;
-  width: 450px;
   background-color: #888888;
   height: 100%;
   width: 400px;
@@ -27,52 +71,60 @@ body {
 }
 .fade-over-panel .content.left-sided {
   -webkit-border-top-right-radius: 20px;
-  -webkit-border-bottom-right-radius: 20px;
+  -webkit-border-bottom-right-radius: 0px;
   -moz-border-radius-topright: 20px;
-  -moz-border-radius-bottomright: 20px;
-  border-bottom-right-radius: 20px;
+  -moz-border-radius-bottomright: 0px;
+  border-bottom-right-radius: 0px;
   border-top-right-radius: 20px;
   border-right: 2px solid #c7e5e5;
   float: left;
 }
 .fade-over-panel .content.right-sided {
   -webkit-border-top-left-radius: 20px;
-  -webkit-border-bottom-left-radius: 20px;
+  -webkit-border-bottom-left-radius: 0px;
   -moz-border-radius-topleft: 20px;
-  -moz-border-radius-bottomleft: 20px;
-  border-bottom-left-radius: 20px;
+  -moz-border-radius-bottomleft: 0px;
+  border-bottom-left-radius: 0px;
   border-top-left-radius: 20px;
   border-left: 2px solid #c7e5e5;
   float: right;
 }
 .quarter-button {
-  position: relative;
+  z-index: 1010;
   color: black;
   background-color: #c7e5e5;
   border: none;
-  width: 50px;
-  height: 10%;
-  top: 90%;
-  min-height: 50px;
-  font-size: 22px;
+  width: 65px;
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+  left: 400px;
+}
+.quarter-button .description {
+  position: relative;
+  font-size: 15px;
+  padding-top: 10px;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
 }
 .quarter-button.left {
-  -webkit-border-top-right-radius: 100%;
+  -webkit-border-top-right-radius: 15%;
   -webkit-border-bottom-right-radius: 0px;
-  -moz-border-radius-topright: 100%;
+  -moz-border-radius-topright: 15%;
   -moz-border-radius-bottomright: 0px;
   border-bottom-right-radius: 0px;
-  border-top-right-radius: 100%;
+  border-top-right-radius: 15%;
   float: right;
 }
 .quarter-button.right {
-  -webkit-border-top-left-radius: 100%;
+  -webkit-border-top-left-radius: 15%;
   -webkit-border-bottom-left-radius: 0px;
-  -moz-border-radius-topleft: 100%;
+  -moz-border-radius-topleft: 15%;
   -moz-border-radius-bottomleft: 0px;
   border-bottom-left-radius: 0px;
-  border-top-left-radius: 100%;
-  float: right;
+  border-top-left-radius: 15%;
+  left: 0px;
 }
 .hidden {
   display: none;
@@ -83,6 +135,7 @@ body {
 }
 .centered {
   text-align: center;
+  vertical-align: center;
 }
 .right-float {
   float: right;

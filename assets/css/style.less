@@ -6,6 +6,7 @@
 @lightRed: #f0002a;
 @minWidth: 250px;
 @middleCyan: #c7e5e5;
+@aqua:#41978E;
 @active: #CFFFD6;
 
 @smallDevicePanelHeight: 100% - @smallDeviceFooterHeight - @smallDeviceLayoutBuffer;
@@ -16,13 +17,19 @@
 @smallDeviceLayoutBuffer: 1%;
 @smallDeviceInnerHeight: 100% - @smallDeviceHeaderHeight - @smallDeviceFooterHeight - 2*@smallDeviceLayoutBuffer;
 
+@controlsHeight: 75%;
+@playerHeight: 40px;
+
+@borderWidth: 2px;
+@sliderContentWidth:400px;
+
 @smallDeviceButtonWidth: 15%;
 
 @navigationButtonRoundness: 80%;
 
 body {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 0px;
+  margin: 0px;
   background-color: @darkGrey !important;
   color: @lightGrey;
 
@@ -31,42 +38,85 @@ body {
   width:100%;
 }
 
+#page-container{
+  min-width: 500px;
+}
 
+#audio-player{
+  width: 94%;
+  position: relative;
+  margin: 5px 3% 5px 3%;
+}
+
+.music-player-bar{
+
+  width:100%;
+  position: fixed;
+  overflow: hidden;
+  z-index: 1000;
+  bottom: 0px;
+  height: @playerHeight;
+
+  background-color: @grey;
+  opacity: .6;
+
+  .content{
+    position: relative;
+    left:27%;
+    width:46%;
+    height:100%;
+    background-color: @aqua;
+
+    .rounded-corners;
+  }
+
+}
 
 .fade-over-panel{
 
-  width:454px;
+  width:465px;
   position: fixed;
   overflow: hidden;
-  z-index: 1001;
-  top: @smallDeviceHeaderHeight + @smallDeviceLayoutBuffer;
-  height: @smallDevicePanelHeight;
+  z-index: 1000;
+  bottom:@playerHeight;
+  height: @controlsHeight;
 
   &.left-sided{
-    //left: -@smallDevicePanelWidth;
+    left: -@sliderContentWidth - @borderWidth;
+    -webkit-transition: left 1s;
+    transition: left 1s;
+    &.slide-out{
+      left: 0px;
+    }    
   }
 
   &.right-sided{
-    left: 100%;
+     left: 100%;
+     margin-left: -65px + @borderWidth;
+    -webkit-transition: margin-left 1s;
+    transition: margin-left 1s;
+    &.slide-out{
+      margin-left: -465px;
+    }
   }    
 
   .content{
+    z-index: 1020;
     padding: 0px;
-    width: 450px;
     background-color: @grey;
     height: 100%;
-    width:400px;
-    border-top: 2px solid @middleCyan;
+    width:@sliderContentWidth;
+    border-top: @borderWidth solid @middleCyan;
 
     &.left-sided{
-      .rounded-corners-right(20px);
-      border-right: 2px solid @middleCyan;
+      .rounded-button-left-bottom(20px);
+      border-right: @borderWidth solid @middleCyan;
       float: left;
     }
 
     &.right-sided{
-      .rounded-corners-left(20px);
-      border-left: 2px solid @middleCyan; 
+      .rounded-button-right-bottom(20px);
+      border-left: @borderWidth solid @middleCyan; 
       float: right;
     }
   }
@@ -74,24 +124,34 @@ body {
 }
 
 .quarter-button{
-  position: relative;
+  z-index: 1010;
   color: black;
   background-color: @middleCyan;
   border: none;
-  width: 50px;
-  height: 10%;
-  top: 90%;
-  min-height: 50px;
-  font-size: 22px;
+  width: 65px;
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+  left: 400px;
+  
+
+  .description{
+    position: relative;
+    font-size: 15px;
+    padding-top: 10px;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+  }
 
   &.left{
-    .rounded-button-left-bottom(100%);
+    .rounded-button-left-bottom(15%);
     float: right;
   }
 
   &.right{
-    .rounded-button-right-bottom(100%);
-    float: right;        
+    .rounded-button-right-bottom(15%);
+    left:0px;       
   }
 }
 
@@ -109,6 +169,7 @@ body {
 
 .centered{
   text-align: center;
+  vertical-align: center;
 }
 
 .right-float{
