@@ -31,7 +31,7 @@ require([], function() {
 
   Router.prototype.bindEvents = function(){
     // $('#welcome').click({locationClassPath: 'js/Welcome'}, this.changeLocationTo)
-    $('#music-player').click({locationClassPath: 'js/MusicPlayer'}, this.changeLocationTo)
+    $('#frequencies').click({locationClassPath: 'js/Frequencies'}, this.changeLocationTo)
   } 
 
   // istantiate passed rendering-class and pass container id
@@ -44,6 +44,6 @@ require([], function() {
   var router = new Router()
   router.bindEvents()
   // currently always refer to one page
-  router.navigate('music-player')
+  router.navigate('frequencies')
 
 })

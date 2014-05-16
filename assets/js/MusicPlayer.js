@@ -1,6 +1,4 @@
 /*
-Initialization of the image processing functionalities
-
 Florian Wokurka (2014)
 https://github.com/frequencies
 */
@@ -8,17 +6,13 @@ https://github.com/frequencies
 "use strict"
 
 define([
-  'text!templates/effect-list.html',
-  'text!templates/music-player.html',
-  'text!templates/playlist.html',
-  'text!templates/visualization-background.html',  
-  'js/test/Test',
+  'js/Playlist',
+  'js/Effects',
+  'js/Visualization'
   ], function(
-  effectList,
-  musicPlayer,
-  playlist,
-  visualization,
-  Test 
+    Playlist,
+    Effects,
+    Visualization
   ) {
 
 var MusicPlayer, _ref, module,
@@ -30,31 +24,20 @@ var MusicPlayer, _ref, module,
 // --------------------------------------
 
 
-    function MusicPlayer(containerIdentifier){   
+    function MusicPlayer(){   
 
-      // render templates
-      $(containerIdentifier).append($(effectList))
-      $(containerIdentifier).append($(playlist))
-      $(containerIdentifier).append($(visualization))
-      $(containerIdentifier).append($(musicPlayer))
+      this.playlist = new Playlist(this)
+      this.effects = new Effects(this)
+      this.visualization = new Visualization(this)
       
       this.initialize()
       //this.runTests()
     }
 
     MusicPlayer.prototype.initialize = function(){
-      $('.action-toggle-panel').click(
-          function(){
-            var refId = "#"+($(this).attr( "refer" ))
-            $(refId).toggleClass("slide-out")
-          }
-        )
+
     }
 
-    MusicPlayer.prototype.runTests = function(){
-      var test = new Test()
-    
-    }
 
 
 // --------------------------------------

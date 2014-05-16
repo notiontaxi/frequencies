@@ -126,6 +126,54 @@ body {
   border-top-left-radius: 15%;
   left: 0px;
 }
+.playlist-container {
+  margin: 5px 15px 5px 15px;
+}
+.playlist-container .number {
+  width: 10%;
+  float: left;
+}
+.playlist-container .title {
+  width: 70%;
+  float: left;
+}
+.playlist-container .length {
+  width: 20%;
+  float: left;
+  text-align: right;
+}
+.playlist-container .playlist-head {
+  height: 20px;
+  padding: 5px;
+}
+.playlist-container .playlist-list {
+  color: #333333;
+  padding: 0px;
+  margin-top: 5px;
+}
+.playlist-container .playlist-list .playlist-item {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  list-style-type: none;
+  height: 15px;
+  padding: 5px;
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
+}
+.playlist-container .playlist-list :hover {
+  color: black;
+  background-color: #dddddd;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
 .hidden {
   display: none;
   visibility: hidden;

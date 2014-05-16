@@ -156,7 +156,63 @@ body {
 }
 
 
-// HELPER CLASSES
+// PLAYLIST -----------------------------------------------------
+
+.playlist-container{
+
+  margin: 5px 15px 5px 15px;
+
+
+  .number{
+    width: 10%;
+    float: left;
+  }
+  .title{
+    width: 70%;
+    float: left;
+  }
+  .length{
+    width: 20%;
+    float: left;
+    text-align: right;
+  }
+
+  .playlist-head{
+    height: 20px;
+    padding: 5px;
+  }
+
+  .playlist-list{
+    color: @darkGrey;
+    padding: 0px;
+    margin-top: 5px;
+    .playlist-item{
+      .rounded-corners;
+      cursor: pointer;
+      list-style-type: none;
+      height: 15px;
+      padding: 5px;
+      -webkit-transition: all 0.4s ease-out;
+      -moz-transition: all 0.4s ease-out;
+      -o-transition: all 0.4s ease-out;
+      transition: all 0.4s ease-out;      
+    }
+
+    :hover
+    {
+      color: black;
+      background-color: @whiteGrey;
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      transition: all 0.2s;
+    }
+  }
+
+
+}
+
+// HELPER CLASSES -----------------------------------------------
 
 .hidden{
   display: none;
