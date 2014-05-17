@@ -9,11 +9,13 @@ define([
     'text!templates/effect-list.html',
     'text!templates/music-player.html',
     'text!templates/playlist.html',
+    'text!templates/track-info.html',
     'text!templates/visualization-background.html',  
   ], function(
     effectList,
     musicPlayer,
     playlist,
+    trackinfo,
     visualization
   ) {
 
@@ -33,13 +35,14 @@ var GUI, _ref, module,
       $(containerIdentifier).append($(playlist))
       $(containerIdentifier).append($(visualization))
       $(containerIdentifier).append($(musicPlayer))
+      $(containerIdentifier).append($(trackinfo))
       
       this.initialize()
     }
 
     GUI.prototype.initialize = function(){
       $('.action-toggle-panel').click(
-          function(){
+          function(){ 
             var refId = "#"+($(this).attr( "refer" ))
             $(refId).toggleClass("slide-out")
           }

@@ -5,6 +5,7 @@ body {
   color: #aaaaaa;
   overflow: hidden;
   width: 100%;
+  font-family: sans-serif;
 }
 #page-container {
   min-width: 500px;
@@ -35,6 +36,25 @@ body {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
+}
+#track-info {
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  top: 0px;
+  height: 20px;
+  text-align: center;
+  left: 27%;
+  width: 46%;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  color: white;
+  background-color: #41978e;
+  opacity: .6;
 }
 .fade-over-panel {
   width: 465px;
@@ -129,7 +149,7 @@ body {
 .playlist-container {
   margin: 5px 15px 5px 15px;
 }
-.playlist-container .number {
+.playlist-container .position {
   width: 10%;
   float: left;
 }

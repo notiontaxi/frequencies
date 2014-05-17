@@ -19,6 +19,7 @@
 
 @controlsHeight: 75%;
 @playerHeight: 40px;
+@trackInfoHeight: 20px;
 
 @borderWidth: 2px;
 @sliderContentWidth:400px;
@@ -36,6 +37,8 @@ body {
   // no scrolling on mobile devices
   overflow:hidden;
   width:100%;
+
+  font-family: sans-serif;
 }
 
 #page-container{
@@ -70,6 +73,23 @@ body {
     .rounded-corners;
   }
 
+}
+
+#track-info{
+  overflow: hidden;
+  width:100%;
+  position: fixed;
+  z-index: 999;
+  top: 0px;
+  height: @trackInfoHeight;
+  text-align: center;
+  left:27%;
+  width:46%;
+
+  .rounded-corners-bottom();
+  color: white;
+  background-color: @aqua;
+  opacity: .6;  
 }
 
 .fade-over-panel{
@@ -163,7 +183,7 @@ body {
   margin: 5px 15px 5px 15px;
 
 
-  .number{
+  .position{
     width: 10%;
     float: left;
   }
