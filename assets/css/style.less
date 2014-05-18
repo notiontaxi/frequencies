@@ -20,6 +20,7 @@
 @controlsHeight: 75%;
 @playerHeight: 40px;
 @trackInfoHeight: 20px;
+@playerWidth: 50%;
 
 @borderWidth: 2px;
 @sliderContentWidth:400px;
@@ -46,10 +47,17 @@ body {
 }
 
 #audio-player{
-  width: 94%;
+  width: 65%;
+  float: left;
   position: relative;
-  margin: 5px 3% 5px 3%;
+  margin: 5px;
 }
+
+.player-button{
+  // width:8%;
+  // height: 100%;
+}
+
 
 .music-player-bar{
 
@@ -64,9 +72,11 @@ body {
   opacity: .6;
 
   .content{
+    margin: auto;
+    padding: 0px 6px 0px 6px;
     position: relative;
-    left:27%;
-    width:46%;
+    left: auto;//(100% - @playerWidth) / 2;
+    width:490px;
     height:100%;
     background-color: @aqua;
 
@@ -206,6 +216,7 @@ body {
     color: @darkGrey;
     padding: 0px;
     margin-top: 5px;
+
     .playlist-item{
       .rounded-corners;
       cursor: pointer;
@@ -216,23 +227,66 @@ body {
       -moz-transition: all 0.4s ease-out;
       -o-transition: all 0.4s ease-out;
       transition: all 0.4s ease-out;      
+      &:hover
+      {
+        color: black;
+        background-color: @whiteGrey;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        transition: all 0.2s;
+      }
     }
 
-    :hover
-    {
-      color: black;
-      background-color: @whiteGrey;
-      -webkit-transition: all 0.2s;
-      -moz-transition: all 0.2s;
-      -o-transition: all 0.2s;
-      transition: all 0.2s;
-    }
+
   }
 
 
 }
 
 // HELPER CLASSES -----------------------------------------------
+
+.button{
+  float: left;
+  cursor: pointer;
+
+  .rounded-corners(2px);
+  background-color: @lightGrey;
+  color: @darkGrey;
+  vertical-align: middle;
+  text-align: center;  
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  transition: all 0.4s;
+
+  &.mid-sized{
+    width: 24px;
+    height: 20px;
+    padding: 6px 4px 3px 4px;
+    margin: 4px;
+  }
+
+  &:hover
+  {
+    color: black;
+    background-color: @whiteGrey;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+
+}
+
+
+.right-sided{
+  float: right;
+}
+
+.left-sided{
+  float: left;
+}
 
 .hidden{
   display: none;

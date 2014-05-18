@@ -11,9 +11,10 @@ body {
   min-width: 500px;
 }
 #audio-player {
-  width: 94%;
+  width: 65%;
+  float: left;
   position: relative;
-  margin: 5px 3% 5px 3%;
+  margin: 5px;
 }
 .music-player-bar {
   width: 100%;
@@ -26,9 +27,11 @@ body {
   opacity: .6;
 }
 .music-player-bar .content {
+  margin: auto;
+  padding: 0px 6px 0px 6px;
   position: relative;
-  left: 27%;
-  width: 46%;
+  left: auto;
+  width: 490px;
   height: 100%;
   background-color: #41978e;
   -webkit-border-radius: 5px;
@@ -38,6 +41,7 @@ body {
   border-radius: 5px;
 }
 #track-info {
+  overflow: hidden;
   width: 100%;
   position: fixed;
   z-index: 999;
@@ -186,13 +190,50 @@ body {
   -o-transition: all 0.4s ease-out;
   transition: all 0.4s ease-out;
 }
-.playlist-container .playlist-list :hover {
+.playlist-container .playlist-list .playlist-item:hover {
   color: black;
   background-color: #dddddd;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   -o-transition: all 0.2s;
   transition: all 0.2s;
+}
+.button {
+  float: left;
+  cursor: pointer;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #aaaaaa;
+  color: #333333;
+  vertical-align: middle;
+  text-align: center;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  transition: all 0.4s;
+}
+.button.mid-sized {
+  width: 24px;
+  height: 20px;
+  padding: 6px 4px 3px 4px;
+  margin: 4px;
+}
+.button:hover {
+  color: black;
+  background-color: #dddddd;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.right-sided {
+  float: right;
+}
+.left-sided {
+  float: left;
 }
 .hidden {
   display: none;
