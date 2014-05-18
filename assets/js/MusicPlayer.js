@@ -30,6 +30,11 @@ define([
       this.playlistItemTemplate = playlistItem
 
       this.playing = false
+      this.shuffle = false
+      this.repeat = false
+
+      this.lastPlayed = Array()
+
       this.mediaPath = './assets/media/audio/'
       this.extension = ''
       this.trackInfo = $("#track-info")
@@ -67,16 +72,19 @@ define([
     }
 
     MusicPlayer.prototype.endedAction = function(player){
-      // npAction.text('Now Playing:');
-      // if((index + 1) < trackAmount) {
-      //         index++;
-      //         loadTrack(index);
-      //         audio.play();
-      //       } else {
-      //         audio.pause();
-      //         index = 0;
-      //         loadTrack(index);
-      //       }
+      console.log("ended")
+      this.nextTrack()
+    }
+
+
+    MusicPlayer.prototype.getRandomTrackId = function() {
+      var random = Math.floor(Math.random()*this.tracks.length);
+
+      // regenerate, if random title is the last played
+      if(random == this.lastPlayed[this.lastPlayed.length-1])
+        return this.getRandomTrackId()
+      else
+        return random
     }
 
     MusicPlayer.prototype.fillPlayList = function(){
@@ -106,16 +114,78 @@ define([
       // change track by clicking on track
       $(".playlist-item").click(function(){
         var trackId = ($(this).attr( "list-id"))
-        that.changeTrack(trackId)
+        that.playTrack(trackId)
+      })
+
+      $(".action-prev").click(function(){that.previousTrack()})
+      $(".action-next").click(function(){that.nextTrack()})
+      $(".action-shuffle").click(function(){that.toggleShuffle()})
+      $(".action-repeat").click(function(){that.toggleRepeat()})
+    }
+
+    MusicPlayer.prototype.toggleShuffle = function(){
+      this.shuffle = !this.shuffle
+      var active = this.shuffle
+
+      $(".action-shuffle").each(function(){
+        active ? $(this).addClass("active") : $(this).removeClass("active")
       })
     }
 
-    MusicPlayer.prototype.changeTrack = function(trackId){
-      var track = this.tracks[trackId]
-      this.audio.src = this.mediaPath + track.fileName + "."+track.extension;
-      this.trackInfo.html(track.title)
-      this.audio.play()      
+    MusicPlayer.prototype.toggleRepeat = function(){
+      this.repeat = !this.repeat
+      var active = this.repeat
+
+      $(".action-repeat").each(function(){
+        active ? $(this).addClass("active") : $(this).removeClass("active")
+      })
     }
+
+    MusicPlayer.prototype.playTrack = function(trackId){
+
+      this.currentTrackId = trackId;
+      var track = this.tracks[this.currentTrackId]
+
+      this.markTrackAsPlaying(track)
+
+      this.audio.src = this.mediaPath + track.fileName + "."+track.extension;
+      this.audio.play()      
+      this.lastPlayed.push(this.currentTrackId)
+    }
+
+    MusicPlayer.prototype.markTrackAsPlaying = function(track){
+      this.trackInfo.html(track.title)    
+      $(".playlist-item").each(function(){$(this).removeClass("active")})
+      $($(".playlist-item")[track.position]).addClass("active") 
+    }
+
+    MusicPlayer.prototype.previousTrack = function(){
+      var id = 0
+      if(this.repeat){
+        id = this.currentTrackId
+      }else if(this.shuffle){
+        id = this.getRandomTrackId()
+      }else{
+        id = --this.currentTrackId
+        id = id < 0 ? this.tracks.length-1 : id
+      }     
+
+      this.playTrack(id)    
+    }
+
+    MusicPlayer.prototype.nextTrack = function(){
+      var id = 0
+      if(this.repeat){
+        id = this.currentTrackId
+      }else if(this.shuffle){
+        id = this.getRandomTrackId()
+      }else{
+        id = ++this.currentTrackId
+        id = id >= this.tracks.length ? 0 : id
+      }     
+
+      this.playTrack(id)      
+    }    
 
     MusicPlayer.prototype.loadDefaultTracks = function(){
       this.tracks = Array()

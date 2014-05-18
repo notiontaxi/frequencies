@@ -46,18 +46,14 @@ body {
   min-width: 500px;
 }
 
+
+// MUSIC PLAYER -----------------------------------------------------------------
 #audio-player{
   width: 65%;
   float: left;
   position: relative;
   margin: 5px;
 }
-
-.player-button{
-  // width:8%;
-  // height: 100%;
-}
-
 
 .music-player-bar{
 
@@ -102,6 +98,8 @@ body {
   opacity: .6;  
 }
 
+
+// PANEL ---------------------------------------------------------------------
 .fade-over-panel{
 
   width:465px;
@@ -136,17 +134,17 @@ body {
     background-color: @grey;
     height: 100%;
     width:@sliderContentWidth;
-    border-top: @borderWidth solid @middleCyan;
+    border-top: @borderWidth solid @lightGrey;
 
     &.left-sided{
       .rounded-button-left-bottom(20px);
-      border-right: @borderWidth solid @middleCyan;
+      border-right: @borderWidth solid @lightGrey;
       float: left;
     }
 
     &.right-sided{
       .rounded-button-right-bottom(20px);
-      border-left: @borderWidth solid @middleCyan; 
+      border-left: @borderWidth solid @lightGrey; 
       float: right;
     }
   }
@@ -155,15 +153,19 @@ body {
 
 .quarter-button{
   z-index: 1010;
-  color: black;
-  background-color: @middleCyan;
+  background-color: @lightGrey;
+  color: @darkGrey;
   border: none;
   width: 65px;
   height: 40px;
   position: absolute;
   bottom: 0;
   left: 400px;
-  
+
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;    
 
   .description{
     position: relative;
@@ -183,10 +185,21 @@ body {
     .rounded-button-right-bottom(15%);
     left:0px;       
   }
+
+  &:hover
+  {
+    color: black;
+    background-color: @whiteGrey;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }  
+
 }
 
 
-// PLAYLIST -----------------------------------------------------
+// PLAYLIST ------------------------------------------------------------------
 
 .playlist-container{
 
@@ -218,6 +231,7 @@ body {
     margin-top: 5px;
 
     .playlist-item{
+      border: 1px solid @grey;
       .rounded-corners;
       cursor: pointer;
       list-style-type: none;
@@ -236,15 +250,14 @@ body {
         -o-transition: all 0.2s;
         transition: all 0.2s;
       }
+      &.active{
+        border: 1px solid @whiteGrey;
+      }
     }
-
-
   }
-
-
 }
 
-// HELPER CLASSES -----------------------------------------------
+// HELPER CLASSES ----------------------------------------------------------------
 
 .button{
   float: left;
@@ -252,29 +265,40 @@ body {
 
   .rounded-corners(2px);
   background-color: @lightGrey;
+  border: 2px solid @lightGrey;
   color: @darkGrey;
   vertical-align: middle;
   text-align: center;  
-  -webkit-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  transition: all 0.4s;
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;  
 
   &.mid-sized{
-    width: 24px;
-    height: 20px;
+    width: 20px;
+    height: 18px;
     padding: 6px 4px 3px 4px;
     margin: 4px;
   }
 
   &:hover
   {
-    color: black;
-    background-color: @whiteGrey;
+    border: 2px solid @whiteGrey;
     -webkit-transition: all 0.2s;
     -moz-transition: all 0.2s;
     -o-transition: all 0.2s;
     transition: all 0.2s;
+  }
+
+  &.active{
+    border: 2px solid @whiteGrey;
+    color: black;
+    background-color: @whiteGrey;    
+
+    &:hover
+    {
+      border: 2px solid @grey;
+    }
   }
 
 }

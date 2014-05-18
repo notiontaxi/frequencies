@@ -91,7 +91,7 @@ body {
   background-color: #888888;
   height: 100%;
   width: 400px;
-  border-top: 2px solid #c7e5e5;
+  border-top: 2px solid #aaaaaa;
 }
 .fade-over-panel .content.left-sided {
   -webkit-border-top-right-radius: 20px;
@@ -100,7 +100,7 @@ body {
   -moz-border-radius-bottomright: 0px;
   border-bottom-right-radius: 0px;
   border-top-right-radius: 20px;
-  border-right: 2px solid #c7e5e5;
+  border-right: 2px solid #aaaaaa;
   float: left;
 }
 .fade-over-panel .content.right-sided {
@@ -110,19 +110,23 @@ body {
   -moz-border-radius-bottomleft: 0px;
   border-bottom-left-radius: 0px;
   border-top-left-radius: 20px;
-  border-left: 2px solid #c7e5e5;
+  border-left: 2px solid #aaaaaa;
   float: right;
 }
 .quarter-button {
   z-index: 1010;
-  color: black;
-  background-color: #c7e5e5;
+  background-color: #aaaaaa;
+  color: #333333;
   border: none;
   width: 65px;
   height: 40px;
   position: absolute;
   bottom: 0;
   left: 400px;
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
 }
 .quarter-button .description {
   position: relative;
@@ -150,6 +154,14 @@ body {
   border-top-left-radius: 15%;
   left: 0px;
 }
+.quarter-button:hover {
+  color: black;
+  background-color: #dddddd;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
 .playlist-container {
   margin: 5px 15px 5px 15px;
 }
@@ -176,6 +188,7 @@ body {
   margin-top: 5px;
 }
 .playlist-container .playlist-list .playlist-item {
+  border: 1px solid #888888;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -198,6 +211,9 @@ body {
   -o-transition: all 0.2s;
   transition: all 0.2s;
 }
+.playlist-container .playlist-list .playlist-item.active {
+  border: 1px solid #dddddd;
+}
 .button {
   float: left;
   cursor: pointer;
@@ -207,27 +223,35 @@ body {
   -o-border-radius: 2px;
   border-radius: 2px;
   background-color: #aaaaaa;
+  border: 2px solid #aaaaaa;
   color: #333333;
   vertical-align: middle;
   text-align: center;
-  -webkit-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  transition: all 0.4s;
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
 }
 .button.mid-sized {
-  width: 24px;
-  height: 20px;
+  width: 20px;
+  height: 18px;
   padding: 6px 4px 3px 4px;
   margin: 4px;
 }
 .button:hover {
-  color: black;
-  background-color: #dddddd;
+  border: 2px solid #dddddd;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   -o-transition: all 0.2s;
   transition: all 0.2s;
+}
+.button.active {
+  border: 2px solid #dddddd;
+  color: black;
+  background-color: #dddddd;
+}
+.button.active:hover {
+  border: 2px solid #888888;
 }
 .right-sided {
   float: right;
