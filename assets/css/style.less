@@ -17,7 +17,7 @@
 @smallDeviceLayoutBuffer: 1%;
 @smallDeviceInnerHeight: 100% - @smallDeviceHeaderHeight - @smallDeviceFooterHeight - 2*@smallDeviceLayoutBuffer;
 
-@controlsHeight: 75%;
+@controlsHeight: 50px;
 @playerHeight: 40px;
 @trackInfoHeight: 20px;
 @playerWidth: 50%;
@@ -107,7 +107,7 @@ body {
   overflow: hidden;
   z-index: 1000;
   bottom:@playerHeight;
-  height: @controlsHeight;
+  // height: @controlsHeight;
 
   &.left-sided{
     left: -@sliderContentWidth - @borderWidth;
@@ -224,6 +224,7 @@ body {
     height: 20px;
     padding: 5px;
   }
+
 
   .playlist-list{
     color: @darkGrey;

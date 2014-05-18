@@ -33,6 +33,7 @@ define([
       this.shuffle = false
       this.repeat = false
 
+      this.tracks = Array()
       this.lastPlayed = Array()
 
       this.mediaPath = './assets/media/audio/'
@@ -87,16 +88,6 @@ define([
         return random
     }
 
-    MusicPlayer.prototype.fillPlayList = function(){
-      var item
-      var list = $("#playlist-list")
-
-      for(var i = 0; i < this.tracks.length; i++){
-        item = this.createPlaylistItem(this.tracks[i], i)
-        list.append(item)
-      }
-
-    }
 
     MusicPlayer.prototype.createPlaylistItem = function(itemInfos, id) {
       var template = this.playlistItemTemplate
@@ -145,6 +136,7 @@ define([
 
       this.currentTrackId = trackId;
       var track = this.tracks[this.currentTrackId]
+      this.playlistScrollBar.doScrollTo(28*trackId)
 
       this.markTrackAsPlaying(track)
 
@@ -187,50 +179,147 @@ define([
       this.playTrack(id)      
     }    
 
-    MusicPlayer.prototype.loadDefaultTracks = function(){
-      this.tracks = Array()
+    MusicPlayer.prototype.setNewPlaylist = function(tracks){
+      this.tracks = tracks
+      this.updatePlaylistView()
+    }
 
-      this.tracks.push({
+    MusicPlayer.prototype.updatePlaylistView = function(){
+      var item
+      var list = $("#playlist-list")
+
+      for(var i = 0; i < this.tracks.length; i++){
+        item = this.createPlaylistItem(this.tracks[i], i)
+        list.append(item)
+      }
+
+      var container = $("#playlist-list-container")
+      // +20 for bottom + 30 for top
+      var height = this.tracks.length*27
+      var max = innerHeight*.7
+      height = height < max ? height : max
+      container.css({height: height+"px"})
+
+      this.playlistScrollBar = container.niceScroll({cursorborder:"",cursorcolor:"#FFF",cursorwidth:"8px",  autohidemode:true})
+
+    }    
+
+    MusicPlayer.prototype.loadDefaultTracks = function(){
+      
+      var tracks = Array()
+      tracks.push({
         position: 0, 
-        title :"Artificial Recreation", 
-        fileName: "00_artificial_recreation",
+        title :"Magic Mushroom", 
+        fileName: "01_magic_mushrooms",
         extension: "ogg",
         length: "04:02"
       });
 
-      this.tracks.push({
+      tracks.push({
         position: 1, 
-        title :"Penguin Planet", 
-        fileName: "01_penguin_planet",
+        title :"Icarus Grounded", 
+        fileName: "02_icarus_grounded",
         extension: "ogg",
         length: "03:52"
       });
 
-      this.tracks.push({
+      tracks.push({
         position: 2, 
-        title :"Icarus Grounded", 
-        fileName: "02_icarus_grounded",
+        title :"Monkey Bones", 
+        fileName: "03_monkey_bones",
         extension: "ogg",
         length: "04:24"
       });
 
-      this.tracks.push({
+      tracks.push({
         position: 3, 
         title :"George", 
-        fileName: "03_george",
+        fileName: "04_george",
         extension: "ogg",
         length: "05:02"
       });
 
-      this.tracks.push({
+      tracks.push({
         position: 4, 
         title :"Inside", 
-        fileName: "04_inside",
+        fileName: "05_inside",
         extension: "ogg",
         length: "04:02"
-      });                        
+      });     
 
-      this.fillPlayList()
+      tracks.push({
+        position: 5, 
+        title :"Fallen Trees", 
+        fileName: "06_fallen_trees",
+        extension: "ogg",
+        length: "04:02"
+      });
+
+      tracks.push({
+        position: 6, 
+        title :"Whispered", 
+        fileName: "07_whispered",
+        extension: "ogg",
+        length: "04:02"
+      });
+
+      tracks.push({
+        position: 7, 
+        title :"Mr Schwinn", 
+        fileName: "08_mr_schwinn",
+        extension: "ogg",
+        length: "04:02"
+      });
+
+      tracks.push({
+        position: 8, 
+        title :"Dance", 
+        fileName: "09_dance",
+        extension: "ogg",
+        length: "04:02"
+      });
+
+      tracks.push({
+        position: 9, 
+        title :"The Coming Through", 
+        fileName: "10_the_coming_through",
+        extension: "ogg",
+        length: "04:02"
+      });
+
+      tracks.push({
+        position: 10, 
+        title :"The March Of The Goblins", 
+        fileName: "11_the_march_of_the_goblins",
+        extension: "ogg",
+        length: "04:02"
+      });    
+
+      tracks.push({
+        position: 11, 
+        title :"Penguin Planet", 
+        fileName: "12_penguin_planet",
+        extension: "ogg",
+        length: "04:02"
+      });   
+
+      tracks.push({
+        position: 12, 
+        title :"The Wave", 
+        fileName: "13_the_wave",
+        extension: "ogg",
+        length: "04:02"
+      });   
+
+      tracks.push({
+        position: 13, 
+        title :"Artificial Recreation", 
+        fileName: "14_artificial_recreation",
+        extension: "ogg",
+        length: "04:02"
+      });                  
+
+      this.setNewPlaylist(tracks)
     }
 
 
