@@ -110,15 +110,16 @@ body {
   // height: @controlsHeight;
 
   &.left-sided{
-    left: -@sliderContentWidth - @borderWidth;
+    left: -@sliderContentWidth - @borderWidth*2;
     -webkit-transition: left 1s;
     transition: left 1s;
     &.slide-out{
       left: 0px;
-    }    
+    }  
   }
 
   &.right-sided{
+      height: 100px;
      left: 100%;
      margin-left: -65px + @borderWidth;
     -webkit-transition: margin-left 1s;
@@ -256,6 +257,12 @@ body {
       }
     }
   }
+}
+
+// SCROLL BAR --------------------------------------------------------------------
+
+#ascrail2000{
+  padding-left: 8px;
 }
 
 // HELPER CLASSES ----------------------------------------------------------------

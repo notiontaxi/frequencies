@@ -48,6 +48,24 @@ __extends = function(child, parent) {
 
 
 // Helper
+
+  function whichTransitionEvent(){
+      var t;
+      var el = document.createElement('fakeelement');
+      var transitions = {
+        'transition':'transitionend',
+        'OTransition':'oTransitionEnd',
+        'MozTransition':'transitionend',
+        'WebkitTransition':'webkitTransitionEnd'
+      }
+
+      for(t in transitions){
+          if( el.style[t] !== undefined ){
+              return transitions[t];
+          }
+      }
+  }
+
   var inArray = function(array, needle) {
     var i = -1, index = -1
     for(var i = 0; i < array.length; i++) {

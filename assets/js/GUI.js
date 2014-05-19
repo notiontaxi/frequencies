@@ -41,8 +41,8 @@ var GUI, _ref, module,
     }
 
     GUI.prototype.initialize = function(){
-      $('.action-toggle-panel').click(
-          function(){ 
+        $('.action-toggle-panel').click(
+          function(){
             var refId = "#"+($(this).attr( "refer" ))
             $(refId).toggleClass("slide-out")
           }

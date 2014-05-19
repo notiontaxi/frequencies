@@ -68,7 +68,7 @@ body {
   bottom: 40px;
 }
 .fade-over-panel.left-sided {
-  left: -402px;
+  left: -404px;
   -webkit-transition: left 1s;
   transition: left 1s;
 }
@@ -76,6 +76,7 @@ body {
   left: 0px;
 }
 .fade-over-panel.right-sided {
+  height: 100px;
   left: 100%;
   margin-left: -63px;
   -webkit-transition: margin-left 1s;
@@ -212,6 +213,9 @@ body {
 }
 .playlist-container .playlist-list .playlist-item.active {
   border: 1px solid #dddddd;
+}
+#ascrail2000 {
+  padding-left: 8px;
 }
 .button {
   float: left;

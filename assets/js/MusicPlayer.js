@@ -88,32 +88,6 @@ define([
         return random
     }
 
-
-    MusicPlayer.prototype.createPlaylistItem = function(itemInfos, id) {
-      var template = this.playlistItemTemplate
-      template = template.replace("%id%", id)
-      template = template.replace("%position%", itemInfos.position)
-      template = template.replace("%title%", itemInfos.title)
-      template = template.replace("%length%", itemInfos.length)
-
-      return template
-    }
-
-    MusicPlayer.prototype.addEventListeners = function(){
-      var that = this
-
-      // change track by clicking on track
-      $(".playlist-item").click(function(){
-        var trackId = ($(this).attr( "list-id"))
-        that.playTrack(trackId)
-      })
-
-      $(".action-prev").click(function(){that.previousTrack()})
-      $(".action-next").click(function(){that.nextTrack()})
-      $(".action-shuffle").click(function(){that.toggleShuffle()})
-      $(".action-repeat").click(function(){that.toggleRepeat()})
-    }
-
     MusicPlayer.prototype.toggleShuffle = function(){
       this.shuffle = !this.shuffle
       var active = this.shuffle
@@ -143,12 +117,6 @@ define([
       this.audio.src = this.mediaPath + track.fileName + "."+track.extension;
       this.audio.play()      
       this.lastPlayed.push(this.currentTrackId)
-    }
-
-    MusicPlayer.prototype.markTrackAsPlaying = function(track){
-      this.trackInfo.html(track.title)    
-      $(".playlist-item").each(function(){$(this).removeClass("active")})
-      $($(".playlist-item")[track.position]).addClass("active") 
     }
 
     MusicPlayer.prototype.previousTrack = function(){
@@ -184,6 +152,50 @@ define([
       this.updatePlaylistView()
     }
 
+
+
+// EVENT --------------------
+
+    MusicPlayer.prototype.addEventListeners = function(){
+      var that = this
+
+      // change track by clicking on track
+      $(".playlist-item").click(function(){
+        var trackId = ($(this).attr( "list-id"))
+        that.playTrack(trackId)
+      })
+
+      $(".left-sided")[0].addEventListener(whichTransitionEvent(), 
+        function(event){
+          if(event.propertyName == 'left'){
+            if($(this).hasClass('slide-out')){
+              that.playlistScrollBar.show()
+              that.playlistScrollBar.resize()
+            }
+          }
+        },false);
+      $(".quarter-button.left").click(function()
+        {
+          if(!$($(".left-sided")[0]).hasClass('slide-out'))
+            that.playlistScrollBar.hide()
+        })
+      
+
+      $(".action-prev").click(function(){that.previousTrack()})
+      $(".action-next").click(function(){that.nextTrack()})
+      $(".action-shuffle").click(function(){that.toggleShuffle()})
+      $(".action-repeat").click(function(){that.toggleRepeat()})
+    }
+
+// VIEW --------------------
+
+
+    MusicPlayer.prototype.markTrackAsPlaying = function(track){
+      this.trackInfo.html(track.title)
+      $(".playlist-item").each(function(){$(this).removeClass("active")})
+      $($(".playlist-item")[track.position]).addClass("active")
+    }
+
     MusicPlayer.prototype.updatePlaylistView = function(){
       var item
       var list = $("#playlist-list")
@@ -200,8 +212,17 @@ define([
       height = height < max ? height : max
       container.css({height: height+"px"})
 
-      this.playlistScrollBar = container.niceScroll({cursorborder:"",cursorcolor:"#FFF",cursorwidth:"8px",  autohidemode:true})
+      this.playlistScrollBar = container.niceScroll({cursorborder:"",cursorcolor:"#FFF",cursorwidth:"8px",  autohidemode:false})
+    }    
 
+    MusicPlayer.prototype.createPlaylistItem = function(itemInfos, id) {
+      var template = this.playlistItemTemplate
+      template = template.replace("%id%", id)
+      template = template.replace("%position%", itemInfos.position)
+      template = template.replace("%title%", itemInfos.title)
+      template = template.replace("%length%", itemInfos.length)
+
+      return template
     }    
 
     MusicPlayer.prototype.loadDefaultTracks = function(){
