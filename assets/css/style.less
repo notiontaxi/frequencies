@@ -205,7 +205,7 @@ body {
 .playlist-container{
 
   margin: 5px 15px 5px 15px;
-
+  min-height: 200px;
 
   .position{
     width: 10%;
@@ -215,10 +215,12 @@ body {
     width: 70%;
     float: left;
   }
-  .length{
+  .actions{
     width: 20%;
     float: left;
     text-align: right;
+    top: -3px;
+    position: relative;
   }
 
   .playlist-head{
@@ -262,7 +264,7 @@ body {
 // SCROLL BAR --------------------------------------------------------------------
 
 #ascrail2000{
-  padding-left: 8px;
+  padding-left: 10px;
 }
 
 // HELPER CLASSES ----------------------------------------------------------------
@@ -280,7 +282,7 @@ body {
   -webkit-transition: all 0.4s ease-out;
   -moz-transition: all 0.4s ease-out;
   -o-transition: all 0.4s ease-out;
-  transition: all 0.4s ease-out;  
+  transition: all 0.4s ease-out;
 
   &.mid-sized{
     width: 20px;
@@ -289,7 +291,17 @@ body {
     margin: 4px;
   }
 
-  &:hover
+  &.small-sized{
+    background-color: inherit;
+    border: 2px solid transparent;
+    width: 15px;
+    height: 14px;
+    padding: 0px;
+    margin: 0px;
+    font-size: 11pt;
+  }  
+
+  .color-fade&:hover
   {
     border: 2px solid @whiteGrey;
     -webkit-transition: all 0.2s;
@@ -297,6 +309,15 @@ body {
     -o-transition: all 0.2s;
     transition: all 0.2s;
   }
+
+  .jump&:hover
+  {
+     margin-top: -2px;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }  
 
   &.active{
     border: 2px solid @whiteGrey;

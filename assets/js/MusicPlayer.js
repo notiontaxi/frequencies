@@ -62,18 +62,13 @@ define([
 
     MusicPlayer.prototype.playAction = function(player){
       this.playing = true
-      // npAction.text('Now Playing:');
-      console.log("play")
     }
 
     MusicPlayer.prototype.pauseAction = function(player){
       this.playing = true
-      console.log("pause")
-      // npAction.text('Now Playing:');
     }
 
     MusicPlayer.prototype.endedAction = function(player){
-      console.log("ended")
       this.nextTrack()
     }
 
@@ -112,7 +107,7 @@ define([
       var track = this.tracks[this.currentTrackId]
       this.playlistScrollBar.doScrollTo(28*trackId)
 
-      this.markTrackAsPlaying(track)
+      this.markTrackAsPlaying(track, trackId)
 
       this.audio.src = this.mediaPath + track.fileName + "."+track.extension;
       this.audio.play()      
@@ -150,20 +145,32 @@ define([
     MusicPlayer.prototype.setNewPlaylist = function(tracks){
       this.tracks = tracks
       this.updatePlaylistView()
+      this.addPlaylistListeners()
     }
 
+    MusicPlayer.prototype.deleteTrack = function(trackId){
+      this.tracks.splice(trackId, 1)
+      this.setNewPlaylist(this.tracks)
+    }
 
+    MusicPlayer.prototype.trackUp = function(trackId){
+      if(trackId > 0){
+        this.tracks.move(trackId, --trackId)
+        this.setNewPlaylist(this.tracks)
+      }
+    }
+
+    MusicPlayer.prototype.trackDown = function(trackId){
+      if(trackId < this.tracks.length-1){
+        this.tracks.move(trackId, ++trackId)
+        this.setNewPlaylist(this.tracks)
+      }      
+    }    
 
 // EVENT --------------------
 
     MusicPlayer.prototype.addEventListeners = function(){
       var that = this
-
-      // change track by clicking on track
-      $(".playlist-item").click(function(){
-        var trackId = ($(this).attr( "list-id"))
-        that.playTrack(trackId)
-      })
 
       $(".left-sided")[0].addEventListener(whichTransitionEvent(), 
         function(event){
@@ -181,24 +188,49 @@ define([
         })
       
 
-      $(".action-prev").click(function(){that.previousTrack()})
-      $(".action-next").click(function(){that.nextTrack()})
-      $(".action-shuffle").click(function(){that.toggleShuffle()})
-      $(".action-repeat").click(function(){that.toggleRepeat()})
+      $(".action-prev").click(function(event){that.previousTrack()})
+      $(".action-next").click(function(event){that.nextTrack()})
+      $(".action-shuffle").click(function(event){that.toggleShuffle()})
+      $(".action-repeat").click(function(event){that.toggleRepeat()})
     }
 
+
+    MusicPlayer.prototype.addPlaylistListeners = function(){
+      var that = this
+      // change track by clicking on track
+      $(".playlist-item").click(function(){
+        var trackId = ($(this).attr( "list-id"))
+        that.playTrack(trackId)
+      })
+      $(".action-delete").click(function(event){
+        event.stopPropagation()
+        event.preventDefault()
+        that.deleteTrack($(this).parent().parent().attr( "list-id"))
+      })
+      $(".action-up").click(function(event){
+        event.stopPropagation()
+        event.preventDefault()
+        that.trackUp($(this).parent().parent().attr( "list-id"))
+      })
+      $(".action-down").click(function(event){
+        event.stopPropagation()
+        event.preventDefault()
+        that.trackDown($(this).parent().parent().attr( "list-id"))
+      })    
+    }
 // VIEW --------------------
 
 
-    MusicPlayer.prototype.markTrackAsPlaying = function(track){
+    MusicPlayer.prototype.markTrackAsPlaying = function(track, trackId){
       this.trackInfo.html(track.title)
       $(".playlist-item").each(function(){$(this).removeClass("active")})
-      $($(".playlist-item")[track.position]).addClass("active")
+      $($(".playlist-item")[trackId]).addClass("active")
     }
 
     MusicPlayer.prototype.updatePlaylistView = function(){
       var item
       var list = $("#playlist-list")
+      list.empty()
 
       for(var i = 0; i < this.tracks.length; i++){
         item = this.createPlaylistItem(this.tracks[i], i)
@@ -218,18 +250,17 @@ define([
     MusicPlayer.prototype.createPlaylistItem = function(itemInfos, id) {
       var template = this.playlistItemTemplate
       template = template.replace("%id%", id)
-      template = template.replace("%position%", itemInfos.position)
+      template = template.replace("%position%", id)
       template = template.replace("%title%", itemInfos.title)
       template = template.replace("%length%", itemInfos.length)
 
       return template
-    }    
+    }
 
     MusicPlayer.prototype.loadDefaultTracks = function(){
       
       var tracks = Array()
       tracks.push({
-        position: 0, 
         title :"Magic Mushroom", 
         fileName: "01_magic_mushrooms",
         extension: "ogg",
@@ -237,7 +268,6 @@ define([
       });
 
       tracks.push({
-        position: 1, 
         title :"Icarus Grounded", 
         fileName: "02_icarus_grounded",
         extension: "ogg",
@@ -245,7 +275,6 @@ define([
       });
 
       tracks.push({
-        position: 2, 
         title :"Monkey Bones", 
         fileName: "03_monkey_bones",
         extension: "ogg",
@@ -253,7 +282,6 @@ define([
       });
 
       tracks.push({
-        position: 3, 
         title :"George", 
         fileName: "04_george",
         extension: "ogg",
@@ -261,7 +289,6 @@ define([
       });
 
       tracks.push({
-        position: 4, 
         title :"Inside", 
         fileName: "05_inside",
         extension: "ogg",
@@ -269,7 +296,6 @@ define([
       });     
 
       tracks.push({
-        position: 5, 
         title :"Fallen Trees", 
         fileName: "06_fallen_trees",
         extension: "ogg",
@@ -277,7 +303,6 @@ define([
       });
 
       tracks.push({
-        position: 6, 
         title :"Whispered", 
         fileName: "07_whispered",
         extension: "ogg",
@@ -285,7 +310,6 @@ define([
       });
 
       tracks.push({
-        position: 7, 
         title :"Mr Schwinn", 
         fileName: "08_mr_schwinn",
         extension: "ogg",
@@ -293,7 +317,6 @@ define([
       });
 
       tracks.push({
-        position: 8, 
         title :"Dance", 
         fileName: "09_dance",
         extension: "ogg",
@@ -301,7 +324,6 @@ define([
       });
 
       tracks.push({
-        position: 9, 
         title :"The Coming Through", 
         fileName: "10_the_coming_through",
         extension: "ogg",
@@ -309,7 +331,6 @@ define([
       });
 
       tracks.push({
-        position: 10, 
         title :"The March Of The Goblins", 
         fileName: "11_the_march_of_the_goblins",
         extension: "ogg",
@@ -317,7 +338,6 @@ define([
       });    
 
       tracks.push({
-        position: 11, 
         title :"Penguin Planet", 
         fileName: "12_penguin_planet",
         extension: "ogg",
@@ -325,7 +345,6 @@ define([
       });   
 
       tracks.push({
-        position: 12, 
         title :"The Wave", 
         fileName: "13_the_wave",
         extension: "ogg",
@@ -333,7 +352,6 @@ define([
       });   
 
       tracks.push({
-        position: 13, 
         title :"Artificial Recreation", 
         fileName: "14_artificial_recreation",
         extension: "ogg",

@@ -164,6 +164,7 @@ body {
 }
 .playlist-container {
   margin: 5px 15px 5px 15px;
+  min-height: 200px;
 }
 .playlist-container .position {
   width: 10%;
@@ -173,10 +174,12 @@ body {
   width: 70%;
   float: left;
 }
-.playlist-container .length {
+.playlist-container .actions {
   width: 20%;
   float: left;
   text-align: right;
+  top: -3px;
+  position: relative;
 }
 .playlist-container .playlist-head {
   height: 20px;
@@ -215,7 +218,7 @@ body {
   border: 1px solid #dddddd;
 }
 #ascrail2000 {
-  padding-left: 8px;
+  padding-left: 10px;
 }
 .button {
   float: left;
@@ -241,8 +244,24 @@ body {
   padding: 6px 4px 3px 4px;
   margin: 4px;
 }
-.button:hover {
+.button.small-sized {
+  background-color: inherit;
+  border: 2px solid transparent;
+  width: 15px;
+  height: 14px;
+  padding: 0px;
+  margin: 0px;
+  font-size: 11pt;
+}
+.color-fade.button:hover {
   border: 2px solid #dddddd;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.jump.button:hover {
+  margin-top: -2px;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   -o-transition: all 0.2s;
