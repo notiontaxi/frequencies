@@ -174,12 +174,27 @@ body {
   width: 70%;
   float: left;
 }
-.playlist-container .actions {
+.playlist-container .title-actions {
   width: 20%;
   float: left;
   text-align: right;
   top: -3px;
   position: relative;
+}
+.playlist-container #playlist-list-container {
+  min-height: 35px;
+}
+.playlist-container .playlist-actions {
+  float: left;
+}
+.playlist-container .playlist-actions .button {
+  color: lightgreen;
+}
+.playlist-container .playlist-actions .button.action-clear {
+  color: lightcoral;
+}
+.playlist-container .playlist-actions .button.action-load-default-playlist {
+  color: lightblue;
 }
 .playlist-container .playlist-head {
   height: 20px;

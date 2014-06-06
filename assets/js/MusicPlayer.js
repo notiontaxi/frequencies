@@ -42,7 +42,7 @@ define([
 
       this.initialize()
       this.addEventListeners()
-      //this.runTests()
+      this.addPlaylistListeners()
     }
 
     MusicPlayer.prototype.initialize = function(){
@@ -74,13 +74,19 @@ define([
 
 
     MusicPlayer.prototype.getRandomTrackId = function() {
-      var random = Math.floor(Math.random()*this.tracks.length);
+      var position = 0
 
-      // regenerate, if random title is the last played
-      if(random == this.lastPlayed[this.lastPlayed.length-1])
-        return this.getRandomTrackId()
-      else
-        return random
+      if(this.tracks.length > 1){
+        var random = Math.floor(Math.random()*this.tracks.length);
+
+        // regenerate, if random title is the last played
+        if(random == this.lastPlayed[this.lastPlayed.length-1])
+          position = this.getRandomTrackId()
+        else
+          position = random
+      }
+
+      return position
     }
 
     MusicPlayer.prototype.toggleShuffle = function(){
@@ -109,7 +115,7 @@ define([
 
       this.markTrackAsPlaying(track, trackId)
 
-      this.audio.src = this.mediaPath + track.fileName + "."+track.extension;
+      this.audio.src = track.src
       this.audio.play()      
       this.lastPlayed.push(this.currentTrackId)
     }
@@ -145,13 +151,26 @@ define([
     MusicPlayer.prototype.setNewPlaylist = function(tracks){
       this.tracks = tracks
       this.updatePlaylistView()
-      this.addPlaylistListeners()
+      this.addPlaylistItemListeners()
     }
 
     MusicPlayer.prototype.deleteTrack = function(trackId){
       this.tracks.splice(trackId, 1)
       this.setNewPlaylist(this.tracks)
     }
+
+    MusicPlayer.prototype.addTrack = function(src, folder, filename, extension, title, length){
+      this.tracks.push({
+        title : title, 
+        fileName: filename,
+        extension: extension,
+        length: length,
+        folder: folder,
+        src: src
+      });
+
+      this.setNewPlaylist(this.tracks)
+    }    
 
     MusicPlayer.prototype.trackUp = function(trackId){
       if(trackId > 0){
@@ -195,7 +214,7 @@ define([
     }
 
 
-    MusicPlayer.prototype.addPlaylistListeners = function(){
+    MusicPlayer.prototype.addPlaylistItemListeners = function(){
       var that = this
       // change track by clicking on track
       $(".playlist-item").click(function(){
@@ -216,7 +235,51 @@ define([
         event.stopPropagation()
         event.preventDefault()
         that.trackDown($(this).parent().parent().attr( "list-id"))
-      })    
+      }) 
+    }
+
+    MusicPlayer.prototype.addPlaylistListeners = function(){
+      var that = this
+
+      $(".action-add").click(function(event){
+        event.stopPropagation()
+        event.preventDefault()
+        $("#open-file-dialog").click()
+      }) 
+
+      $(".action-clear").click(function(event){
+        event.stopPropagation()
+        event.preventDefault()
+        that.tracks = Array()
+        that.setNewPlaylist(that.tracks)
+      })  
+
+      $(".action-load-default-playlist").click(function(event){
+        event.stopPropagation()
+        event.preventDefault()
+        that.loadDefaultTracks();
+      })               
+
+      $("#open-file-dialog").change(function(event){
+        event.stopPropagation()
+        event.preventDefault()        
+        that.openFile(event, that);
+      })  
+    }    
+
+    MusicPlayer.prototype.openFile = function(event, that){
+      var files = event.target.files
+
+      for(var i = 0; i < files.length; i++){
+        var file = files[i]
+        var extension = file.name.split(".")[1]
+
+        if(extension == "ogg" || extension == "mp3"){
+          var name = file.name.split(".")[0]
+          var src = URL.createObjectURL(file)
+          that.addTrack(src, "unknown", name, extension, name, 0)
+        }
+      }
     }
 // VIEW --------------------
 
@@ -264,98 +327,126 @@ define([
         title :"Magic Mushroom", 
         fileName: "01_magic_mushrooms",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "01_magic_mushrooms" + "."+"ogg"
       });
 
       tracks.push({
         title :"Icarus Grounded", 
         fileName: "02_icarus_grounded",
         extension: "ogg",
-        length: "03:52"
+        length: "03:52",
+        folder: this.mediaPath,
+        src: this.mediaPath + "02_icarus_grounded" + "."+"ogg"
       });
 
       tracks.push({
         title :"Monkey Bones", 
         fileName: "03_monkey_bones",
         extension: "ogg",
-        length: "04:24"
+        length: "04:24",
+        folder: this.mediaPath,
+        src: this.mediaPath + "03_monkey_bones" + "."+"ogg"
       });
 
       tracks.push({
         title :"George", 
         fileName: "04_george",
         extension: "ogg",
-        length: "05:02"
+        length: "05:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "04_george" + "."+"ogg"
       });
 
       tracks.push({
         title :"Inside", 
         fileName: "05_inside",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "05_inside" + "."+"ogg"
       });     
 
       tracks.push({
         title :"Fallen Trees", 
         fileName: "06_fallen_trees",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "06_fallen_trees" + "."+"ogg"
       });
 
       tracks.push({
         title :"Whispered", 
         fileName: "07_whispered",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "07_whispered" + "."+"ogg"
       });
 
       tracks.push({
         title :"Mr Schwinn", 
         fileName: "08_mr_schwinn",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "08_mr_schwinn" + "."+"ogg"
       });
 
       tracks.push({
         title :"Dance", 
         fileName: "09_dance",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "09_dance" + "."+"ogg"
       });
 
       tracks.push({
         title :"The Coming Through", 
         fileName: "10_the_coming_through",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "10_the_coming_through" + "."+"ogg"
       });
 
       tracks.push({
         title :"The March Of The Goblins", 
         fileName: "11_the_march_of_the_goblins",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "11_the_march_of_the_goblins" + "."+"ogg"
       });    
 
       tracks.push({
         title :"Penguin Planet", 
         fileName: "12_penguin_planet",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "12_penguin_planet" + "."+"ogg"
       });   
 
       tracks.push({
         title :"The Wave", 
         fileName: "13_the_wave",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "13_the_wave" + "."+"ogg"
       });   
 
       tracks.push({
         title :"Artificial Recreation", 
         fileName: "14_artificial_recreation",
         extension: "ogg",
-        length: "04:02"
+        length: "04:02",
+        folder: this.mediaPath,
+        src: this.mediaPath + "14_artificial_recreation" + "."+"ogg"
       });                  
 
       this.setNewPlaylist(tracks)
