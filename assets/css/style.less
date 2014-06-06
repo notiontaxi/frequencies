@@ -215,12 +215,29 @@ body {
     width: 70%;
     float: left;
   }
-  .actions{
+  .title-actions{
     width: 20%;
     float: left;
     text-align: right;
     top: -3px;
     position: relative;
+  }
+
+  #playlist-list-container{
+    min-height: 35px;
+  }
+
+  .playlist-actions{
+    float: left;
+    .button{
+      color: lightgreen;
+      &.action-clear{
+        color: lightcoral;
+      }
+      &.action-load-default-playlist {
+        color: lightblue;
+      }      
+    }
   }
 
   .playlist-head{
