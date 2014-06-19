@@ -6,12 +6,8 @@ https://github.com/frequencies
 "use strict"
 
 define([
-  'js/Effects',
-  'js/Visualization',
   'text!templates/playlist-item.html',
   ], function(
-    Effects,
-    Visualization,
     playlistItem
   ) {
 
@@ -24,9 +20,6 @@ define([
 // --------------------------------------
 
     function MusicPlayer(){   
-
-      this.effects = new Effects(this)
-      this.visualization = new Visualization(this)
       this.playlistItemTemplate = playlistItem
 
       this.playing = false
@@ -273,8 +266,9 @@ define([
       for(var i = 0; i < files.length; i++){
         var file = files[i]
         var extension = file.name.split(".")[1]
-
-        if(extension == "ogg" || extension == "mp3"){
+        
+        var extest = extension.toLowerCase()
+        if(extest == "ogg" || extest == "mp3" || extest == "wav"){
           var name = file.name.split(".")[0]
           var src = URL.createObjectURL(file)
           that.addTrack(src, "unknown", name, extension, name, 0)
@@ -321,7 +315,7 @@ define([
     }
 
     MusicPlayer.prototype.loadDefaultTracks = function(){
-      
+      // save as JSON file and parse -> save/load playlists
       var tracks = Array()
       tracks.push({
         title :"Magic Mushroom", 

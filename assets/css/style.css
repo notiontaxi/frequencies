@@ -10,6 +10,11 @@ body {
 #page-container {
   min-width: 500px;
 }
+.canvas {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
 #audio-player {
   width: 65%;
   float: left;

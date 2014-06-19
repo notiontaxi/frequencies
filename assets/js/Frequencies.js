@@ -8,10 +8,12 @@ https://github.com/frequencies
 define([
   'js/test/Test',
   'js/MusicPlayer',
+  'js/Visualization',  
   'js/GUI'
   ], function(
     Test,
     MusicPlayer,
+    Visualization,
     GUI 
   ) {
 
@@ -28,6 +30,7 @@ var Frequencies, _ref, module,
 
       this.gui = new GUI(containerIdentifier)
       this.musikPlayer = new MusicPlayer()
+      this.visualization = new Visualization(containerIdentifier, this.musikPlayer)
 
       this.initialize()
       //this.runTests()
