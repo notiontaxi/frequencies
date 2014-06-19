@@ -76,7 +76,7 @@ var Visualization, _ref, module,
         })
 
       // this.geometry = new THREE.IcosahedronGeometry(40,3)
-      this.geometry = new THREE.CubeGeometry(10,10,10,10,10,10)
+      this.geometry = new THREE.BoxGeometry(10,10,10,10,10,10)
       this.mesh = new THREE.Mesh(this.geometry, material);
 
       this.scene.add(this.mesh)
