@@ -9,7 +9,7 @@ define([
     'text!templates/canvas.html',
     'js/Effects',
     'assets/lib/three.min.js',
-    'assets/lib/ImprovedNoise.js',
+    'assets/lib/improvedNoise.js',
   ], function(
     canvasContainer,
     Effects
