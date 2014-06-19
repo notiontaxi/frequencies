@@ -31,55 +31,61 @@ var Visualization, _ref, module,
 
       this.container = $(containerIdentifier).append($(canvasContainer))
 
-      this.initialize()
+      var that = this
+      window.addEventListener( 'resize', function(){that.initialize(that)}, false );   
+      this.initialize(that)   
       this.renderScene()
     }
 
-    Visualization.prototype.initialize = function(){
-      this.initRenderer()
-      this.initScene()
-      this.addSceneObjects()
+    Visualization.prototype.initialize = function(that){
+      this.initRenderer(that)
+      this.initScene(that)
+      this.addSceneObjects(that)
     }
 
-    Visualization.prototype.initRenderer = function(){
+
+    Visualization.prototype.initRenderer = function(that){
+
+      if(!!that.canvas)
+        that.canvas.remove()
+
       var rendererOptions = {
           antialias: true
         , 
       }
 
-      this.renderer = new THREE.WebGLRenderer(rendererOptions)
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
+      that.renderer = new THREE.WebGLRenderer(rendererOptions)
+      that.renderer.setSize(window.innerWidth, window.innerHeight)
 
-      var container = this.renderer.domElement;
-      this.container.append($(container))
-
+      that.canvas = that.renderer.domElement;
+      that.container.append($(that.canvas))
     }
 
-    Visualization.prototype.initScene = function(){
+    Visualization.prototype.initScene = function(that){
 
-      this.scene = new THREE.Scene()
-      this.camera = new THREE.PerspectiveCamera(
+      that.scene = new THREE.Scene()
+      that.camera = new THREE.PerspectiveCamera(
           70 // angle
         , window.innerWidth / window.innerHeight // ratio
         , 10 // near plane
         , 1000 // far plane
         )
-      this.camera.position.z = 100
+      that.camera.position.z = 100
 
-      this.scene.add(this.camera)
+      that.scene.add(this.camera)
     } 
 
-    Visualization.prototype.addSceneObjects = function(){
+    Visualization.prototype.addSceneObjects = function(that){
 
       var material = new THREE.MeshNormalMaterial({
           shading: THREE.FlatShading
         })
 
-      // this.geometry = new THREE.IcosahedronGeometry(40,3)
-      this.geometry = new THREE.BoxGeometry(10,10,10,10,10,10)
-      this.mesh = new THREE.Mesh(this.geometry, material);
+      // that.geometry = new THREE.IcosahedronGeometry(40,3)
+      that.geometry = new THREE.BoxGeometry(10,10,10,10,10,10)
+      that.mesh = new THREE.Mesh(that.geometry, material);
 
-      this.scene.add(this.mesh)
+      that.scene.add(that.mesh)
     }
        
     Visualization.prototype.updateScene = function(){
@@ -118,6 +124,9 @@ var Visualization, _ref, module,
       requestAnimationFrame(function(){that.renderScene()})
     }
 
+    Visualization.prototype.onWindowResize = function(event, that) {
+        that.renderer.setSize(window.innerWidth, window.innerHeight)
+    }
 
 
 // --------------------------------------
