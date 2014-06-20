@@ -10,7 +10,7 @@ body {
 #page-container {
   min-width: 500px;
 }
-.canvas {
+.canvas-container {
   z-index: 1;
   width: 100%;
   height: 100%;
@@ -239,6 +239,28 @@ body {
 }
 #ascrail2000 {
   padding-left: 10px;
+}
+.slider {
+  float: left;
+  cursor: pointer;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #aaaaaa;
+  border: 2px solid #aaaaaa;
+  color: #333333;
+  vertical-align: middle;
+  text-align: center;
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
+}
+.slider.mid-sized {
+  width: 60px;
+  margin: 10px;
 }
 .button {
   float: left;

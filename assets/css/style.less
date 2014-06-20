@@ -297,6 +297,30 @@ body {
 
 // HELPER CLASSES ----------------------------------------------------------------
 
+.slider{
+  float: left;
+  cursor: pointer;
+
+  .rounded-corners(2px);
+  background-color: @lightGrey;
+  border: 2px solid @lightGrey;
+  color: @darkGrey;
+  vertical-align: middle;
+  text-align: center;  
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
+
+  &.mid-sized{
+    width: 60px;
+    // height: 18px;
+    // padding: 6px 4px 3px 4px;
+    margin: 10px;
+  }
+}
+
+
 .button{
   float: left;
   cursor: pointer;

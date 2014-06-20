@@ -29,6 +29,8 @@ define([
       this.tracks = Array()
       this.lastPlayed = Array()
 
+      this.context = new AudioContext();
+
       this.mediaPath = './assets/media/audio/'
       this.extension = ''
       this.trackInfo = $("#track-info")
@@ -39,26 +41,76 @@ define([
     }
 
     MusicPlayer.prototype.initialize = function(){
-      this.initializePlayer()
+      this.createAudioContext()
       this.loadDefaultTracks()
+      this.initAudioNodes()
+      this.addEventListenersToNodes() 
     }
 
-    MusicPlayer.prototype.initializePlayer = function(){
+    MusicPlayer.prototype.createAudioContext = function(){
+      try {
+        // Fix up for prefixing
+        window.AudioContext = window.AudioContext||window.webkitAudioContext;
+        this.context = new AudioContext();
+      }
+      catch(e) {
+        alert('Web Audio API is not supported in this browser');
+      }      
+    }
 
-      this.audio = $("#audio-player")[0]
+    MusicPlayer.prototype.initAudioNodes = function(){
+        var javascriptNode
 
+        // creates a ScriptProcessorNode used for direct audio processing.
+        // https://developer.mozilla.org/en-US/docs/Web/API/AudioContext.createScriptProcessor
+        // [bufferSize][, numberOfInputChannels][, numberOfOutputChannels]
+        javascriptNode = this.context.createScriptProcessor(0, 2, 2)
+        // connect to destination, else it isn't called
+        // setup a connection to an audionode
+        // http://people.mozilla.org/~bgirard/doxygen/media/classmozilla_1_1dom_1_1ScriptProcessorNode.html        
+        javascriptNode.connect(this.context.destination)
+
+
+        // The AnalyserNode interface represents a node able to provide real-time frequency and time-domain analysis information.
+        // https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
+        this.analyser = this.context.createAnalyser()
+        // Is a double value representing the averaging constant with the last analysis frame.
+        this.analyser.smoothingTimeConstant = 0.3
+        // Is an unsigned long value representing the size of the Fast Fourier Transform to be used to determine the frequency domain.
+        this.analyser.fftSize = 512
+
+        // create a buffer source node
+        this.sourceNode = this.context.createBufferSource()
+        this.sourceNode.connect(this.analyser)
+        this.analyser.connect(javascriptNode)
+
+        this.sourceNode.connect(this.context.destination)
+    }
+
+    MusicPlayer.prototype.addEventListenersToNodes = function(){
       var that = this
-      this.audio.addEventListener('play',  function(){that.playAction(that)}, false)
-      this.audio.addEventListener('pause', function(){that.pauseAction(that)}, false)
-      this.audio.addEventListener('ended', function(){that.endedAction(that)}, false)   
+      this.sourceNode.onended = function(){that.endedAction(that)}
     }
 
     MusicPlayer.prototype.playAction = function(player){
       this.playing = true
+
+      // create new sourcenode and link to existing buffer
+      this.sourceNode = this.context.createBufferSource()
+      this.sourceNode.buffer = this.buffer
+      this.sourceNode.connect(this.context.destination)
+
+      if (!this.sourceNode.start){
+          this.sourceNode.start = this.sourceNode.noteOn
+      }
+      this.sourceNode.start(0)
     }
 
     MusicPlayer.prototype.pauseAction = function(player){
-      this.playing = true
+      this.playing = false
+      if (!this.sourceNode.stop)
+        this.sourceNode.stop = source.noteOff
+      this.sourceNode.stop(0)
     }
 
     MusicPlayer.prototype.endedAction = function(player){
@@ -82,6 +134,10 @@ define([
       return position
     }
 
+    MusicPlayer.prototype.togglePlay = function(){
+      this.playing !== true ? this.playAction() : this.pauseAction()
+    }
+
     MusicPlayer.prototype.toggleShuffle = function(){
       this.shuffle = !this.shuffle
       var active = this.shuffle
@@ -100,18 +156,31 @@ define([
       })
     }
 
-    MusicPlayer.prototype.playTrack = function(trackId){
 
+    MusicPlayer.prototype.switchBuffer = function(trackId){
       this.currentTrackId = trackId;
       var track = this.tracks[this.currentTrackId]
       this.playlistScrollBar.doScrollTo(28*trackId)
 
       this.markTrackAsPlaying(track, trackId)
+   
+      var request = new XMLHttpRequest()
+      request.open('GET', track.src, true)
+      request.responseType = 'arraybuffer'
 
-      this.audio.src = track.src
-      this.audio.play()      
-      this.lastPlayed.push(this.currentTrackId)
-    }
+      var that = this
+      // When loaded decode the data
+      request.onload = function() {
+          // decode the data
+          that.context.decodeAudioData(request.response, function(buffer) {
+            // set new buffer for playback
+            that.buffer = buffer
+            that.sourceNode.buffer = that.buffer
+            // that.playAction()
+          }, function(err){console.log(err)})
+      }
+      request.send()
+    }   
 
     MusicPlayer.prototype.previousTrack = function(){
       var id = 0
@@ -124,7 +193,7 @@ define([
         id = id < 0 ? this.tracks.length-1 : id
       }     
 
-      this.playTrack(id)    
+      this.switchBuffer(id)    
     }
 
     MusicPlayer.prototype.nextTrack = function(){
@@ -138,7 +207,7 @@ define([
         id = id >= this.tracks.length ? 0 : id
       }     
 
-      this.playTrack(id)      
+      this.switchBuffer(id)      
     }    
 
     MusicPlayer.prototype.setNewPlaylist = function(tracks){
@@ -204,6 +273,7 @@ define([
       $(".action-next").click(function(event){that.nextTrack()})
       $(".action-shuffle").click(function(event){that.toggleShuffle()})
       $(".action-repeat").click(function(event){that.toggleRepeat()})
+      $(".action-toggle-play").click(function(event){that.togglePlay()})    
     }
 
 
@@ -212,7 +282,7 @@ define([
       // change track by clicking on track
       $(".playlist-item").click(function(){
         var trackId = ($(this).attr( "list-id"))
-        that.playTrack(trackId)
+        that.switchBuffer(trackId)
       })
       $(".action-delete").click(function(event){
         event.stopPropagation()
