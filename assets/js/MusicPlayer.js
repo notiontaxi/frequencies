@@ -81,10 +81,22 @@ define([
 
         // create a buffer source node
         this.sourceNode = this.context.createBufferSource()
-        this.sourceNode.connect(this.analyser)
+        
         this.analyser.connect(javascriptNode)
 
-        this.sourceNode.connect(this.context.destination)
+        // Create gain node
+        if (!this.context.createGain)
+          this.context.createGain = this.context.createGainNode        
+        this.gainNode = this.context.createGain()
+        this.gainNode.connect(this.context.destination)   
+
+        this.connectNodes()  
+    }
+
+    MusicPlayer.prototype.connectNodes = function(){
+      this.sourceNode.connect(this.context.destination)
+      this.sourceNode.connect(this.analyser) 
+      this.sourceNode.connect(this.gainNode)     
     }
 
     MusicPlayer.prototype.addEventListenersToNodes = function(){
@@ -92,18 +104,36 @@ define([
       this.sourceNode.onended = function(){that.endedAction(that)}
     }
 
+    MusicPlayer.prototype.changeVolume = function(volume, maxVolume){
+      var fraction = parseInt(volume) / parseInt(maxVolume)
+      // x*x curve (x-squared) 
+      this.gainNode.gain.value = (fraction * fraction * 2) -1
+
+      console.log(this.gainNode.gain.value)
+    }
+
+
     MusicPlayer.prototype.playAction = function(player){
       this.playing = true
+      /*
+      FINISHED_STATE: 3
+      PLAYING_STATE: 2
+      SCHEDULED_STATE: 1
+      UNSCHEDULED_STATE: 0
+      */
+      if(this.sourceNode.playbackState == this.sourceNode.PLAYING_STATE)
+        this.sourceNode.stop(0)
 
       // create new sourcenode and link to existing buffer
       this.sourceNode = this.context.createBufferSource()
       this.sourceNode.buffer = this.buffer
-      this.sourceNode.connect(this.context.destination)
+      this.connectNodes()
 
       if (!this.sourceNode.start){
           this.sourceNode.start = this.sourceNode.noteOn
       }
       this.sourceNode.start(0)
+       // this.sourceNode.noteOn(0)
     }
 
     MusicPlayer.prototype.pauseAction = function(player){
@@ -135,7 +165,15 @@ define([
     }
 
     MusicPlayer.prototype.togglePlay = function(){
-      this.playing !== true ? this.playAction() : this.pauseAction()
+      if(this.playing){
+        this.pauseAction()
+        $("#play-button").removeClass("icon-play")
+        $("#play-button").addClass("icon-pause")
+      }else{
+        this.playAction() 
+        $("#play-button").removeClass("icon-pause")
+        $("#play-button").addClass("icon-play")        
+      }
     }
 
     MusicPlayer.prototype.toggleShuffle = function(){
@@ -176,7 +214,11 @@ define([
             // set new buffer for playback
             that.buffer = buffer
             that.sourceNode.buffer = that.buffer
-            // that.playAction()
+
+            // check playing state and start playing if not playing
+            if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE)
+              that.playAction()
+
           }, function(err){console.log(err)})
       }
       request.send()
@@ -273,7 +315,12 @@ define([
       $(".action-next").click(function(event){that.nextTrack()})
       $(".action-shuffle").click(function(event){that.toggleShuffle()})
       $(".action-repeat").click(function(event){that.toggleRepeat()})
-      $(".action-toggle-play").click(function(event){that.togglePlay()})    
+      $(".action-toggle-play").click(function(event){that.togglePlay()})   
+
+      $("#volume-slider").change(function(event){
+        that.changeVolume(parseInt(event.target.value), parseInt(event.target.max))
+      })  
+       
     }
 
 
