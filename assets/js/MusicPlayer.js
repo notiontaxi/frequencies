@@ -38,13 +38,13 @@ define([
       this.initialize()
       this.addEventListeners()
       this.addPlaylistListeners()
+      // this.testFrequency()
     }
 
     MusicPlayer.prototype.initialize = function(){
       this.createAudioContext()
       this.loadDefaultTracks()
       this.initAudioNodes()
-      this.addEventListenersToNodes() 
     }
 
     MusicPlayer.prototype.createAudioContext = function(){
@@ -64,11 +64,11 @@ define([
         // creates a ScriptProcessorNode used for direct audio processing.
         // https://developer.mozilla.org/en-US/docs/Web/API/AudioContext.createScriptProcessor
         // [bufferSize][, numberOfInputChannels][, numberOfOutputChannels]
-        javascriptNode = this.context.createScriptProcessor(0, 2, 2)
+        this.javascriptNode = this.context.createScriptProcessor(0, 2, 2)
         // connect to destination, else it isn't called
         // setup a connection to an audionode
         // http://people.mozilla.org/~bgirard/doxygen/media/classmozilla_1_1dom_1_1ScriptProcessorNode.html        
-        javascriptNode.connect(this.context.destination)
+        this.javascriptNode.connect(this.context.destination)
 
 
         // The AnalyserNode interface represents a node able to provide real-time frequency and time-domain analysis information.
@@ -82,7 +82,7 @@ define([
         // create a buffer source node
         this.sourceNode = this.context.createBufferSource()
         
-        this.analyser.connect(javascriptNode)
+        this.analyser.connect(this.javascriptNode)
 
         // Create gain node
         if (!this.context.createGain)
@@ -90,7 +90,36 @@ define([
         this.gainNode = this.context.createGain()
         this.gainNode.connect(this.context.destination)   
 
-        this.connectNodes()  
+        this.connectNodes()
+        this.initAudioProcess()  
+    }
+
+    MusicPlayer.prototype.testFrequency = function(){
+      var sineWave = this.context.createOscillator()
+
+      sineWave.frequency.value = 2000
+
+      sineWave.connect(this.context.destination)
+      sineWave.connect(this.analyser)
+      sineWave.connect(this.gainNode)
+
+      // this.gainNode.connect(this.context.destination)
+      sineWave.noteOn(0)
+    }
+
+    MusicPlayer.prototype.initAudioProcess = function(){
+      var that = this
+
+      this.javascriptNode.onaudioprocess = function() {
+        // get the average for the first channel
+        var array =  new Uint8Array(that.analyser.frequencyBinCount);
+        that.analyser.getByteFrequencyData(array);
+        that.frequencies = array
+        // drawSpectrum(array);
+        // console.log(array)
+        // [255, 255, 207, 201, 216, 213, 184, 165, 162, 154, 135, 115, 107, 97, 60, 0] 
+
+      }      
     }
 
     MusicPlayer.prototype.connectNodes = function(){
@@ -99,17 +128,20 @@ define([
       this.sourceNode.connect(this.gainNode)     
     }
 
-    MusicPlayer.prototype.addEventListenersToNodes = function(){
+    MusicPlayer.prototype.addEventListenerToSourceNode = function(){
       var that = this
-      this.sourceNode.onended = function(){that.endedAction(that)}
+      this.sourceNode.onended = function(){
+        console.log(parseInt(that.sourceNode.buffer.duration))
+        console.log(parseInt(that.sourceNode.context.currentTime))
+        if(parseInt(that.sourceNode.context.currentTime) >= parseInt(that.sourceNode.buffer.duration))
+          that.endedAction()
+      }
     }
 
     MusicPlayer.prototype.changeVolume = function(volume, maxVolume){
       var fraction = parseInt(volume) / parseInt(maxVolume)
-      // x*x curve (x-squared) 
+      // x*x curve (x-squared)  value between -1 and 1
       this.gainNode.gain.value = (fraction * fraction * 2) -1
-
-      console.log(this.gainNode.gain.value)
     }
 
 
@@ -127,6 +159,7 @@ define([
       // create new sourcenode and link to existing buffer
       this.sourceNode = this.context.createBufferSource()
       this.sourceNode.buffer = this.buffer
+      this.addEventListenerToSourceNode() 
       this.connectNodes()
 
       if (!this.sourceNode.start){
@@ -143,7 +176,7 @@ define([
       this.sourceNode.stop(0)
     }
 
-    MusicPlayer.prototype.endedAction = function(player){
+    MusicPlayer.prototype.endedAction = function(){
       this.nextTrack()
     }
 

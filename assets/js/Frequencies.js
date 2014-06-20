@@ -33,7 +33,7 @@ var Frequencies, _ref, module,
       this.visualization = new Visualization(containerIdentifier, this.musikPlayer)
 
       this.initialize()
-      //this.runTests()
+      
     }
 
     Frequencies.prototype.initialize = function(){
