@@ -77,35 +77,42 @@ var Visualization, _ref, module,
 
     Visualization.prototype.addSceneObjects = function(){
 
-      var material = new THREE.MeshNormalMaterial({
-          shading: THREE.FlatShading
-        })
+      var material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading, wireframe: true})
+      // var material = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors })
+      // var material = new THREE.MeshBasicMaterial( { color: 0x000000, shading: THREE.FlatShading, wireframe: true, transparent: true })
 
       // this.geometry = new THREE.IcosahedronGeometry(40,3)
-      this.geometry = new THREE.BoxGeometry(10,10,10,10,10,10)
+      this.geometry = new THREE.PlaneGeometry(80,80, 256, 15)
       this.mesh = new THREE.Mesh(this.geometry, material);
+      this.mesh.rotation.x -= 1.3
 
       this.scene.add(this.mesh)
     }
        
     Visualization.prototype.updateScene = function(){
-      // console.log(this.musicPlayer.frequencies)
-      this.mesh.rotation.y += .01
+
+      // this.mesh.rotation.y += .01
 
       var time = .001 * Date.now();
-      var vertex, distance
+      var vertex, meshPosition
+      var verticesLength =  this.geometry.vertices.length -1
+      var timeOffset = 1
+      var width = 255
 
-      for(var j = 0; j < this.geometry.vertices.length; j++){
-        vertex = this.geometry.vertices[j]
-        distance = 30 + 1 * Math.random()
+      // for(var j = 255; j >= 1; j--){
+      for(var j = width; j >= 0; j--){
 
-        distance = 30 + 3 * ImprovedNoise().noise(
-              .1 * vertex.x + 1.0 * time
-            , .1 * vertex.y + 0.9 * time
-            , .1 * vertex.z + 1.1 * time
-          )
-
-        vertex.normalize().multiplyScalar(distance)
+        meshPosition = verticesLength - width * timeOffset - j - 2*timeOffset
+        vertex = this.geometry.vertices[meshPosition]
+        // console.log(meshPosition)
+        // vertex.x += 0.0
+        // vertex.y = 0.5 
+        if(!!this.musicPlayer.frequencies){
+          var value = this.musicPlayer.frequencies[j] / 25
+          if(!isNaN(value)){
+            vertex.z = value
+          }
+        }
       }
 
       this.geometry.computeVertexNormals()

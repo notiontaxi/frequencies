@@ -135,8 +135,6 @@ define([
     MusicPlayer.prototype.addEventListenerToSourceNode = function(){
       var that = this
       this.sourceNode.onended = function(){
-        console.log(parseInt(that.sourceNode.buffer.duration))
-        console.log(parseInt(that.sourceNode.context.currentTime))
         if(parseInt(that.sourceNode.context.currentTime) >= parseInt(that.sourceNode.buffer.duration))
           that.endedAction()
       }
@@ -169,11 +167,10 @@ define([
       if (!this.sourceNode.start){
           this.sourceNode.start = this.sourceNode.noteOn
       }
-      console.log("resuming from: "+this.pausedAt / 1000)
+      // console.log("resuming from: "+this.pausedAt / 1000)
       this.sourceNode.start(0, this.pausedAt / 1000)
       this.startedAt = Date.now() - this.pausedAt
       
-      console.log(this.startedAt)
       this.updatePlayButton()
     }
 
@@ -183,7 +180,7 @@ define([
       if (!this.sourceNode.stop)
         this.sourceNode.stop = source.noteOff
       this.sourceNode.stop(0)
-      console.log("paused at: "+this.pausedAt / 1000)
+      // console.log("paused at: "+this.pausedAt / 1000)
       this.updatePlayButton()
     }
 
@@ -268,9 +265,10 @@ define([
             that.sourceNode.buffer = that.buffer
 
             // check playing state and start playing if not playing
-            if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE)
+            if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE){
               that.pausedAt = 0
               that.playAction()
+            }
           }, function(err){console.log(err)})                
         } catch(e) {
             log('decode exception',e.message);
@@ -493,12 +491,12 @@ define([
       
       var tracks = Array()
       tracks.push({
-        title :"Magic Mushroom", 
-        fileName: "01_magic_mushrooms",
+        title :"Audiocheck", 
+        fileName: "audiocheck",
         extension: "ogg",
         length: "04:02",
         folder: this.mediaPath,
-        src: this.mediaPath + "01_magic_mushrooms" + "."+"ogg"
+        src: this.mediaPath + "audiocheck" + "."+"ogg"
       });
 
       tracks.push({
