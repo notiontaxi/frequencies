@@ -29,11 +29,15 @@ define([
       this.tracks = Array()
       this.lastPlayed = Array()
 
-      this.context = new AudioContext();
+      this.context = new AudioContext()
+
+      this.timestamp = 0
 
       this.mediaPath = './assets/media/audio/'
       this.extension = ''
       this.trackInfo = $("#track-info")
+
+      this.pausedAt = this.startedAt = 0
 
       this.initialize()
       this.addEventListeners()
@@ -165,15 +169,22 @@ define([
       if (!this.sourceNode.start){
           this.sourceNode.start = this.sourceNode.noteOn
       }
-      this.sourceNode.start(0)
-       // this.sourceNode.noteOn(0)
+      console.log("resuming from: "+this.pausedAt / 1000)
+      this.sourceNode.start(0, this.pausedAt / 1000)
+      this.startedAt = Date.now() - this.pausedAt
+      
+      console.log(this.startedAt)
+      this.updatePlayButton()
     }
 
     MusicPlayer.prototype.pauseAction = function(player){
       this.playing = false
+      this.pausedAt = Date.now() - this.startedAt
       if (!this.sourceNode.stop)
         this.sourceNode.stop = source.noteOff
       this.sourceNode.stop(0)
+      console.log("paused at: "+this.pausedAt / 1000)
+      this.updatePlayButton()
     }
 
     MusicPlayer.prototype.endedAction = function(){
@@ -200,12 +211,18 @@ define([
     MusicPlayer.prototype.togglePlay = function(){
       if(this.playing){
         this.pauseAction()
-        $("#play-button").removeClass("icon-play")
-        $("#play-button").addClass("icon-pause")
       }else{
-        this.playAction() 
+        this.playAction()        
+      }
+    }
+
+    MusicPlayer.prototype.updatePlayButton = function(){
+      if(this.playing){
+        $("#play-button").removeClass("icon-play")
+        $("#play-button").addClass("icon-pause")  
+      }else{
         $("#play-button").removeClass("icon-pause")
-        $("#play-button").addClass("icon-play")        
+        $("#play-button").addClass("icon-play")                      
       }
     }
 
@@ -242,6 +259,8 @@ define([
       var that = this
       // When loaded decode the data
       request.onload = function() {
+
+        try{
           // decode the data
           that.context.decodeAudioData(request.response, function(buffer) {
             // set new buffer for playback
@@ -250,9 +269,13 @@ define([
 
             // check playing state and start playing if not playing
             if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE)
+              that.pausedAt = 0
               that.playAction()
+          }, function(err){console.log(err)})                
+        } catch(e) {
+            log('decode exception',e.message);
+        }
 
-          }, function(err){console.log(err)})
       }
       request.send()
     }   
@@ -464,8 +487,10 @@ define([
       return template
     }
 
+    // TODO:
+    // save as JSON file and parse -> save/load playlists
     MusicPlayer.prototype.loadDefaultTracks = function(){
-      // save as JSON file and parse -> save/load playlists
+      
       var tracks = Array()
       tracks.push({
         title :"Magic Mushroom", 

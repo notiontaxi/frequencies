@@ -89,7 +89,7 @@ var Visualization, _ref, module,
     }
        
     Visualization.prototype.updateScene = function(){
-      console.log(this.musicPlayer.frequencies)
+      // console.log(this.musicPlayer.frequencies)
       this.mesh.rotation.y += .01
 
       var time = .001 * Date.now();
