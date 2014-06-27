@@ -245,6 +245,7 @@ define([
 
     MusicPlayer.prototype.switchBuffer = function(trackId){
       console.log("switching buffer")
+      $("#overlay").show()
       this.pausedAt = 0
       this.currentTrackId = trackId;
       var track = this.tracks[this.currentTrackId]
@@ -275,6 +276,7 @@ define([
             if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE){
               that.playAction()
             }
+            $("#overlay").hide()
 
           }, function(err){console.log(err)})                
         } catch(e) {

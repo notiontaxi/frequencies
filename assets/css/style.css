@@ -15,6 +15,23 @@ body {
   width: 100%;
   height: 100%;
 }
+#overlay {
+  display: none;
+  background-color: #41978e;
+  opacity: .7;
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+#overlay span {
+  position: relative;
+  top: 24%;
+  color: white;
+  font-size: 300%;
+  font-style: oblique;
+}
 #audio-player {
   width: 65%;
   float: left;
