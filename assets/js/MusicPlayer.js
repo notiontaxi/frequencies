@@ -266,9 +266,9 @@ define([
 
             // check playing state and start playing if not playing
             if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE){
-              that.pausedAt = 0
               that.playAction()
             }
+            that.pausedAt = 0
           }, function(err){console.log(err)})                
         } catch(e) {
             log('decode exception',e.message);
