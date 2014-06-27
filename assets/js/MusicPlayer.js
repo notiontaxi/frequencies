@@ -167,7 +167,7 @@ define([
       if (!this.sourceNode.start){
           this.sourceNode.start = this.sourceNode.noteOn
       }
-      // console.log("resuming from: "+this.pausedAt / 1000)
+      console.log("resuming from: "+this.pausedAt / 1000)
       this.sourceNode.start(0, this.pausedAt / 1000)
       this.startedAt = Date.now() - this.pausedAt
       
@@ -177,10 +177,11 @@ define([
     MusicPlayer.prototype.pauseAction = function(player){
       this.playing = false
       this.pausedAt = Date.now() - this.startedAt
-      if (!this.sourceNode.stop)
+      if (!this.sourceNode.stop){
         this.sourceNode.stop = source.noteOff
+      }
       this.sourceNode.stop(0)
-      // console.log("paused at: "+this.pausedAt / 1000)
+      console.log("paused at: "+this.pausedAt / 1000)
       this.updatePlayButton()
     }
 
@@ -243,6 +244,8 @@ define([
 
 
     MusicPlayer.prototype.switchBuffer = function(trackId){
+      console.log("switching buffer")
+      this.pausedAt = 0
       this.currentTrackId = trackId;
       var track = this.tracks[this.currentTrackId]
       this.playlistScrollBar.doScrollTo(28*trackId)
@@ -252,6 +255,10 @@ define([
       var request = new XMLHttpRequest()
       request.open('GET', track.src, true)
       request.responseType = 'arraybuffer'
+      
+      if(this.sourceNode.playbackState !== this.sourceNode.UNSCHEDULED_STATE){
+        this.sourceNode.stop(0)
+      }      
 
       var that = this
       // When loaded decode the data
@@ -263,12 +270,12 @@ define([
             // set new buffer for playback
             that.buffer = buffer
             that.sourceNode.buffer = that.buffer
-
+            console.log("filled buffer")
             // check playing state and start playing if not playing
             if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE){
               that.playAction()
             }
-            that.pausedAt = 0
+
           }, function(err){console.log(err)})                
         } catch(e) {
             log('decode exception',e.message);
