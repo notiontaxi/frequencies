@@ -79,7 +79,7 @@ define([
         // https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
         this.analyser = this.context.createAnalyser()
         // Is a double value representing the averaging constant with the last analysis frame.
-        this.analyser.smoothingTimeConstant = 0.3
+        this.analyser.smoothingTimeConstant = 0.8
         // Is an unsigned long value representing the size of the Fast Fourier Transform to be used to determine the frequency domain.
         this.analyser.fftSize = 512
 
