@@ -45,7 +45,7 @@ define([
       this.initialize()
       this.addEventListeners()
       this.addPlaylistListeners()
-      // this.testFrequency()
+      this.testFrequency()
     }
 
     MusicPlayer.prototype.initialize = function(){
@@ -86,11 +86,13 @@ define([
     }
 
     MusicPlayer.prototype.checkSongState = function(){
-      var time = (Date.now() - this.startedAt) / 1000
+      if(this.sourceNode.buffer){
+        var time = (Date.now() - this.startedAt) / 1000
 
-      if(time >= this.sourceNode.buffer.duration){
-        this.pauseAction();
-        this.nextTrack();
+        if(time >= this.sourceNode.buffer.duration){
+          this.pauseAction();
+          this.nextTrack();
+        }
       }
     }
 
@@ -142,16 +144,21 @@ define([
     }
 
     MusicPlayer.prototype.testFrequency = function(){
-      var sineWave = this.context.createOscillator()
+      this.sineWave = this.context.createOscillator()
 
-      sineWave.frequency.value = 2000
+      this.sineWave.frequency.value = 1000
 
-      sineWave.connect(this.context.destination)
-      sineWave.connect(this.analyser)
-      sineWave.connect(this.gainNode)
+      this.sineWave.connect(this.context.destination)
+      this.sineWave.connect(this.analyser)
+      this.sineWave.connect(this.gainNode)
 
-      // this.gainNode.connect(this.context.destination)
-      sineWave.noteOn(0)
+      this.gainNode.connect(this.context.destination)
+      this.sineWave.noteOn(0)
+    }
+
+    MusicPlayer.prototype.updateFrequency = function(frequency){
+      console.log(frequency)
+      this.sineWave.frequency.value = frequency
     }
 
     MusicPlayer.prototype.initAudioProcess = function(){

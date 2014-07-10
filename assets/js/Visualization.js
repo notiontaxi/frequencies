@@ -22,9 +22,10 @@ var Visualization, _ref, module,
 // --------------------------------------
 
 
-    function Visualization(containerIdentifier, musicPlayer){ 
+    function Visualization(containerIdentifier, musicPlayer, effects){ 
 
       this.musicPlayer = musicPlayer
+      this.effects = effects
 
       this.container = $(containerIdentifier).append($(canvasContainer))
 
@@ -92,44 +93,45 @@ var Visualization, _ref, module,
        
     Visualization.prototype.updateScene = function(){
 
-      var time = .001 * Date.now();
-      var vertex, meshPosition, copyFrom, copyTo, value
-      var i,j
-      var verticesLength = this.geometry.vertices.length -3
-      var timeOffset = 1
-      var width = this.musicPlayer.frequencies.length -1
-      var length = 25
+      if(this.musicPlayer.frequencies){
+        var time = .001 * Date.now();
+        var vertex, meshPosition, copyFrom, copyTo, value
+        var i,j
+        var verticesLength = this.geometry.vertices.length -3
+        var timeOffset = 1
+        var width = this.musicPlayer.frequencies.length -1
+        var length = 25
 
-      var width = 512
-      // place values
-      for(i = 0; i < length; i++){
-        for(j = 0; j < width; j++){
-          copyFrom = j + width*(i+1)+1
-          copyTo = j + width*i
-          this.geometry.vertices[copyTo].z = this.geometry.vertices[copyFrom].z * (1 - i*(1/300))
-          // this.geometry.vertices[copyTo].z = this.geometry.vertices[copyFrom].z
-        }          
-      }
+        var width = 512
+        // place values
+        for(i = 0; i < length; i++){
+          for(j = 0; j < width; j++){
+            copyFrom = j + width*(i+1)+1
+            copyTo = j + width*i
+            this.geometry.vertices[copyTo].z = this.geometry.vertices[copyFrom].z * (1 - i*(1/300))
+            // this.geometry.vertices[copyTo].z = this.geometry.vertices[copyFrom].z
+          }          
+        }
 
-      width = this.musicPlayer.frequencies.length -1
-      for(i = width; i >= 0; i--){
-        meshPosition = verticesLength - width - i
-        value = this.musicPlayer.frequencies[i] / 25
-        vertex = this.geometry.vertices[meshPosition]
-        vertex.z = value
-      }
-    
-      // this.geometry.computeVertexNormals()
-      this.geometry.computeFaceNormals()
-
-      this.geometry.verticesNeedUpdate = true
-      this.geometry.normalsNeedUpdate = true
+        width = this.musicPlayer.frequencies.length -1
+        for(i = width; i >= 0; i--){
+          meshPosition = verticesLength - width - i
+          value = this.musicPlayer.frequencies[i] / 25
+          vertex = this.geometry.vertices[meshPosition]
+          vertex.z = value
+        }
       
+        // this.geometry.computeVertexNormals()
+        this.geometry.computeFaceNormals()
+
+        this.geometry.verticesNeedUpdate = true
+        this.geometry.normalsNeedUpdate = true
+      }
     }   
 
     Visualization.prototype.renderScene = function(){
 
-      if(this.musicPlayer.isPlaying()){
+      if(this.musicPlayer.isPlaying() || this.effects.activity){
         this.updateScene()
         this.renderer.render(this.scene, this.camera)        
       }
