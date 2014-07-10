@@ -62,6 +62,14 @@ body {
   -o-border-radius: 5px;
   border-radius: 5px;
 }
+.music-player-bar .player-info {
+  width: 40PX;
+  float: left;
+  height: 20PX;
+  padding: 8px 0px 5px 5px;
+  margin: 4px;
+  color: cyan;
+}
 #track-info {
   overflow: hidden;
   width: 100%;
@@ -277,6 +285,10 @@ body {
 }
 .slider.mid-sized {
   width: 60px;
+  margin: 10px;
+}
+.slider.big-sized {
+  width: 120px;
   margin: 10px;
 }
 .button {

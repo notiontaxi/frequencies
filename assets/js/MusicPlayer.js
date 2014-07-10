@@ -25,6 +25,9 @@ define([
       this.playing = false
       this.shuffle = false
       this.repeat = false
+      this.muted = false
+      this.timeSliderIsMoving = false
+      this.oldVolume = 1
 
       this.tracks = Array()
       this.lastPlayed = Array()
@@ -49,10 +52,46 @@ define([
       this.createAudioContext()
       this.loadDefaultTracks()
       this.initAudioNodes()
+      this.initRendering()
     }
 
     MusicPlayer.prototype.isPlaying = function(){
       return this.playing
+    }
+
+    MusicPlayer.prototype.initRendering = function(){
+      var that = this
+      setInterval(function() {
+        if(that.isPlaying()){
+          that.checkSongState()
+          that.updateElements()
+        }
+      }, 1000);       
+    }
+
+    MusicPlayer.prototype.updateElements = function(){
+      // update time display
+      var time = (Date.now() - this.startedAt) / 1000
+      var minutes = Math.floor(time / 60)
+      var seconds = Math.round(time % 60)
+      seconds = seconds < 10 ? "0"+seconds : seconds
+      minutes = minutes < 10 ? "0"+minutes : minutes
+      $("#time-code").html(minutes+":"+seconds)
+
+      // update time slider
+      if(!this.timeSliderIsMoving){
+        var percent = time / this.sourceNode.buffer.duration * 100
+        $("#time-slider").val(percent)
+      }
+    }
+
+    MusicPlayer.prototype.checkSongState = function(){
+      var time = (Date.now() - this.startedAt) / 1000
+
+      if(time >= this.sourceNode.buffer.duration){
+        this.pauseAction();
+        this.nextTrack();
+      }
     }
 
     MusicPlayer.prototype.createAudioContext = function(){
@@ -85,7 +124,7 @@ define([
         // Is a double value representing the averaging constant with the last analysis frame.
         this.analyser.smoothingTimeConstant = 0.8
         // Is an unsigned long value representing the size of the Fast Fourier Transform to be used to determine the frequency domain.
-        this.analyser.fftSize = 512
+        this.analyser.fftSize = 1024
 
         // create a buffer source node
         this.sourceNode = this.context.createBufferSource()
@@ -137,21 +176,30 @@ define([
     }
 
     MusicPlayer.prototype.addEventListenerToSourceNode = function(){
-      var that = this
-      this.sourceNode.onended = function(){
-        if(parseInt(that.sourceNode.context.currentTime) >= parseInt(that.sourceNode.buffer.duration))
-          that.endedAction()
-      }
+      // var that = this
+      // this.sourceNode.onended = function(){
+      //   if(parseInt(that.sourceNode.context.currentTime) >= parseInt(that.sourceNode.buffer.duration))
+      //     that.endedAction()
+      // }
     }
 
     MusicPlayer.prototype.changeVolume = function(volume, maxVolume){
-      var fraction = parseInt(volume) / parseInt(maxVolume)
-      // x*x curve (x-squared)  value between -1 and 1
-      this.gainNode.gain.value = (fraction * fraction * 2) -1
+      if(maxVolume){
+        var fraction = parseInt(volume) / parseInt(maxVolume)
+        // x*x curve (x-squared)  value between -1 and 1
+        this.gainNode.gain.value = (fraction * fraction * 2) -1
+      }else{
+         this.gainNode.gain.value = volume
+      }
     }
 
+    MusicPlayer.prototype.changeTime = function(value, maxValue){
+        this.pausedAt = (value / maxValue) * this.sourceNode.buffer.duration * 1000
+        this.playAction()
+        this.updateElements()
+    }    
 
-    MusicPlayer.prototype.playAction = function(player){
+    MusicPlayer.prototype.playAction = function(){
       this.playing = true
       /*
       FINISHED_STATE: 3
@@ -190,7 +238,10 @@ define([
     }
 
     MusicPlayer.prototype.endedAction = function(){
-      this.nextTrack()
+      console.log("ended")
+      if(this.isPlaying()){
+        this.nextTrack()
+      }
     }
 
 
@@ -217,6 +268,19 @@ define([
         this.playAction()        
       }
     }
+
+    MusicPlayer.prototype.toggleMute = function(){
+      if(this.muted){
+        this.changeVolume(this.oldVolume)
+        this.muted = false
+        $('.action-toggle-mute').removeClass("active")      
+      }else{
+        this.oldVolume = (this.gainNode.gain.value)
+        this.changeVolume(-1)
+        this.muted = true
+        $('.action-toggle-mute').addClass("active")  
+      }
+    }    
 
     MusicPlayer.prototype.updatePlayButton = function(){
       if(this.playing){
@@ -251,6 +315,7 @@ define([
       console.log("switching buffer")
       $("#overlay").show()
       this.pausedAt = 0
+
       this.currentTrackId = trackId;
       var track = this.tracks[this.currentTrackId]
       this.playlistScrollBar.doScrollTo(28*trackId)
@@ -284,7 +349,7 @@ define([
 
           }, function(err){console.log(err)})                
         } catch(e) {
-            log('decode exception',e.message);
+            console.log('Decoding failed: '+e.message);
         }
 
       }
@@ -382,12 +447,23 @@ define([
       $(".action-next").click(function(event){that.nextTrack()})
       $(".action-shuffle").click(function(event){that.toggleShuffle()})
       $(".action-repeat").click(function(event){that.toggleRepeat()})
-      $(".action-toggle-play").click(function(event){that.togglePlay()})   
+      $(".action-toggle-play").click(function(event){that.togglePlay()})
+      $(".action-toggle-mute").click(function(event){that.toggleMute()})   
+
 
       $("#volume-slider").change(function(event){
         that.changeVolume(parseInt(event.target.value), parseInt(event.target.max))
       })  
        
+      $("#time-slider").change(function(event){
+        that.changeTime(parseInt(event.target.value), parseInt(event.target.max))
+      })  
+      $("#time-slider").mousedown( function(e){
+          that.timeSliderIsMoving = true
+      });
+      $("#time-slider").mouseup( function(e){
+          that.timeSliderIsMoving = false
+      });                     
     }
 
 

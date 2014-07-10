@@ -83,7 +83,7 @@ var Visualization, _ref, module,
       // var material = new THREE.MeshBasicMaterial( { color: 0x000000, shading: THREE.FlatShading, wireframe: true, transparent: true })
 
       // this.geometry = new THREE.IcosahedronGeometry(40,3)
-      this.geometry = new THREE.PlaneGeometry(80,100, 256, 25)
+      this.geometry = new THREE.PlaneGeometry(80,100, 512, 25)
       this.mesh = new THREE.Mesh(this.geometry, material);
       this.mesh.rotation.x -= 1.3
 
@@ -100,7 +100,7 @@ var Visualization, _ref, module,
       var width = this.musicPlayer.frequencies.length -1
       var length = 25
 
-      var width = 256
+      var width = 512
       // place values
       for(i = 0; i < length; i++){
         for(j = 0; j < width; j++){

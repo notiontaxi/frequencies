@@ -1,11 +1,13 @@
 <div class="music-player-bar">
   <div class="content">
+    <div id="play-button" class="icon-play button mid-sized action-toggle-play color-fade"></div>  
+    <div id="time-code" class="color-fade player-info">--:--</div>
+    <input id="time-slider" class="slider big-sized" type="range" min="0" max="100" value="0"></input>     
     <div class="icon-previous button mid-sized action-prev color-fade"></div>
     <div class="icon-next button mid-sized action-next color-fade"></div>
-    <div id="play-button" class="icon-play button mid-sized action-toggle-play color-fade"></div>
     <input id="volume-slider" class="slider mid-sized" type="range" min="0" max="100" value="100"></input>
-    <div class="icon-mute button mid-sized action-toggle-mute color-fade"></div>
+    <div class="icon-volume-mute2 button mid-sized action-toggle-mute color-fade"></div>
     <div class="icon-shuffle button mid-sized action-shuffle color-fade"></div>
-    <div class="icon-repeat button mid-sized action-repeat color-fade"></div>    
+    <div class="icon-repeat button mid-sized action-repeat color-fade"></div>       
   </div>
 </div>
