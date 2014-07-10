@@ -29,17 +29,47 @@ var Frequencies, _ref, module,
     function Frequencies(containerIdentifier){   
 
       this.gui = new GUI(containerIdentifier)
-      this.musikPlayer = new MusicPlayer()
-      this.visualization = new Visualization(containerIdentifier, this.musikPlayer)
+      this.musicPlayer = new MusicPlayer()
+      this.visualization = new Visualization(containerIdentifier, this.musicPlayer)
 
       this.initialize()
       
     }
 
     Frequencies.prototype.initialize = function(){
-      // var test = new Test()
+
+      this.initializeVisualizationWorker()
     }
 
+    Frequencies.prototype.initializeVisualizationWorker = function(){
+      var that = this
+
+      if(typeof(Worker) !== "undefined") {
+        this.visuWorker = new Worker("assets/js/VisulizationWorker.js");
+      } else {
+          alert("No web worker support. Your browser is outdated!")
+      }
+
+      this.visuWorker.addEventListener('message', function(e) {
+        // if(that.musicPlayer.isPlaying){
+        //   that.visualization.updateVertices(e.data)
+        // }
+        // console.log("got it , recall")
+        // window.setTimeout(function(){that.updateWorker()},50);
+        // that.updateWorker()
+      }, false);
+
+      this.updateWorker()
+    }
+
+    Frequencies.prototype.updateWorker = function(){
+        this.visuWorker.postMessage(
+          { 
+            "vertices": this.visualization.getGeometryVertices(),
+            "frequencies": this.musicPlayer.frequencies
+          }
+        );
+    }
 
     Frequencies.prototype.runTests = function(){
       // var test = new Test()

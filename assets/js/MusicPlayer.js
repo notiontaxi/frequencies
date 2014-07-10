@@ -51,6 +51,10 @@ define([
       this.initAudioNodes()
     }
 
+    MusicPlayer.prototype.isPlaying = function(){
+      return this.playing
+    }
+
     MusicPlayer.prototype.createAudioContext = function(){
       try {
         // Fix up for prefixing

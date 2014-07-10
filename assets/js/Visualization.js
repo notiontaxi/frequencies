@@ -7,12 +7,10 @@ https://github.com/frequencies
 
 define([
     'text!templates/canvas.html',
-    'js/Effects',
     'assets/lib/three.min.js',
     'assets/lib/improvedNoise.js',
   ], function(
-    canvasContainer,
-    Effects
+    canvasContainer
   ) {
 
 var Visualization, _ref, module,
@@ -24,17 +22,21 @@ var Visualization, _ref, module,
 // --------------------------------------
 
 
-    function Visualization(containerIdentifier, musicPlayer){   
+    function Visualization(containerIdentifier, musicPlayer){ 
 
-      this.effects = new Effects()  
       this.musicPlayer = musicPlayer
 
       this.container = $(containerIdentifier).append($(canvasContainer))
 
       var that = this
-      window.addEventListener( 'resize', function(){that.initialize()}, false );   
-      this.initialize(that)   
-      this.renderScene()
+      window.addEventListener( 'resize', function(){that.initialize()}, false );
+      this.initialize(that)
+
+      var that = this 
+      setInterval(function() {
+        requestAnimationFrame(function(){that.renderScene()})
+      }, 25); 
+
     }
 
     Visualization.prototype.initialize = function(){
@@ -42,7 +44,6 @@ var Visualization, _ref, module,
       this.initScene()
       this.addSceneObjects()
     }
-
 
     Visualization.prototype.initRenderer = function(){
 
@@ -86,56 +87,69 @@ var Visualization, _ref, module,
       this.mesh = new THREE.Mesh(this.geometry, material);
       this.mesh.rotation.x -= 1.3
 
-
       this.scene.add(this.mesh)
     }
        
     Visualization.prototype.updateScene = function(){
 
-      // this.mesh.rotation.y += .01
-      if(!!this.musicPlayer.frequencies){
+      var time = .001 * Date.now();
+      var vertex, meshPosition, copyFrom, copyTo, value
+      var i,j
+      var verticesLength = this.geometry.vertices.length -3
+      var timeOffset = 1
+      var width = this.musicPlayer.frequencies.length -1
+      var length = 25
 
-        var time = .001 * Date.now();
-        var vertex, meshPosition, copyFrom, copyTo, value
-        var i,j
-        var verticesLength = this.geometry.vertices.length -3
-        var timeOffset = 1
-        var width = this.musicPlayer.frequencies.length -1
-
-        width = 256
-        // place values
-        for(i = 0; i < 25; i++){
-          for(j = 0; j < width; j++){
-            copyFrom = j + width*(i+1)+1
-            copyTo = j + width*i
-            this.geometry.vertices[copyTo].z = this.geometry.vertices[copyFrom].z
-          }          
-        }
-
-        width = this.musicPlayer.frequencies.length -1
-        for(i = width; i >= 0; i--){
-          meshPosition = verticesLength - width - i
-          value = this.musicPlayer.frequencies[i] / 25
-          vertex = this.geometry.vertices[meshPosition]
-          vertex.z = value
-        }
-      
-        this.geometry.computeVertexNormals()
-        this.geometry.computeFaceNormals()
-
-        this.geometry.verticesNeedUpdate = true
-        this.geometry.normalsNeedUpdate = true
+      var width = 256
+      // place values
+      for(i = 0; i < length; i++){
+        for(j = 0; j < width; j++){
+          copyFrom = j + width*(i+1)+1
+          copyTo = j + width*i
+          this.geometry.vertices[copyTo].z = this.geometry.vertices[copyFrom].z * (1 - i*(1/300))
+          // this.geometry.vertices[copyTo].z = this.geometry.vertices[copyFrom].z
+        }          
       }
+
+      width = this.musicPlayer.frequencies.length -1
+      for(i = width; i >= 0; i--){
+        meshPosition = verticesLength - width - i
+        value = this.musicPlayer.frequencies[i] / 25
+        vertex = this.geometry.vertices[meshPosition]
+        vertex.z = value
+      }
+    
+      // this.geometry.computeVertexNormals()
+      this.geometry.computeFaceNormals()
+
+      this.geometry.verticesNeedUpdate = true
+      this.geometry.normalsNeedUpdate = true
+      
     }   
 
     Visualization.prototype.renderScene = function(){
 
-      this.updateScene()
-      this.renderer.render(this.scene, this.camera)
+      if(this.musicPlayer.isPlaying()){
+        this.updateScene()
+        this.renderer.render(this.scene, this.camera)        
+      }
+      
+    }
 
+    Visualization.prototype.getGeometryVertices = function(){
+      return this.geometry.vertices;
+    }
 
-      var that = this
-      requestAnimationFrame(function(){that.renderScene()})
+    Visualization.prototype.updateVertices = function(newVertices){
+
+      this.geometry.vertices = newVertices
+
+      this.geometry.computeVertexNormals()
+      this.geometry.computeFaceNormals()
+
+      this.geometry.verticesNeedUpdate = true
+      this.geometry.normalsNeedUpdate = true
+
     }
 
     Visualization.prototype.onWindowResize = function(event, that) {
