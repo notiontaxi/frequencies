@@ -725,7 +725,7 @@ define([
     }
     MusicPlayer.prototype.getAnalizer = function(){
       return this.analyser;
-    }    
+    }         
 
 
 // --------------------------------------

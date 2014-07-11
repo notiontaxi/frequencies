@@ -209,8 +209,8 @@ body {
 #effects-container .effect-wrapper.microphone {
   height: 30px;
 }
-#effects-container .effect-wrapper.sinus {
-  height: 80px;
+#effects-container .effect-wrapper.wave {
+  height: 90px;
 }
 #effects-container .effect-wrapper .header {
   padding: 3px;
@@ -327,6 +327,10 @@ body {
 .slider.big-sized {
   width: 120px;
   margin: 10px;
+}
+.slider.bigger-sized {
+  width: 200px;
+  margin-left: 7px;
 }
 .slider.very-big-sized {
   width: 90%;
