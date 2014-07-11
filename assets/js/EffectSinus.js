@@ -35,14 +35,23 @@ var EffectSinus, _ref, module,
     EffectSinus.prototype.initView = function(){
       var that = this
       $("#sinus-slider").on("input change", function(event){
-        that.updateFrequency(parseInt(event.target.value))
-        $("#sinus-slider-output").html("Frequency: "+parseInt(event.target.value)+" hz")}
-      ) 
+          if(!that.muted){
+            that.updateFrequency(parseInt(event.target.value))
+          }
+        }
+      )
 
       $("#sinus-wave-toggle").on("change", function(event){
         that.mute(!event.target.checked)
+        that.updateOutput()
         }
-      )       
+      )     
+
+      $("#sinus-slider-output").html("Frequency: "+parseInt($("#sinus-slider")[0].value)+" hz") 
+    }
+
+    EffectSinus.prototype.updateOutput = function(){
+      $("#sinus-slider-output").html("Frequency: "+parseInt($("#sinus-slider")[0].value)+" hz") 
     }
 
     EffectSinus.prototype.initEffect = function(){
@@ -64,8 +73,19 @@ var EffectSinus, _ref, module,
 
     EffectSinus.prototype.updateFrequency = function(frequency){
       this.sineWave.frequency.value = frequency
+      this.updateOutput()
     }   
 
+    EffectSinus.prototype.mute = function(mute){
+      if(mute){
+        this.gainNode.gain.value = -1
+        this.sineWave.frequency.value = 24000
+      }else{
+        this.gainNode.gain.value = 1
+        this.sineWave.frequency.value = $("#sinus-slider")[0].value
+      }    
+      this.muted = mute
+  }
 
 
 // --------------------------------------

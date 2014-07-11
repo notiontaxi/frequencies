@@ -131,7 +131,7 @@ var Visualization, _ref, module,
 
     Visualization.prototype.renderScene = function(){
 
-      if(this.musicPlayer.isPlaying() || this.effects.activity){
+      if(this.musicPlayer.isPlaying() || this.effects.activity()){
         this.updateScene()
         this.renderer.render(this.scene, this.camera)        
       }

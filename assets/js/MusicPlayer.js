@@ -199,7 +199,7 @@ define([
       if(maxVolume){
         var fraction = parseInt(volume) / parseInt(maxVolume)
         // x*x curve (x-squared)  value between -1 and 1
-        this.gainMusicNode.gain.value = (fraction * fraction * 2) -1
+        this.gainMusicNode.gain.value = (fraction * fraction ) 
       }else{
          this.gainMusicNode.gain.value = volume
       }
@@ -288,7 +288,7 @@ define([
         $('.action-toggle-mute').removeClass("active")      
       }else{
         this.oldVolume = (this.gainMusicNode.gain.value)
-        this.changeVolume(-1)
+        this.changeVolume(0)
         this.muted = true
         $('.action-toggle-mute').addClass("active")  
       }
@@ -463,7 +463,7 @@ define([
       $(".action-toggle-mute").click(function(event){that.toggleMute()})   
 
 
-      $("#volume-slider").change(function(event){
+      $("#volume-slider").on('input change', function(event){
         that.changeVolume(parseInt(event.target.value), parseInt(event.target.max))
       })  
        
