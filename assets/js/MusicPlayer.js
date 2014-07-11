@@ -225,7 +225,7 @@ define([
       // create new sourcenode and link to existing buffer
       this.sourceNode = this.context.createBufferSource()
       this.sourceNode.buffer = this.buffer
-      this.addEventListenerToSourceNode() 
+      this.addEventListenerToSourceNode()
       this.connectNodes()
 
       if (!this.sourceNode.start){

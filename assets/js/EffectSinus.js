@@ -28,7 +28,7 @@ var EffectSinus, _ref, module,
 
       this.container = $(Effect.CONTAINER).append($(effectTemplate))
       this.initialize()
-      this.mute()
+      this.mute(true)
     }
 
 
@@ -40,7 +40,7 @@ var EffectSinus, _ref, module,
       ) 
 
       $("#sinus-wave-toggle").on("change", function(event){
-        that.mute(event.target.checked)
+        that.mute(!event.target.checked)
         }
       )       
     }

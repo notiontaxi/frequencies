@@ -24,7 +24,7 @@ var Effect, _ref, module,
     Effect.CONTAINER = "#effects-container";
 
     function Effect(musicplayer){   
-
+      
       this.musicplayer = musicplayer
     }
 

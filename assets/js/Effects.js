@@ -24,6 +24,7 @@ var Effects, _ref, module,
     function Effects(musicplayer){   
 
       this.musicplayer = musicplayer
+      this.active = true
 
       this.container = $("#panel-right .content").append($(effectsTemplate))
       this.initialize()
@@ -32,6 +33,10 @@ var Effects, _ref, module,
 
     Effects.prototype.initialize = function(){
       this.effectSinus = new EffectSinus(this.musicplayer)
+    }
+
+    Effects.prototype.activity = function() {
+      return this.active;
     }
 
 
