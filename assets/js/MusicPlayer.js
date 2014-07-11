@@ -31,6 +31,8 @@ define([
 
       this.tracks = Array()
       this.lastPlayed = Array()
+      // fill with objects like this: {node: gainNode, name: "myName"}
+      this.gainNodes = Array() 
 
       this.context = new AudioContext()
 
@@ -45,7 +47,6 @@ define([
       this.initialize()
       this.addEventListeners()
       this.addPlaylistListeners()
-      this.testFrequency()
     }
 
     MusicPlayer.prototype.initialize = function(){
@@ -135,30 +136,40 @@ define([
 
         // Create gain node
         if (!this.context.createGain)
-          this.context.createGain = this.context.createGainNode        
-        this.gainNode = this.context.createGain()
-        this.gainNode.connect(this.context.destination)   
+          this.context.createGain = this.context.creategainMusicNode        
+        this.gainMusicNode = this.context.createGain()
+        this.gainMusicNode.connect(this.context.destination)   
+        this.gainNodes.push({node: this.gainMusicNode, name: "music"})
 
         this.connectNodes()
         this.initAudioProcess()  
     }
 
-    MusicPlayer.prototype.testFrequency = function(){
-      this.sineWave = this.context.createOscillator()
+    MusicPlayer.prototype.connectNodes = function(){
+      this.sourceNode.connect(this.context.destination)
+      this.sourceNode.connect(this.analyser) 
 
-      this.sineWave.frequency.value = 1000
+      for(var i = 0; i < this.gainNodes.length; i++){
+        this.sourceNode.connect(this.gainNodes[i].node)  
+      }
+    }  
 
-      this.sineWave.connect(this.context.destination)
-      this.sineWave.connect(this.analyser)
-      this.sineWave.connect(this.gainNode)
+    MusicPlayer.prototype.addGainNode = function(name){
+        var gainNewNode = this.context.createGain()
+        gainNewNode.connect(this.context.destination)           
+        this.gainNodes.push({node: gainNewNode, name: name})
+        this.sourceNode.connect(gainNewNode)
+        return gainNewNode       
+    }  
 
-      this.gainNode.connect(this.context.destination)
-      this.sineWave.noteOn(0)
-    }
-
-    MusicPlayer.prototype.updateFrequency = function(frequency){
-      console.log(frequency)
-      this.sineWave.frequency.value = frequency
+    MusicPlayer.prototype.getGainNode = function(name){
+      var result = null
+      for(var i = 0; i < this.gainNodes.length; i++){
+        if(this.gainNodes[i].name == name){
+          result = this.gainNodes[i]
+        }
+      } 
+      return result
     }
 
     MusicPlayer.prototype.initAudioProcess = function(){
@@ -176,12 +187,6 @@ define([
       }      
     }
 
-    MusicPlayer.prototype.connectNodes = function(){
-      this.sourceNode.connect(this.context.destination)
-      this.sourceNode.connect(this.analyser) 
-      this.sourceNode.connect(this.gainNode)     
-    }
-
     MusicPlayer.prototype.addEventListenerToSourceNode = function(){
       // var that = this
       // this.sourceNode.onended = function(){
@@ -194,9 +199,9 @@ define([
       if(maxVolume){
         var fraction = parseInt(volume) / parseInt(maxVolume)
         // x*x curve (x-squared)  value between -1 and 1
-        this.gainNode.gain.value = (fraction * fraction * 2) -1
+        this.gainMusicNode.gain.value = (fraction * fraction * 2) -1
       }else{
-         this.gainNode.gain.value = volume
+         this.gainMusicNode.gain.value = volume
       }
     }
 
@@ -282,7 +287,7 @@ define([
         this.muted = false
         $('.action-toggle-mute').removeClass("active")      
       }else{
-        this.oldVolume = (this.gainNode.gain.value)
+        this.oldVolume = (this.gainMusicNode.gain.value)
         this.changeVolume(-1)
         this.muted = true
         $('.action-toggle-mute').addClass("active")  
@@ -715,6 +720,12 @@ define([
       this.setNewPlaylist(tracks)
     }
 
+    MusicPlayer.prototype.getContext = function(){
+      return this.context;
+    }
+    MusicPlayer.prototype.getAnalizer = function(){
+      return this.analyser;
+    }    
 
 
 // --------------------------------------

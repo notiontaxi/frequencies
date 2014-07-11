@@ -191,11 +191,11 @@ body {
   -o-transition: all 0.2s;
   transition: all 0.2s;
 }
-.effects-container {
+#effects-container {
   margin: 20px 15px 5px 15px;
   min-height: 200px;
 }
-.effects-container .effect-wrapper {
+#effects-container .effect-wrapper {
   background-color: cadetblue;
   width: 95%;
   margin: 5px 0px 5px 0px;
@@ -206,25 +206,28 @@ body {
   -o-border-radius: 3px;
   border-radius: 3px;
 }
-.effects-container .effect-wrapper.microphone {
+#effects-container .effect-wrapper.microphone {
   height: 30px;
 }
-.effects-container .effect-wrapper.sinus {
+#effects-container .effect-wrapper.sinus {
   height: 80px;
 }
-.effects-container .effect-wrapper .header {
+#effects-container .effect-wrapper .header {
   padding: 3px;
   color: lightgrey;
 }
-.effects-container .effect-wrapper .controls .checkbox {
+#effects-container .effect-wrapper .controls .checkbox {
   padding: 3px;
   float: left;
 }
-.effects-container .effect-wrapper .output {
+#effects-container .effect-wrapper .output {
   float: left;
   padding: 3px 3px 3px 22px;
   font-size: 90%;
   color: lightgrey;
+}
+#effects-container .effect-wrapper .output .inner {
+  float: left;
 }
 .playlist-container {
   margin: 5px 15px 5px 15px;
