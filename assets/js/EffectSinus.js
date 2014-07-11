@@ -28,6 +28,7 @@ var EffectSinus, _ref, module,
 
       this.container = $(Effect.CONTAINER).append($(effectTemplate))
       this.initialize()
+      this.mute()
     }
 
 
