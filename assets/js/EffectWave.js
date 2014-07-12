@@ -61,7 +61,7 @@ var EffectWave, _ref, module,
       this.sineWave = this.musicplayer.getContext().createOscillator()
       this.sineWave.frequency.value = 400
 
-      this.sineWave.connect(this.musicplayer.getContext().destination)
+      // this.sineWave.connect(this.musicplayer.getContext().destination)
       this.sineWave.connect(this.musicplayer.getAnalizer())
 
       this.gainNode = this.musicplayer.addGainNode("effect-sinus")
@@ -85,9 +85,15 @@ var EffectWave, _ref, module,
       if(mute){
         this.gainNode.gain.value = -1
         this.sineWave.frequency.value = 24000
+        this.gainNode.disconnect(this.musicplayer.getContext().destination)
+        this.sineWave.disconnect(this.gainNode)
+        this.sineWave.disconnect(this.musicplayer.getAnalizer())
       }else{
         this.gainNode.gain.value = 1
-        this.sineWave.frequency.value = $("#wave-effect-slider")[0].value
+        this.sineWave.frequency.value = $("#wave-effect-slider")[0].value          
+        this.sineWave.connect(this.musicplayer.getAnalizer())
+        this.sineWave.connect(this.gainNode)
+        this.gainNode.connect(this.musicplayer.getContext().destination)
       }    
       this.muted = mute
     }

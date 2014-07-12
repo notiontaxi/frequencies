@@ -28,11 +28,17 @@ var EffectMicrophone, _ref, module,
 
       this.container = $(Effect.CONTAINER).append($(effectTemplate))
       this.initialize()
+      
     }
 
 
     EffectMicrophone.prototype.initView = function(){
-      
+      var that = this
+
+      $("#microphone-effect-toggle").on("change", function(event){
+          that.mute(!event.target.checked)
+          that.updateOutput()
+        })
     }
 
     EffectMicrophone.prototype.updateOutput = function(){
@@ -56,13 +62,24 @@ var EffectMicrophone, _ref, module,
 
     EffectMicrophone.prototype.connectMicrophone = function(stream){
       this.microphone = this.musicplayer.getContext().createMediaStreamSource(stream);
+
       this.gainNode = this.musicplayer.addGainNode("effect-microphone")
+
       this.microphone.connect(this.gainNode)
-      // this.gainNode.connect(this.musicplayer.getContext().destination)
-      // this.gainNode.connect(this.musicplayer.getAnalizer())
+
+      this.gainNode.connect(this.musicplayer.getAnalizer())
+      window.test = this.gainNode
+      this.mute(true)
     }  
 
-
+    EffectMicrophone.prototype.mute = function(mute){
+      if(mute){
+        this.gainNode.disconnect(this.musicplayer.getAnalizer())
+      }else{
+        this.gainNode.connect(this.musicplayer.getAnalizer())
+      }    
+      this.muted = mute
+    }
 
 // --------------------------------------
     return EffectMicrophone
