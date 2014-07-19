@@ -199,7 +199,7 @@ define([
       if(maxVolume){
         var fraction = parseInt(volume) / parseInt(maxVolume)
         // x*x curve (x-squared)  value between -1 and 1
-        this.gainMusicNode.gain.value = (fraction * fraction ) 
+        this.gainMusicNode.gain.value = (fraction * fraction )*2 -1 
       }else{
          this.gainMusicNode.gain.value = volume
       }
@@ -219,8 +219,11 @@ define([
       SCHEDULED_STATE: 1
       UNSCHEDULED_STATE: 0
       */
-      if(this.sourceNode.playbackState == this.sourceNode.PLAYING_STATE)
+      // playbackstate was removed
+      // if(this.sourceNode.playbackState == this.sourceNode.PLAYING_STATE)
+      try{
         this.sourceNode.stop(0)
+      }catch(error){} 
 
       // create new sourcenode and link to existing buffer
       this.sourceNode = this.context.createBufferSource()
@@ -288,7 +291,7 @@ define([
         $('.action-toggle-mute').removeClass("active")      
       }else{
         this.oldVolume = (this.gainMusicNode.gain.value)
-        this.changeVolume(0)
+        this.changeVolume(-1)
         this.muted = true
         $('.action-toggle-mute').addClass("active")  
       }
@@ -338,9 +341,10 @@ define([
       request.open('GET', track.src, true)
       request.responseType = 'arraybuffer'
       
-      if(this.sourceNode.playbackState !== this.sourceNode.UNSCHEDULED_STATE){
+      // if(this.sourceNode.playbackState !== this.sourceNode.UNSCHEDULED_STATE){
+      try{
         this.sourceNode.stop(0)
-      }      
+      }catch(error){}      
 
       var that = this
       // When loaded decode the data
@@ -353,20 +357,21 @@ define([
             that.buffer = buffer
             that.sourceNode.buffer = that.buffer
             console.log("filled buffer")
+            console.log(that.sourceNode)
             // check playing state and start playing if not playing
-            if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE){
+            // if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE){
               that.playAction()
-            }
+            // }
             $("#overlay").hide()
 
           }, function(err){console.log(err)})                
         } catch(e) {
-            console.log('Decoding failed: '+e.message);
+          console.log('Decoding failed: '+e.message);
         }
 
       }
       request.send()
-    }   
+    }
 
     MusicPlayer.prototype.previousTrack = function(){
       var id = 0
