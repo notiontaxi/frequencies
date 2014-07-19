@@ -8,13 +8,15 @@ https://github.com/frequencies
 define([
   'js/test/Test',
   'js/MusicPlayer',
-  'js/Visualization',
+  'js/PlaneVisualization',
+  'js/ShaderVisualization',
   'js/Effects', 
   'js/GUI'
   ], function(
     Test,
     MusicPlayer,
-    Visualization,
+    PlaneVisualization,
+    ShaderVisualization,
     Effects,
     GUI 
   ) {
@@ -33,7 +35,7 @@ var Frequencies, _ref, module,
       this.gui = new GUI(containerIdentifier)
       this.musicPlayer = new MusicPlayer()
       this.effects = new Effects(this.musicPlayer)
-      this.visualization = new Visualization(containerIdentifier, this.musicPlayer, this.effects)
+      this.visualization = new ShaderVisualization(containerIdentifier, this.musicPlayer, this.effects)
 
       this.initialize()
       

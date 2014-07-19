@@ -357,7 +357,7 @@ define([
             that.buffer = buffer
             that.sourceNode.buffer = that.buffer
             console.log("filled buffer")
-            console.log(that.sourceNode)
+            
             // check playing state and start playing if not playing
             // if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE){
               that.playAction()

@@ -12,6 +12,8 @@
       baseUrl: 'assets/lib',
       paths: {
             templates: '../templates'
+          , fragmentShader: '../shader/fragment'
+          , vertexShader: '../shader/vertex'
           , js: '../js'
           , home: '../'
           , lib: '.'
