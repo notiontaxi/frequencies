@@ -10,13 +10,17 @@ define([
     'text!templates/music-player.html',
     'text!templates/playlist.html',
     'text!templates/track-info.html',
-    'text!templates/visualization-background.html',  
+    'text!templates/visualization-background.html', 
+    'text!templates/visualization-selection.html',
+    'text!templates/canvas.html',
   ], function(
     effectList,
     musicPlayer,
     playlist,
     trackinfo,
-    visualization
+    visualization,
+    visuSelection,
+    canvasContainer
   ) {
 
 var GUI, _ref, module,
@@ -36,6 +40,8 @@ var GUI, _ref, module,
       $(containerIdentifier).append($(visualization))
       $(containerIdentifier).append($(musicPlayer))
       $(containerIdentifier).append($(trackinfo))
+      $(containerIdentifier).append($(visuSelection))
+      $(containerIdentifier).append($(canvasContainer))
       
       this.initialize()
     }

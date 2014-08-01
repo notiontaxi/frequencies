@@ -120,16 +120,35 @@ body {
 
 }
 
+#visu-select-wrapper{
+  position: fixed;
+  z-index: 999;
+  top: 24px;
+  height: @trackInfoHeight;
+  left:37%;
+  width:100%;
+
+}
+
+#visu-select{
+  width:95px;
+  width: 27%;
+  background-color: @darkBlue;
+  color: white;  
+  height: 25px;
+  font-size: 90%;
+}
+
 #track-info{
   overflow: hidden;
   width:100%;
   position: fixed;
   z-index: 999;
-  top: 0px;
+  top: 2px;
   height: @trackInfoHeight;
   text-align: center;
-  left:27%;
-  width:46%;
+  left:37%;
+  width:27%;
 
   .rounded-corners-bottom();
   color: white;

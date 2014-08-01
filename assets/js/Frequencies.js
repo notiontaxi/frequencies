@@ -8,6 +8,7 @@ https://github.com/frequencies
 define([
   'js/test/Test',
   'js/MusicPlayer',
+  'js/Visualization',
   'js/PlaneVisualization',
   'js/ShaderVisualization',
   'js/Effects', 
@@ -15,10 +16,11 @@ define([
   ], function(
     Test,
     MusicPlayer,
+    Visualization,
     PlaneVisualization,
     ShaderVisualization,
     Effects,
-    GUI 
+    GUI
   ) {
 
 var Frequencies, _ref, module,
@@ -32,19 +34,58 @@ var Frequencies, _ref, module,
 
     function Frequencies(containerIdentifier){   
 
+      this.containerIdentifier = containerIdentifier
       this.gui = new GUI(containerIdentifier)
       this.musicPlayer = new MusicPlayer()
       this.effects = new Effects(this.musicPlayer)
-      this.visualization = new ShaderVisualization(containerIdentifier, this.musicPlayer, this.effects)
+      this.visualization = new PlaneVisualization(containerIdentifier, this.musicPlayer, this.effects)
 
       this.initialize()
       
     }
 
     Frequencies.prototype.initialize = function(){
-
-      this.initializeVisualizationWorker()
+      this.initSelectionTool()
+      // this.initializeVisualizationWorker()
     }
+
+    Frequencies.prototype.initSelectionTool = function(){
+
+      var select = $("#visu-select");
+
+      var option = document.createElement('option')
+      option.innerHTML = "Visualization: Plane"
+      option.value = 0
+      select.append(option)
+
+      var option = document.createElement('option')
+      option.innerHTML = "Visualization: Magic"
+      option.value = 1
+      select.append(option)    
+
+
+      var that = this
+      select.change(function(e){
+        that.changeVisualization(this.selectedIndex)
+      })  
+
+
+    }
+
+    Frequencies.prototype.changeVisualization = function(index){
+      console.log("index: "+index)
+      switch(index){
+        case 0:
+            this.visualization.stop()
+            this.visualization = new PlaneVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
+            break
+        case 1: 
+            this.visualization.stop()
+            this.visualization = new ShaderVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
+            break
+      }
+
+    }    
 
     Frequencies.prototype.initializeVisualizationWorker = function(){
       var that = this

@@ -70,16 +70,32 @@ body {
   margin: 4px;
   color: cyan;
 }
+#visu-select-wrapper {
+  position: fixed;
+  z-index: 999;
+  top: 24px;
+  height: 20px;
+  left: 37%;
+  width: 100%;
+}
+#visu-select {
+  width: 95px;
+  width: 27%;
+  background-color: #00355f;
+  color: white;
+  height: 25px;
+  font-size: 90%;
+}
 #track-info {
   overflow: hidden;
   width: 100%;
   position: fixed;
   z-index: 999;
-  top: 0px;
+  top: 2px;
   height: 20px;
   text-align: center;
-  left: 27%;
-  width: 46%;
+  left: 37%;
+  width: 27%;
   -webkit-border-bottom-right-radius: 5px;
   -webkit-border-bottom-left-radius: 5px;
   -moz-border-radius-bottomright: 5px;

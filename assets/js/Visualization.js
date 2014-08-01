@@ -6,11 +6,9 @@ https://github.com/frequencies
 "use strict"
 
 define([
-    'text!templates/canvas.html',
     'assets/lib/three.min.js',
-    'assets/lib/improvedNoise.js',
+    'assets/lib/improvedNoise.js',  
   ], function(
-    canvasContainer
   ) {
 
 var Visualization, _ref, module,
@@ -26,9 +24,9 @@ var Visualization, _ref, module,
 
       this.musicPlayer = musicPlayer
       this.effects = effects
-
-      this.container = $(containerIdentifier).append($(canvasContainer))
+      this.container = $("#canvas-live-container")
     }
+
 
     Visualization.prototype.activateResizeListener = function(){
       window.addEventListener( 'resize', function(){this.callResize();}.bind(this), false );
@@ -50,8 +48,8 @@ var Visualization, _ref, module,
 
     Visualization.prototype.start = function(){
       var that = this 
-      setInterval(function() {
-        requestAnimationFrame(function(){that.renderScene()})
+      this.intervalId = setInterval(function() {
+        that.aniamationId = requestAnimationFrame(function(){that.renderScene()})
       }, 25);       
     }
 
@@ -81,6 +79,15 @@ var Visualization, _ref, module,
         this.renderer.render(this.scene, this.camera)        
       }
       
+    }
+
+    Visualization.prototype.stop = function(){
+      console.log("stop")
+      cancelAnimationFrame(this.animationId)
+      clearInterval(this.intervalId)
+      this.renderer.domElement.addEventListener('dblclick', null, false)
+      $("#the-canvas").remove()
+      // this.scene = this.projector = this.camera = null
     }
 
   

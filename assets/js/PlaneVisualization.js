@@ -45,7 +45,8 @@ var PlaneVisualization, _ref, module,
       this.renderer = new THREE.WebGLRenderer(rendererOptions)
       this.renderer.setSize(window.innerWidth, window.innerHeight)
 
-      this.canvas = this.renderer.domElement;
+      this.canvas = this.renderer.domElement
+      this.canvas.id = "the-canvas"
       this.container.append($(this.canvas))
     }
 
