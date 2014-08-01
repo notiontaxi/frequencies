@@ -42,6 +42,7 @@ var ShaderVisualization, _ref, module,
 
     ShaderVisualization.prototype.initUniforms = function(){
       this.uniforms = {
+        volume: { type: "f", value: this.musicPlayer.getVolume() },
         time: { type: "f", value: 1.0 },
         resolution: { type: "v2", value: new THREE.Vector2() }
       }
@@ -90,7 +91,6 @@ var ShaderVisualization, _ref, module,
           uniforms: this.uniforms,
           vertexShader: vertexShader,
           fragmentShader: fragmentShader
-
         } );
 
         var mesh = new THREE.Mesh( this.geometry, material );
@@ -98,7 +98,8 @@ var ShaderVisualization, _ref, module,
     }
        
     ShaderVisualization.prototype.updateScene = function(){
-      this.uniforms.time.value += 0.05;
+      this.uniforms.time.value += 0.05
+      this.uniforms.volume.value = this.musicPlayer.getVolume()
     }   
 
 

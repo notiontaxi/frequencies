@@ -357,7 +357,7 @@ define([
             that.buffer = buffer
             that.sourceNode.buffer = that.buffer
             console.log("filled buffer")
-            
+
             // check playing state and start playing if not playing
             // if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE){
               that.playAction()
@@ -726,11 +726,14 @@ define([
     }
 
     MusicPlayer.prototype.getContext = function(){
-      return this.context;
+      return this.context
     }
     MusicPlayer.prototype.getAnalizer = function(){
-      return this.analyser;
-    }         
+      return this.analyser
+    } 
+    MusicPlayer.prototype.getVolume = function(){
+      return this.gainMusicNode.gain.value
+    }        
 
 
 // --------------------------------------

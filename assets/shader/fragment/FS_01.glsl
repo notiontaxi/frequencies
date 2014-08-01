@@ -1,5 +1,6 @@
 uniform vec2 resolution;
 uniform float time;
+uniform float volume;
 
 void main()	{
 
@@ -25,7 +26,7 @@ void main()	{
 	d=r/350.0;
 	d+=sin(d*d*8.0)*0.52;
 	f=(sin(a*g)+1.0)/2.0;
-	gl_FragColor=vec4(vec3(f*i/1.6,i/2.0+d/13.0,i)*d*p.x+vec3(i/1.3+d/8.0,i/2.0+d/18.0,i)*d*(1.0-p.x),1.0);
+	gl_FragColor=vec4(vec3(f*i/1.6,i/2.0+d/13.0,i)*d*p.x+vec3(i/1.3+d/8.0,i/2.0+d/18.0,i)*d*(volume-p.x),1.0);
 //gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
 }
 
