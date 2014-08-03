@@ -733,7 +733,21 @@ define([
     } 
     MusicPlayer.prototype.getVolume = function(){
       return this.gainMusicNode.gain.value
-    }        
+    }  
+    MusicPlayer.prototype.getLoudness = function(){
+      var array = new Uint8Array(this.analyser.frequencyBinCount)
+      this.analyser.getByteFrequencyData(array)
+
+      var average = 0
+
+      for(var i=0; i < array.length; i++) {
+          average += parseFloat(array[i])
+      }
+
+      var average = average/array.length
+
+      return average
+    }      
 
 
 // --------------------------------------

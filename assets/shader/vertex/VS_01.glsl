@@ -179,6 +179,7 @@ float pnoise(vec3 P, vec3 rep)
 }
 
 // code from: http://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js
+// edited by notiontaxi
 // Include the Ashima code here!
  
 varying vec2 vUv;

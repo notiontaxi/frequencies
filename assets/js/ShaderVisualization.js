@@ -46,7 +46,8 @@ var ShaderVisualization, _ref, module,
       this.uniforms = {
         volume: { type: "f", value: this.musicPlayer.getVolume() },
         time: { type: "f", value: 1.0 },
-        resolution: { type: "v2", value: new THREE.Vector2() }
+        resolution: { type: "v2", value: new THREE.Vector2() },
+        loudness: {type: "f", value: this.musicPlayer.getLoudness()}
       }
 
       this.uniforms.resolution.value.x = window.innerWidth
@@ -107,6 +108,7 @@ var ShaderVisualization, _ref, module,
     ShaderVisualization.prototype.updateScene = function(){
       // this.uniforms.time.value += 0.05
       this.uniforms.volume.value = this.musicPlayer.getVolume()
+      this.uniforms.loudness.value = this.musicPlayer.getLoudness()
 
       this.material.uniforms[ 'time' ].value = .00025 * ( Date.now() - this.startTime );
     }   
