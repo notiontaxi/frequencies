@@ -20,6 +20,7 @@ body {
   background-color: #41978e;
   opacity: .7;
   position: absolute;
+  top: 0px;
   z-index: 1000;
   width: 100%;
   height: 100%;

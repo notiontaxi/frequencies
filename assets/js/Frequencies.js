@@ -38,7 +38,7 @@ var Frequencies, _ref, module,
       this.gui = new GUI(containerIdentifier)
       this.musicPlayer = new MusicPlayer()
       this.effects = new Effects(this.musicPlayer)
-      this.visualization = new PlaneVisualization(containerIdentifier, this.musicPlayer, this.effects)
+      this.visualization = new ShaderVisualization(containerIdentifier, this.musicPlayer, this.effects)
 
       this.initialize()
       
@@ -54,12 +54,12 @@ var Frequencies, _ref, module,
       var select = $("#visu-select");
 
       var option = document.createElement('option')
-      option.innerHTML = "Visualization: Plane"
+      option.innerHTML = "Visualization: Shader"
       option.value = 0
       select.append(option)
 
       var option = document.createElement('option')
-      option.innerHTML = "Visualization: Magic"
+      option.innerHTML = "Visualization: Plane"
       option.value = 1
       select.append(option)    
 
@@ -77,11 +77,11 @@ var Frequencies, _ref, module,
       switch(index){
         case 0:
             this.visualization.stop()
-            this.visualization = new PlaneVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
+            this.visualization = new ShaderVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
             break
         case 1: 
             this.visualization.stop()
-            this.visualization = new ShaderVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
+            this.visualization = new PlaneVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
             break
       }
 

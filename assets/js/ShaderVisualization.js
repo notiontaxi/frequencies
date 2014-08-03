@@ -27,6 +27,8 @@ var ShaderVisualization, _ref, module,
     function ShaderVisualization(containerIdentifier, musicPlayer, effects){ 
       ShaderVisualization.__super__.constructor(containerIdentifier, musicPlayer, effects)
 
+      this.startTime = Date.now()
+
       this.initUniforms()
       this.initialize()
       this.activateResizeListener()
@@ -73,9 +75,9 @@ var ShaderVisualization, _ref, module,
 
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(
-          70 // angle
+          30 // angle
         , window.innerWidth / window.innerHeight // ratio
-        , 10 // near plane
+        , 1// near plane
         , 1000 // far plane
         )
       this.camera.position.z = 100
@@ -85,21 +87,28 @@ var ShaderVisualization, _ref, module,
 
     ShaderVisualization.prototype.addSceneObjects = function(){
 
-        this.geometry = new THREE.PlaneGeometry( 2, 2 );
+        // this.geometry = new THREE.PlaneGeometry( 2, 2 );
 
-        var material = new THREE.ShaderMaterial( {
+        this.material = new THREE.ShaderMaterial( {
           uniforms: this.uniforms,
           vertexShader: vertexShader,
           fragmentShader: fragmentShader
         } );
 
-        var mesh = new THREE.Mesh( this.geometry, material );
-        this.scene.add( mesh );      
+        var mesh = new THREE.Mesh( 
+           // radius, detail
+            new THREE.IcosahedronGeometry( 15, 4 ), 
+            this.material 
+        );
+        this.scene.add( mesh )
+
     }
        
     ShaderVisualization.prototype.updateScene = function(){
-      this.uniforms.time.value += 0.05
+      // this.uniforms.time.value += 0.05
       this.uniforms.volume.value = this.musicPlayer.getVolume()
+
+      this.material.uniforms[ 'time' ].value = .00025 * ( Date.now() - this.startTime );
     }   
 
 
