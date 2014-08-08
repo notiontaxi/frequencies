@@ -734,19 +734,30 @@ define([
     MusicPlayer.prototype.getVolume = function(){
       return this.gainMusicNode.gain.value
     }  
-    MusicPlayer.prototype.getLoudness = function(){
+    MusicPlayer.prototype.getLoudnesses = function(){
       var array = new Uint8Array(this.analyser.frequencyBinCount)
       this.analyser.getByteFrequencyData(array)
-
-      var average = 0
+      var frequencies = Array()
+      var average = 0,
+          base = 0,
+          baseAmount = 0
 
       for(var i=0; i < array.length; i++) {
-          average += parseFloat(array[i])
+          frequencies[i] = 1
+          average += array[i]
+          if(i < 3){
+            base += array[i] > 1.0 ? array[i] : 1.0
+            baseAmount++
+          }
       }
 
-      var average = average/array.length
+      var loudnesses = {
+          total: average/array.length
+        , base: base/baseAmount
+        , frequencies: frequencies
+      }
 
-      return average
+      return loudnesses
     }      
 
 
