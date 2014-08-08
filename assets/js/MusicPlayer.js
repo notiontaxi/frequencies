@@ -743,7 +743,7 @@ define([
           baseAmount = 0
 
       for(var i=0; i < array.length; i++) {
-          frequencies[i] = 1
+          frequencies[i] = -array[i]
           average += array[i]
           if(i < 3){
             base += array[i] > 1.0 ? array[i] : 1.0

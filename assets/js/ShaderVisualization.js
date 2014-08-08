@@ -69,7 +69,7 @@ var ShaderVisualization, _ref, module,
         resolution: { type: "v2", value: new THREE.Vector2() },
         loudness: {type: "f", value: l.total},
         baseLoudness: {type: "f", value: l.batotalse},
-        frequencies: {type: "fv1", value: l.frequencies}
+        frequencies: {type: "iv1", value: l.frequencies}
       }
 
       this.uniforms.resolution.value.x = window.innerWidth
