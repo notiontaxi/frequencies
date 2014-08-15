@@ -51,7 +51,7 @@ define([
 
     MusicPlayer.prototype.initialize = function(){
       this.createAudioContext()
-      this.loadDefaultTracks()
+      // this.loadDefaultTracks()
       this.initAudioNodes()
       this.initRendering()
     }
