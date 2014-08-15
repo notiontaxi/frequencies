@@ -11,6 +11,7 @@ define([
   'js/Visualization',
   'js/PlaneVisualization',
   'js/ShaderVisualization',
+  'js/ShaderVisualizationSimple',
   'js/Effects', 
   'js/GUI'
   ], function(
@@ -19,6 +20,7 @@ define([
     Visualization,
     PlaneVisualization,
     ShaderVisualization,
+    ShaderVisualizationSimple,
     Effects,
     GUI
   ) {
@@ -38,7 +40,7 @@ var Frequencies, _ref, module,
       this.gui = new GUI(containerIdentifier)
       this.musicPlayer = new MusicPlayer()
       this.effects = new Effects(this.musicPlayer)
-      this.visualization = new ShaderVisualization(containerIdentifier, this.musicPlayer, this.effects)
+      this.visualization = new ShaderVisualizationSimple(containerIdentifier, this.musicPlayer, this.effects)
 
       this.initialize()
       
@@ -63,6 +65,10 @@ var Frequencies, _ref, module,
       option.value = 1
       select.append(option)    
 
+      var option = document.createElement('option')
+      option.innerHTML = "Visualization: Shader with noise"
+      option.value = 2
+      select.append(option)    
 
       var that = this
       select.change(function(e){
@@ -77,11 +83,15 @@ var Frequencies, _ref, module,
       switch(index){
         case 0:
             this.visualization.stop()
-            this.visualization = new ShaderVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
+            this.visualization = new ShaderVisualizationSimple(this.containerIdentifier, this.musicPlayer, this.effects)
             break
         case 1: 
             this.visualization.stop()
             this.visualization = new PlaneVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
+            break
+        case 2: 
+            this.visualization.stop()
+            this.visualization = new ShaderVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
             break
       }
 

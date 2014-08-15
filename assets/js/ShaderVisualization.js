@@ -134,16 +134,8 @@ var ShaderVisualization, _ref, module,
 
       var l = this.musicPlayer.getLoudnesses();
 
-      this.uniforms.loudness.value = l.total/10
-
-      var newBaseVal = l.base - 205
-      newBaseVal = newBaseVal < 1.0 ? 1.0 : newBaseVal/5.0
-      newBaseVal = newBaseVal > 10.0 ? 10.0 : newBaseVal
-
-      // console.log(newBaseVal)
-
-      this.uniforms.baseLoudness.value = newBaseVal/2.0
-      this.uniforms.loudness.value = l.total/20.0
+      this.uniforms.baseLoudness.value = l.base
+      this.uniforms.loudness.value = l.total
       this.uniforms.frequencies.value = l.frequencies
 
       this.uniforms.time.value = .00025 * ( Date.now() - this.startTime );

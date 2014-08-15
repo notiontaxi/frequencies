@@ -738,13 +738,17 @@ define([
       var array = new Uint8Array(this.analyser.frequencyBinCount)
       this.analyser.getByteFrequencyData(array)
       var frequencies = Array()
-      var average = 0,
+      var sum = 0,
           base = 0,
           baseAmount = 0
 
+      // Values of analyser array are betwen -30 and -100 
+      // console.log(this.analyser.minDecibels)
+      // console.log(this.analyser.maxDecibels) 
+
       for(var i=0; i < array.length; i++) {
           frequencies[i] = -array[i]
-          average += array[i]
+          sum += array[i]
           if(i < 3){
             base += array[i] > 1.0 ? array[i] : 1.0
             baseAmount++
@@ -752,8 +756,8 @@ define([
       }
 
       var loudnesses = {
-          total: average/array.length
-        , base: base/baseAmount
+          total: sum/array.length/255.0 // value between 0.0 and 1.0
+        , base: base/baseAmount/255.0
         , frequencies: frequencies
       }
 

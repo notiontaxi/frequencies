@@ -204,8 +204,8 @@ void main() {
 
   vUv = uv;
 
-  noise = loudness *  -.10 * turbulence( .5 * normal + time );
-  float b = baseLoudness * pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( 100.0 ) );
+  noise = (1.+3.*loudness) *  -.10 * turbulence( .5 * normal + time );
+  float b =  pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( 100.0 ) );
   float displacement = - 10. * noise + b;
   
   vec3 newPosition = position + normal * displacement;
