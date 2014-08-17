@@ -5,6 +5,7 @@
     return ('ontouchstart' in window) || ('onmsgesturechange' in window) // IE10
   }
   window.isTouchDevice = testIfTouchDevice()
+  window.uniformAmount = window.isTouchDevice ? 128 : 256
 
 
 // DEP MANAGEMENT

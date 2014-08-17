@@ -129,9 +129,6 @@ var ShaderVisualization, _ref, module,
        
     ShaderVisualization.prototype.updateScene = function(){
 
-      // this.uniforms.time.value += 0.05
-      this.uniforms.volume.value = this.musicPlayer.getVolume()
-
       var l = this.musicPlayer.getLoudnesses();
 
       this.uniforms.baseLoudness.value = l.base

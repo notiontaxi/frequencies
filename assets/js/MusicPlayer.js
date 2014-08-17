@@ -44,6 +44,8 @@ define([
 
       this.pausedAt = this.startedAt = 0
 
+      this.frequenciesAmount = window.uniformAmount
+
       this.initialize()
       this.addEventListeners()
       this.addPlaylistListeners()
@@ -127,7 +129,7 @@ define([
         // Is a double value representing the averaging constant with the last analysis frame.
         this.analyser.smoothingTimeConstant = 0.8
         // Is an unsigned long value representing the size of the Fast Fourier Transform to be used to determine the frequency domain.
-        this.analyser.fftSize = 256
+        this.analyser.fftSize = this.frequenciesAmount*2
 
         // create a buffer source node
         this.sourceNode = this.context.createBufferSource()
@@ -744,12 +746,10 @@ define([
           base = 0,
           baseAmount = 0
 
-      // Values of analyser array are betwen -30 and -100 
-      // console.log(this.analyser.minDecibels)
-      // console.log(this.analyser.maxDecibels) 
+      // Values of analyser array are betwen 0 and 255 
 
       for(var i=0; i < array.length; i++) {
-          frequencies[i] = parseFloat(array[i])/256.0
+          frequencies[i] = parseFloat(array[i])/255.0
           sum += array[i]
           if(i < 3){
             base += array[i] > 1.0 ? array[i] : 1.0

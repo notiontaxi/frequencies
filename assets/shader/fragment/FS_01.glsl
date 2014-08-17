@@ -1,7 +1,7 @@
 // code from http://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js
 varying vec2 vUv;
 uniform float loudness;
-uniform float frequencies[128];
+uniform float frequencies[256];
 int pos;
 
 float random( vec3 scale, float seed ){
@@ -11,9 +11,9 @@ float random( vec3 scale, float seed ){
 void main() {
     vec3 color;
 
-    int i = int(vUv.y * 128.) -5;
+    int i = int(vUv.y * 256.) -15;
     if(i >= 0){
-      for (int x = 0; x < 128; x++) {
+      for (int x = 0; x < 256; x++) {
           if (x == i){ 
                 color = vec3(  vUv * (.3 + frequencies[x]) , loudness );
           }

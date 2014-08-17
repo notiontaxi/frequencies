@@ -65,11 +65,13 @@ var Frequencies, _ref, module,
       option.value = 1
       select.append(option)    
 
-      var option = document.createElement('option')
-      option.innerHTML = "Visualization: Shader with noise"
-      option.value = 2
-      select.append(option)    
-
+      if(!window.isTouchDevice){
+        var option = document.createElement('option')
+        option.innerHTML = "Visualization: Shader with noise"
+        option.value = 2
+        select.append(option)    
+      }
+      
       var that = this
       select.change(function(e){
         that.changeVisualization(this.selectedIndex)

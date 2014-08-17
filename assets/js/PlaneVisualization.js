@@ -23,7 +23,7 @@ var PlaneVisualization, _ref, module,
     function PlaneVisualization(containerIdentifier, musicPlayer, effects){ 
       PlaneVisualization.__super__.constructor(containerIdentifier, musicPlayer, effects)
 
-      this.size = 128;
+      this.size = window.uniformAmount
 
       this.initialize()
       this.activateResizeListener()

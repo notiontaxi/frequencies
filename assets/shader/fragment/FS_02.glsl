@@ -5,7 +5,7 @@ uniform float frequencies[128];
 void main() {
     vec3 color;
 
-    int i = int(vUv.y * 128.) -5;
+    int i = int(vUv.y * 128.) ;
     if(i >= 0){
       for (int x = 0; x < 128; x++) {
           if (x == i){ 

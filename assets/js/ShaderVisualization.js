@@ -59,8 +59,6 @@ var ShaderVisualization, _ref, module,
 
     ShaderVisualization.prototype.initUniforms = function(){
 
-      this.testArray = Array(1.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.0);
-
       var l = this.musicPlayer.getLoudnesses();
 
       this.uniforms = {
@@ -120,7 +118,7 @@ var ShaderVisualization, _ref, module,
 
         var mesh = new THREE.Mesh( 
            // radius, detail
-            new THREE.IcosahedronGeometry( 15, 3 ), 
+            new THREE.IcosahedronGeometry( 15, 4 ), 
             this.material 
         );
         this.scene.add( mesh )
