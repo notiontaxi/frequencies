@@ -227,7 +227,10 @@ body {
   height: 30px;
 }
 #effects-container .effect-wrapper.wave {
-  height: 90px;
+  height: 50px;
+}
+#effects-container .effect-wrapper.equalizer {
+  height: 110px;
 }
 #effects-container .effect-wrapper .header {
   padding: 3px;
