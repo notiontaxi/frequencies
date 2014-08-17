@@ -183,11 +183,9 @@ float pnoise(vec3 P, vec3 rep)
 // Include the Ashima code here!
  
 varying vec2 vUv;
-varying float noise;
+float noise;
 uniform float time;
 uniform float loudness;
-uniform float baseLoudness;
-uniform int frequencies[512];
 
 
 float turbulence( vec3 p ) {

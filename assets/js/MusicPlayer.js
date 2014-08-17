@@ -127,7 +127,7 @@ define([
         // Is a double value representing the averaging constant with the last analysis frame.
         this.analyser.smoothingTimeConstant = 0.8
         // Is an unsigned long value representing the size of the Fast Fourier Transform to be used to determine the frequency domain.
-        this.analyser.fftSize = 1024
+        this.analyser.fftSize = 256
 
         // create a buffer source node
         this.sourceNode = this.context.createBufferSource()
@@ -542,11 +542,13 @@ define([
 
       for(var i = 0; i < files.length; i++){
         var file = files[i]
-        var extension = file.name.split(".")[1]
-        
-        var extest = extension.toLowerCase()
-        if(extest == "ogg" || extest == "mp3" || extest == "wav"){
+        console.log(file)
+        var parts = file.name.split(".")
+        var extension = parts.lengts > 1 ? parts[1].toLowerCase() : 'unknown'
+
+        if(extension == "ogg" || extension == "mp3" || extension == "unknown"){
           var name = file.name.split(".")[0]
+          console.log(name)
           var src = URL.createObjectURL(file)
           that.addTrack(src, "unknown", name, extension, name, 0)
         }
@@ -747,7 +749,7 @@ define([
       // console.log(this.analyser.maxDecibels) 
 
       for(var i=0; i < array.length; i++) {
-          frequencies[i] = -array[i]
+          frequencies[i] = parseFloat(array[i])/256.0
           sum += array[i]
           if(i < 3){
             base += array[i] > 1.0 ? array[i] : 1.0

@@ -1,16 +1,16 @@
 varying vec2 vUv;
 uniform float loudness;
-uniform int frequencies[512];
-
+uniform float frequencies[128];
 
 void main() {
     vec3 color;
 
-    int i = int(vUv.y * 512.) -40;
+    int i = int(vUv.y * 128.) -5;
     if(i >= 0){
-      for (int x = 0; x < 512; x++) {
+      for (int x = 0; x < 128; x++) {
           if (x == i){ 
-                color = vec3(  vUv * ( 1. - float(frequencies[x])/300.) , loudness );
+                color = vec3(  vUv * (.3 + frequencies[x]) , loudness );
+                //color = vec3(  vUv  , 0.0 );
           }
       }
       gl_FragColor = vec4( color.rgb, 1.0 ); 

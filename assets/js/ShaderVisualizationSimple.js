@@ -65,11 +65,11 @@ var ShaderVisualization, _ref, module,
 
       this.uniforms = {
         volume: { type: "f", value: this.musicPlayer.getVolume() },
-        time: { type: "f", value: 1.0 },
+        arraySize: { type: "i", value: 128 },
         resolution: { type: "v2", value: new THREE.Vector2() },
         loudness: {type: "f", value: l.total},
         baseLoudness: {type: "f", value: l.batotalse},
-        frequencies: {type: "iv1", value: l.frequencies}
+        frequencies: {type: "fv1", value: l.frequencies}
       }
 
       this.uniforms.resolution.value.x = window.innerWidth
@@ -137,8 +137,6 @@ var ShaderVisualization, _ref, module,
       this.uniforms.baseLoudness.value = l.base
       this.uniforms.loudness.value = l.total
       this.uniforms.frequencies.value = l.frequencies
-
-      this.uniforms.time.value = .00025 * ( Date.now() - this.startTime );
     }   
 
 

@@ -23,6 +23,8 @@ var PlaneVisualization, _ref, module,
     function PlaneVisualization(containerIdentifier, musicPlayer, effects){ 
       PlaneVisualization.__super__.constructor(containerIdentifier, musicPlayer, effects)
 
+      this.size = 128;
+
       this.initialize()
       this.activateResizeListener()
       this.start()  
@@ -68,7 +70,7 @@ var PlaneVisualization, _ref, module,
 
       var material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading, wireframe: true})
 
-      this.geometry = new THREE.PlaneGeometry(80,100, 512, 25)
+      this.geometry = new THREE.PlaneGeometry(80,100, this.size, 25)
       this.mesh = new THREE.Mesh(this.geometry, material);
       this.mesh.rotation.x -= 1.3
 
@@ -86,7 +88,7 @@ var PlaneVisualization, _ref, module,
         var width = this.musicPlayer.frequencies.length -1
         var length = 25
 
-        var width = 512
+        var width = this.size
         // place values
         for(i = 0; i < length; i++){
           for(j = 0; j < width; j++){
