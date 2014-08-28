@@ -1,26 +1,38 @@
 <div class="effect-wrapper equalizer">
     <div class="header">
       <input id="equalizer-effect-toggle" class="checkbox" name="effect-wave" value="0" type="checkbox">
-      activate equalizer     
+      activate equalizer
+      <input id="equalizer-bass-toggle" class="checkbox" name="effect-bass" value="0" type="checkbox">
+      bass boost            
     </div>
     <div class="controls">
 
 
-      <input id="eq-slider-00" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>
+      <input id="eq-slider-00" nr="0" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>
       <div class="output">
         <div id="qu-00" class="inner">low</div>
       </div>
 
-
-      <input id="eq-slider-01" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>
+      <input id="eq-slider-01" nr="1" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>
       <div class="output">
         <div id="qu-01" class="inner">mid</div>
       </div>
 
-      <input id="eq-slider-02" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>  
+      <input id="eq-slider-02" nr="2" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>  
       <div class="output">
         <div id="eq-02" class="inner">high</div>
       </div>
 
-    </div>     
+      <input id="eq-slider-03" nr="3" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>  
+      <div class="output">
+        <div id="eq-03" class="inner">high</div>
+      </div>
+
+      <input id="eq-slider-04" nr="4" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>  
+      <div class="output">
+        <div id="eq-04" class="inner">high</div>
+      </div>            
+
+    </div>  
+
 </div>

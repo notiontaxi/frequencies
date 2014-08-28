@@ -8,13 +8,11 @@ https://github.com/frequencies
 define([
     'text!templates/effects.html',
     'assets/js/EffectWave.js',
-    'assets/js/EffectMicrophone.js',
-    'assets/js/EffectEqualizer.js',
+    'assets/js/EffectMicrophone.js'
   ], function(
       effectsTemplate,
       EffectWave,
-      EffectMicrophone,
-      EffectEqualizer
+      EffectMicrophone
   ) {
 
 var Effects, _ref, module,
@@ -30,7 +28,7 @@ var Effects, _ref, module,
       this.musicplayer = musicplayer
       this.active = true
 
-      this.container = $("#panel-right .content").append($(effectsTemplate))
+      // this.container = $("#panel-right .content").append($(effectsTemplate))
       this.initialize()
 
     }
@@ -38,7 +36,6 @@ var Effects, _ref, module,
     Effects.prototype.initialize = function(){
       this.effectWave = new EffectWave(this.musicplayer)
       this.effectMicrophone = new EffectMicrophone(this.musicplayer)
-      this.effectEqualizer = new EffectEqualizer(this.musicplayer)
     }
 
     Effects.prototype.activity = function() {

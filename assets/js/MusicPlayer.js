@@ -7,8 +7,10 @@ https://github.com/frequencies
 
 define([
   'text!templates/playlist-item.html',
+  'assets/js/Equalizer.js',
   ], function(
-    playlistItem
+    playlistItem,
+    Equalizer
   ) {
 
   var MusicPlayer, _ref, module,
@@ -34,8 +36,6 @@ define([
       // fill with objects like this: {node: gainNode, name: "myName"}
       this.gainNodes = Array() 
 
-      this.context = new AudioContext()
-
       this.timestamp = 0
 
       this.mediaPath = './assets/media/audio/'
@@ -47,12 +47,14 @@ define([
       this.frequenciesAmount = window.uniformAmount
 
       this.initialize()
+      
       this.addEventListeners()
       this.addPlaylistListeners()
     }
 
     MusicPlayer.prototype.initialize = function(){
       this.createAudioContext()
+      this.equalizer = new Equalizer(this)
       // this.loadDefaultTracks()
       this.initAudioNodes()
       this.initRendering()
@@ -148,19 +150,14 @@ define([
     }
 
     MusicPlayer.prototype.connectNodes = function(){
-      this.sourceNode.connect(this.context.destination)
-      this.sourceNode.connect(this.analyser) 
-
-      for(var i = 0; i < this.gainNodes.length; i++){
-        this.sourceNode.connect(this.gainNodes[i].node)  
-      }
+      this.equalizer.connect()
     }  
 
     MusicPlayer.prototype.addGainNode = function(name){
         var gainNewNode = this.context.createGain()
         gainNewNode.connect(this.context.destination)           
         this.gainNodes.push({node: gainNewNode, name: name})
-        this.sourceNode.connect(gainNewNode)
+        // this.equalizer.getNode().connect(gainNewNode) 
         return gainNewNode       
     }  
 
@@ -738,6 +735,9 @@ define([
     MusicPlayer.prototype.getVolume = function(){
       return this.gainMusicNode.gain.value
     }  
+    MusicPlayer.prototype.getSource = function(){
+      return this.sourceNode
+    }     
     MusicPlayer.prototype.getLoudnesses = function(){
       var array = new Uint8Array(this.analyser.frequencyBinCount)
       this.analyser.getByteFrequencyData(array)
