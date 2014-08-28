@@ -232,6 +232,12 @@ body {
 #effects-container .effect-wrapper.equalizer {
   height: 145px;
 }
+#effects-container .effect-wrapper.bass-boost {
+  height: 30px;
+}
+#effects-container .effect-wrapper.filter {
+  height: 100px;
+}
 #effects-container .effect-wrapper .header {
   padding: 3px;
   color: lightgrey;

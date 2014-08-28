@@ -27,6 +27,7 @@ var Equalizer, _ref, module,
       this.musicplayer = musicplayer
       this.equalizerEnabled = false
       this.bbEnabled = false
+      this.filterTestEnabled = false
       this.filters = Array()
 
       this.container = $(Effect.CONTAINER).append($(effectTemplate))
@@ -42,6 +43,7 @@ var Equalizer, _ref, module,
     Equalizer.prototype.initialize = function(){
       this.initFilters()
       this.initBassBoost()
+      this.initTestFilter()
       this.initView()
     }
 
@@ -54,6 +56,16 @@ var Equalizer, _ref, module,
           }
         )
       }
+
+      $("#filter-frequency").on("input change", function(event){
+        that.updateTestFilter(parseFloat(event.target.value), 'frequency')
+      })
+      $("#filter-quality").on("input change", function(event){
+        that.updateTestFilter(parseFloat(event.target.value), 'quality')
+      })
+      $("#filter-gain").on("input change", function(event){
+        that.updateTestFilter(parseFloat(event.target.value), 'gain')
+      })            
 
       $("#equalizer-effect-toggle").on("change", function(event){
           if(!!event.target.checked){
@@ -74,7 +86,21 @@ var Equalizer, _ref, module,
           that.connect()
         }
       )
+
+      $("#filter-test-toggle").on("change", function(event){
+          if(!!event.target.checked){
+            that.filterTestEnabled = true
+          }else{
+            that.filterTestEnabled = false
+          }
+          that.connectTestFilter()
+        }
+      )      
       
+      $("#filter-select").change(function(e){
+        var type = e.target.options[e.target.selectedIndex].text
+        that.updateTestFilter(type, 'filter-type')
+      })
 
     }
 
@@ -95,6 +121,16 @@ var Equalizer, _ref, module,
       }
     }
 
+    Equalizer.prototype.initTestFilter = function(){
+
+      this.testFilter = this.musicplayer.getContext().createBiquadFilter()
+
+      this.testFilter.Q.value = 1
+      this.testFilter.type = 'peaking'
+      this.testFilter.frequency.value = 5000
+      this.testFilter.gain.value = 30
+    } 
+
     Equalizer.prototype.initFilters = function(){
 
       var context = this.musicplayer.getContext()
@@ -105,11 +141,11 @@ var Equalizer, _ref, module,
 
         var filter = context.createBiquadFilter(2)
 
-        filter.Q.value = 10
+        filter.Q.value = 1
         filter.type = 'peaking'
         filter.frequency.value = 5000
-        filter.gain.value = 3
-        console.log(filter)
+        filter.gain.value = 30
+
         this.filters.push(filter)
       }
     }    
@@ -121,6 +157,44 @@ var Equalizer, _ref, module,
     Equalizer.prototype.updateFilter = function(value, filterNumber){
       this.filters[0].frequency.value = value * 20000
     }   
+
+    Equalizer.prototype.updateTestFilter = function(value, type){
+      switch(type){
+        case "frequency":
+          this.testFilter.frequency.value = value
+          console.log("update test frequency: "+value)
+          break;
+        case "quality":
+          this.testFilter.Q.value = value
+          break;
+        case "gain":
+          this.testFilter.gain.value = value
+          break;
+        case "filter-type":
+          console.log("update test filter type: "+value)
+          this.testFilter.type = value
+          break;
+      }
+    }
+
+    Equalizer.prototype.connectTestFilter = function(){
+      
+      this.musicplayer.getSource().disconnect(0)
+      this.getBandPassInterface().disconnect(0)
+      this.bassBoost.disconnect(0)
+      this.testFilter.disconnect(0)
+
+
+      if(this.filterTestEnabled){
+          this.musicplayer.getSource().connect(this.testFilter)
+          this.testFilter.connect(this.getBandPassInterface())
+          this.getBandPassInterface().connect(this.musicplayer.getContext().destination)
+          this.getBandPassInterface().connect(this.musicplayer.getAnalizer())
+          console.log("test filter enabled")
+      }else{
+        this.connect()
+      }
+    }
 
     Equalizer.prototype.connect = function(){
 
@@ -147,7 +221,6 @@ var Equalizer, _ref, module,
           this.musicplayer.getSource().connect(this.musicplayer.getAnalizer())
         }               
       }
-
     }
 
     Equalizer.prototype.enable = function(){

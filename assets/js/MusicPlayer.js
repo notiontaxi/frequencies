@@ -55,7 +55,7 @@ define([
     MusicPlayer.prototype.initialize = function(){
       this.createAudioContext()
       this.equalizer = new Equalizer(this)
-      // this.loadDefaultTracks()
+      this.loadDefaultTracks()
       this.initAudioNodes()
       this.initRendering()
     }
