@@ -34,14 +34,15 @@ var Equalizer, _ref, module,
 
       // cout occurencies of sliders in template
       // var count = effectTemplate.match(/eq-slider-/g)
-      this.filterAmount = 6 //count.length
-      this.filterValues = Array(.1,.5,1,3,8,15)
+      this.filterAmount = 10 //count.length
+      this.filterValues = Array(.032,.064,.125,.250,.5,1,2,4,8,16)
 
       this.initialize()
 
     }
 
     Equalizer.prototype.initialize = function(){
+      this.initGainNode()
       this.initFilters()
       this.initBassBoost()
       this.initTestFilter()
@@ -60,6 +61,11 @@ var Equalizer, _ref, module,
           }
         )
       }
+
+      $("#eq-slider-gain").on("input change", function(event){
+        that.updateGain(event.target.value, 'frequency')
+        $("#eq-slider-gain-output").html(event.target.value)
+      })
 
       $("#filter-frequency").on("input change", function(event){
         that.updateTestFilter(event.target.value, 'frequency')
@@ -100,7 +106,7 @@ var Equalizer, _ref, module,
           }else{
             that.filterTestEnabled = false
           }
-          that.connectTestFilter()
+          that.connect()
         }
       )      
       
@@ -111,13 +117,17 @@ var Equalizer, _ref, module,
 
     }
 
+    Equalizer.prototype.initGainNode = function(){
+      this.gainNode = this.musicplayer.getContext().createGain() 
+    }
+
     Equalizer.prototype.initBassBoost = function(){
       var context = this.musicplayer.getContext()
       this.bassBoost = context.createBiquadFilter()
       this.bassBoost.Q.value = .8
       this.bassBoost.type = 'peaking'
       this.bassBoost.frequency.value = 50
-      this.bassBoost.gain.value = 22      
+      this.bassBoost.gain.value = 10      
     }
 
 
@@ -165,6 +175,10 @@ var Equalizer, _ref, module,
       this.filters[filterNumber].gain.value = value
     }   
 
+    Equalizer.prototype.updateGain = function(value){
+      this.gainNode.gain.value = value
+    }
+
     Equalizer.prototype.updateTestFilter = function(value, type){
       switch(type){
         case "frequency":
@@ -186,50 +200,36 @@ var Equalizer, _ref, module,
       }
     }
 
-    Equalizer.prototype.connectTestFilter = function(){
-      
-      this.musicplayer.getNodeApi().disconnect(0)
-      this.getBandPassInterface().last.disconnect(0)
-      this.bassBoost.disconnect(0)
-      this.testFilter.disconnect(0)
-
-
-      if(this.filterTestEnabled){
-          this.musicplayer.getNodeApi().connect(this.testFilter)
-          this.testFilter.connect(this.getBandPassInterface().first)
-          this.getBandPassInterface().last.connect(this.musicplayer.getContext().destination)
-          this.getBandPassInterface().last.connect(this.musicplayer.getAnalizer())
-          console.log("test filter enabled")
-      }else{
-        this.connect()
-      }
-    }
-
     Equalizer.prototype.connect = function(){
 
       this.musicplayer.getNodeApi().disconnect(0)
       this.getBandPassInterface().last.disconnect(0)
       this.bassBoost.disconnect(0)
+      this.testFilter.disconnect(0)
 
+      this.musicplayer.getNodeApi().connect(this.gainNode)
+      var lastFilter = this.gainNode
+
+      // blug equalizer
       if(this.equalizerEnabled){
-        if(this.bbEnabled){
-          this.musicplayer.getNodeApi().connect(this.bassBoost)
-          this.bassBoost.connect(this.getBandPassInterface().first)
-        }else{
-          this.musicplayer.getNodeApi().connect(this.getBandPassInterface().first)
-        }
-        this.getBandPassInterface().last.connect(this.musicplayer.getContext().destination)
-        this.getBandPassInterface().last.connect(this.musicplayer.getAnalizer()) 
-      }else{
-        if(this.bbEnabled){
-          this.musicplayer.getNodeApi().connect(this.bassBoost)
-          this.bassBoost.connect(this.musicplayer.getContext().destination)
-          this.bassBoost.connect(this.musicplayer.getAnalizer())
-        }else{
-          this.musicplayer.getNodeApi().connect(this.musicplayer.getContext().destination)
-          this.musicplayer.getNodeApi().connect(this.musicplayer.getAnalizer())
-        }               
+        lastFilter.connect(this.getBandPassInterface().first)
+        lastFilter = this.getBandPassInterface().last
       }
+
+      // plug bass boost
+      if(this.bbEnabled){
+        lastFilter.connect(this.bassBoost)
+        lastFilter = this.bassBoost
+      }
+
+      // plug testfilter
+      if(this.filterTestEnabled){
+        lastFilter.connect(this.testFilter)
+        lastFilter = this.testFilter
+      }
+
+      lastFilter.connect(this.musicplayer.getContext().destination)
+      lastFilter.connect(this.musicplayer.getAnalizer())
     }
 
     Equalizer.prototype.enable = function(){

@@ -38,11 +38,13 @@ var Effect, _ref, module,
     }
 
     Effect.prototype.mute = function(mute){
-      if(mute){
-        this.gainNode.gain.value = -1
-      }else{
-        this.gainNode.gain.value = 1
+
+        this.gainNode.disconnect(0)
+      if(!mute){
+        this.gainNode.connect(this.musicplayer.getNodeApi())
+        this.gainNode.connect(this.musicplayer.getAnalizer())
       }
+      this.muted = mute
     }   
 
     Effect.prototype.initView = function(){

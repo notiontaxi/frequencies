@@ -72,14 +72,6 @@ var EffectMicrophone, _ref, module,
       this.mute(true)
     }  
 
-    EffectMicrophone.prototype.mute = function(mute){
-      if(mute){
-        this.gainNode.disconnect(this.musicplayer.getAnalizer())
-      }else{
-        this.gainNode.connect(this.musicplayer.getAnalizer())
-      }    
-      this.muted = mute
-    }
 
 // --------------------------------------
     return EffectMicrophone

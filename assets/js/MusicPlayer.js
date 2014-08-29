@@ -151,6 +151,7 @@ define([
     MusicPlayer.prototype.connectNodes = function(){
       // always connect source to gain node
       this.sourceNode.disconnect(0)
+      this.gainMusicNode.disconnect(0)
       this.sourceNode.connect(this.gainMusicNode)
       this.equalizer.connect()
     }  
