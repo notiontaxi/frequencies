@@ -230,7 +230,7 @@ body {
   height: 50px;
 }
 #effects-container .effect-wrapper.equalizer {
-  height: 195px;
+  height: 170px;
 }
 #effects-container .effect-wrapper.bass-boost {
   height: 30px;
@@ -246,7 +246,11 @@ body {
   padding: 3px;
   float: left;
 }
+#effects-container .effect-wrapper .controls .slider-set {
+  float: left;
+}
 #effects-container .effect-wrapper .output {
+  float: left;
   padding: 3px 3px 3px 22px;
   font-size: 90%;
   color: lightgrey;
