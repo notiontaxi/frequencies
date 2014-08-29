@@ -33,8 +33,9 @@ var Equalizer, _ref, module,
       this.container = $(Effect.CONTAINER).append($(effectTemplate))
 
       // cout occurencies of sliders in template
-      var count = effectTemplate.match(/eq-slider-/g)
-      this.filterAmount = count.length
+      // var count = effectTemplate.match(/eq-slider-/g)
+      this.filterAmount = 6 //count.length
+      this.filterValues = Array(.1,.5,1,3,8,15)
 
       this.initialize()
 
@@ -52,19 +53,25 @@ var Equalizer, _ref, module,
 
       for(var i = 0; i < this.filterAmount; i++){
         $("#eq-slider-0"+i).on("input change", function(event){
-              that.updateFilter(parseFloat(event.target.value), parseInt($(this).attr('nr')))
+              var nr = parseInt($(this).attr('nr')),
+                  val = parseFloat(event.target.value)
+              that.updateFilter(val, nr)
+              $("#eq-slider-0"+nr+"-output").html(val)
           }
         )
       }
 
       $("#filter-frequency").on("input change", function(event){
-        that.updateTestFilter(parseFloat(event.target.value), 'frequency')
+        that.updateTestFilter(event.target.value, 'frequency')
+        $("#filter-frequency-output").html(event.target.value)
       })
       $("#filter-quality").on("input change", function(event){
         that.updateTestFilter(parseFloat(event.target.value), 'quality')
+        $("#filter-quality-output").html(parseFloat(event.target.value))
       })
       $("#filter-gain").on("input change", function(event){
         that.updateTestFilter(parseFloat(event.target.value), 'gain')
+        $("#filter-gain-output").html(parseFloat(event.target.value))
       })            
 
       $("#equalizer-effect-toggle").on("change", function(event){
@@ -107,19 +114,12 @@ var Equalizer, _ref, module,
     Equalizer.prototype.initBassBoost = function(){
       var context = this.musicplayer.getContext()
       this.bassBoost = context.createBiquadFilter()
-      this.bassBoost.Q.value = 10
+      this.bassBoost.Q.value = .8
       this.bassBoost.type = 'peaking'
       this.bassBoost.frequency.value = 50
-      this.bassBoost.gain.value = 30      
+      this.bassBoost.gain.value = 22      
     }
 
-    Equalizer.prototype.bassBoost = function(enable){
-      if(enable){
-        this.getBandPassInterface().connect(this.bassBoost)
-      }else{
-        this.getBandPassInterface().disconnect(this.bassBoost)
-      }
-    }
 
     Equalizer.prototype.initTestFilter = function(){
 
@@ -136,39 +136,48 @@ var Equalizer, _ref, module,
       var context = this.musicplayer.getContext()
       var step = 20000/this.filterAmount
 
+      for(var i = 0; i < this.filterAmount; i++){
 
-      for(var i = 1; i <= 1; i++){
+        var filter = context.createBiquadFilter()
 
-        var filter = context.createBiquadFilter(2)
-
-        filter.Q.value = 1
+        filter.Q.value = .2
         filter.type = 'peaking'
-        filter.frequency.value = 5000
-        filter.gain.value = 30
+        filter.frequency.value = this.filterValues[i]*1000
+        filter.gain.value = 0
 
         this.filters.push(filter)
+
+        if(i > 0){
+          this.filters[i-1].connect(this.filters[i])
+          console.log("connected "+(i-1)+" to "+i)
+        }
       }
     }    
 
     Equalizer.prototype.getBandPassInterface = function(){
-      return this.filters[0]
+      return {
+        first: this.filters[0], 
+        last: this.filters[this.filters.length-1]
+      }
     }
 
     Equalizer.prototype.updateFilter = function(value, filterNumber){
-      this.filters[0].frequency.value = value * 20000
+      this.filters[filterNumber].gain.value = value
     }   
 
     Equalizer.prototype.updateTestFilter = function(value, type){
       switch(type){
         case "frequency":
           this.testFilter.frequency.value = value
-          console.log("update test frequency: "+value)
+          console.log("update test frequency: "+value,this.testFilter)
           break;
         case "quality":
           this.testFilter.Q.value = value
+          console.log("set quality to "+value)
           break;
         case "gain":
           this.testFilter.gain.value = value
+          console.log("set gain to "+value)
           break;
         case "filter-type":
           console.log("update test filter type: "+value)
@@ -179,17 +188,17 @@ var Equalizer, _ref, module,
 
     Equalizer.prototype.connectTestFilter = function(){
       
-      this.musicplayer.getSource().disconnect(0)
-      this.getBandPassInterface().disconnect(0)
+      this.musicplayer.getNodeApi().disconnect(0)
+      this.getBandPassInterface().last.disconnect(0)
       this.bassBoost.disconnect(0)
       this.testFilter.disconnect(0)
 
 
       if(this.filterTestEnabled){
-          this.musicplayer.getSource().connect(this.testFilter)
-          this.testFilter.connect(this.getBandPassInterface())
-          this.getBandPassInterface().connect(this.musicplayer.getContext().destination)
-          this.getBandPassInterface().connect(this.musicplayer.getAnalizer())
+          this.musicplayer.getNodeApi().connect(this.testFilter)
+          this.testFilter.connect(this.getBandPassInterface().first)
+          this.getBandPassInterface().last.connect(this.musicplayer.getContext().destination)
+          this.getBandPassInterface().last.connect(this.musicplayer.getAnalizer())
           console.log("test filter enabled")
       }else{
         this.connect()
@@ -198,27 +207,27 @@ var Equalizer, _ref, module,
 
     Equalizer.prototype.connect = function(){
 
-      this.musicplayer.getSource().disconnect(0)
-      this.getBandPassInterface().disconnect(0)
+      this.musicplayer.getNodeApi().disconnect(0)
+      this.getBandPassInterface().last.disconnect(0)
       this.bassBoost.disconnect(0)
 
       if(this.equalizerEnabled){
         if(this.bbEnabled){
-          this.musicplayer.getSource().connect(this.bassBoost)
-          this.bassBoost.connect(this.getBandPassInterface())
+          this.musicplayer.getNodeApi().connect(this.bassBoost)
+          this.bassBoost.connect(this.getBandPassInterface().first)
         }else{
-          this.musicplayer.getSource().connect(this.getBandPassInterface())
+          this.musicplayer.getNodeApi().connect(this.getBandPassInterface().first)
         }
-        this.getBandPassInterface().connect(this.musicplayer.getContext().destination)
-        this.getBandPassInterface().connect(this.musicplayer.getAnalizer()) 
+        this.getBandPassInterface().last.connect(this.musicplayer.getContext().destination)
+        this.getBandPassInterface().last.connect(this.musicplayer.getAnalizer()) 
       }else{
         if(this.bbEnabled){
-          this.musicplayer.getSource().connect(this.bassBoost)
+          this.musicplayer.getNodeApi().connect(this.bassBoost)
           this.bassBoost.connect(this.musicplayer.getContext().destination)
           this.bassBoost.connect(this.musicplayer.getAnalizer())
         }else{
-          this.musicplayer.getSource().connect(this.musicplayer.getContext().destination)
-          this.musicplayer.getSource().connect(this.musicplayer.getAnalizer())
+          this.musicplayer.getNodeApi().connect(this.musicplayer.getContext().destination)
+          this.musicplayer.getNodeApi().connect(this.musicplayer.getAnalizer())
         }               
       }
     }

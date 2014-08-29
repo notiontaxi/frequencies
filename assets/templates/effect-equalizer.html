@@ -12,30 +12,42 @@
   </div>
   <div class="controls">
 
-    <input id="eq-slider-00" nr="0" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>
     <div class="output">
-      <div id="qu-00" class="inner">low</div>
+      <div id="qu-00" class="inner">0.1k</div>
     </div>
+    <input id="eq-slider-00" nr="0" class="slider bigger-sized" type="range" min="-50" max="50" value="0" step='1'>
+    <div class="output"> <span class="slider-output" id="eq-slider-00-output">0</span> dB</div> 
 
-    <input id="eq-slider-01" nr="1" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>
+
     <div class="output">
-      <div id="qu-01" class="inner">mid</div>
+      <div class="inner">0.5k</div>
     </div>
+    <input id="eq-slider-01" nr="1" class="slider bigger-sized" type="range" min="-50" max="50" value="0" step='1'>
+    <div class="output"> <span class="slider-output" id="eq-slider-01-output">0</span> dB</div>  
 
-    <input id="eq-slider-02" nr="2" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>  
     <div class="output">
-      <div id="eq-02" class="inner">high</div>
+      <div class="inner">1k</div>
     </div>
+    <input id="eq-slider-02" nr="2" class="slider bigger-sized" type="range" min="-50" max="50" value="0" step='1'>  
+    <div class="output"> <span class="slider-output" id="eq-slider-02-output">0</span> dB</div> 
 
-    <input id="eq-slider-03" nr="3" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>  
     <div class="output">
-      <div id="eq-03" class="inner">high</div>
+      <div class="inner">3k</div>
     </div>
+    <input id="eq-slider-03" nr="3" class="slider bigger-sized" type="range" min="-50" max="50" value="0" step='1'>  
+    <div class="output"> <span class="slider-output" id="eq-slider-03-output">0</span> dB</div>  
 
-    <input id="eq-slider-04" nr="4" class="slider bigger-sized" type="range" min="0" max="1" value=".5" step='.05'>  
     <div class="output">
-      <div id="eq-04" class="inner">high</div>
-    </div>            
+      <div class="inner">8k</div>
+    </div> 
+    <input id="eq-slider-04" nr="4" class="slider bigger-sized" type="range" min="-50" max="50" value="0" step='1'>  
+    <div class="output"> <span class="slider-output" id="eq-slider-04-output">0</span> dB</div>
+
+    <div class="output">
+      <div class="inner">15k</div>
+    </div>  
+    <input id="eq-slider-05" nr="5" class="slider bigger-sized" type="range" min="-50" max="50" value="0" step='1'>  
+    <div class="output"> <span class="slider-output" id="eq-slider-05-output">0</span> dB</div>             
 
   </div>   
 </div>
@@ -60,15 +72,15 @@
     <div class="controls">
       <input id="filter-frequency" nr="0" class="slider bigger-sized" type="range" min="0" max="20000" value="350" step='5'>
       <div class="output">
-        <div class="inner">Frequency</div>
+        <div class="inner">Freq. <span id="filter-frequency-output"> </span> </div>
       </div> 
-      <input id="filter-gain" nr="0" class="slider bigger-sized" type="range" min="0" max="30" value="1" step='1'>
+      <input id="filter-gain" nr="0" class="slider bigger-sized" type="range" min="-30" max="30" value="1" step='1'>
       <div class="output">
-        <div class="inner">Gain</div>
+        <div class="inner">Gain <span id="filter-gain-output"> </span> </div>
       </div> 
-      <input id="filter-quality" nr="0" class="slider bigger-sized" type="range" min="0" max="30" value="1" step='1'>
+      <input id="filter-quality" nr="0" class="slider bigger-sized" type="range" min="0" max="3" value="1" step='.1'>
       <div class="output">
-        <div class="inner">Quality</div>
+        <div class="inner">Quality <span id="filter-quality-output"> </span> </div>
       </div> 
     </div> 
 </div>

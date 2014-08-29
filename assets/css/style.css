@@ -230,7 +230,7 @@ body {
   height: 50px;
 }
 #effects-container .effect-wrapper.equalizer {
-  height: 145px;
+  height: 195px;
 }
 #effects-container .effect-wrapper.bass-boost {
   height: 30px;
@@ -247,12 +247,17 @@ body {
   float: left;
 }
 #effects-container .effect-wrapper .output {
-  float: left;
   padding: 3px 3px 3px 22px;
   font-size: 90%;
   color: lightgrey;
 }
 #effects-container .effect-wrapper .output .inner {
+  float: left;
+  min-width: 30px;
+}
+#effects-container .effect-wrapper .output .slider-output {
+  padding-left: 3px;
+  min-width: 25px;
   float: left;
 }
 .playlist-container {

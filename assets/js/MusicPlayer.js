@@ -141,8 +141,7 @@ define([
         // Create gain node
         if (!this.context.createGain)
           this.context.createGain = this.context.creategainMusicNode        
-        this.gainMusicNode = this.context.createGain()
-        this.gainMusicNode.connect(this.context.destination)   
+        this.gainMusicNode = this.context.createGain() 
         this.gainNodes.push({node: this.gainMusicNode, name: "music"})
 
         this.connectNodes()
@@ -150,6 +149,9 @@ define([
     }
 
     MusicPlayer.prototype.connectNodes = function(){
+      // always connect source to gain node
+      this.sourceNode.disconnect(0)
+      this.sourceNode.connect(this.gainMusicNode)
       this.equalizer.connect()
     }  
 
@@ -198,7 +200,7 @@ define([
       if(maxVolume){
         var fraction = parseInt(volume) / parseInt(maxVolume)
         // x*x curve (x-squared)  value between -1 and 1
-        this.gainMusicNode.gain.value = (fraction * fraction )*2 -1 
+        this.gainMusicNode.gain.value = (fraction * fraction )
       }else{
          this.gainMusicNode.gain.value = volume
       }
@@ -359,6 +361,7 @@ define([
 
             // check playing state and start playing if not playing
             // if(that.sourceNode.playbackState !== that.sourceNode.PLAYING_STATE){
+              // that.connectNodes()
               that.playAction()
             // }
             $("#overlay").hide()
@@ -735,8 +738,8 @@ define([
     MusicPlayer.prototype.getVolume = function(){
       return this.gainMusicNode.gain.value
     }  
-    MusicPlayer.prototype.getSource = function(){
-      return this.sourceNode
+    MusicPlayer.prototype.getNodeApi = function(){
+      return this.gainMusicNode
     }     
     MusicPlayer.prototype.getLoudnesses = function(){
       var array = new Uint8Array(this.analyser.frequencyBinCount)
