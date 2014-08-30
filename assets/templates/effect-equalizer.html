@@ -1,21 +1,42 @@
-<div class="effect-wrapper bass-boost">
+<div class="effect-wrapper bass-boost inactive">
   <div class="header">
-    <input id="equalizer-bass-toggle" class="checkbox" name="effect-bass" value="0" type="checkbox">
-    bass boost  
+    <div class="head-left">
+      Bass boost
+    </div>
+    <div class="head-right">
+      <div class="onoffswitch">
+        <input type="checkbox" name="equalizer-bass-toggle" class="onoffswitch-checkbox" id="equalizer-bass-toggle">
+        <label class="onoffswitch-label" for="equalizer-bass-toggle">
+          <span class="onoffswitch-inner"></span>
+          <span class="onoffswitch-switch"></span>
+        </label>
+      </div>
+    </div> 
   </div>
 </div>
-<div class="effect-wrapper equalizer">
-  <div class="header">
 
-    <input id="equalizer-effect-toggle" class="checkbox" name="effect-wave" value="0" type="checkbox">
-    activate equalizer
+<div class="effect-wrapper equalizer inactive">
+  <div class="header">
+    <div class="head-left">
+      Euqalizer
+    </div>
+    <div class="head-right">
+      <div class="onoffswitch">
+        <input type="checkbox" name="equalizer-effect-toggle" class="onoffswitch-checkbox" id="equalizer-effect-toggle">
+        <label class="onoffswitch-label" for="equalizer-effect-toggle">
+          <span class="onoffswitch-inner"></span>
+          <span class="onoffswitch-switch"></span>
+        </label>
+      </div>
+    </div>
   </div>
+
   <div class="controls">
     <div class="slider-set">
       <div class="output">
         <div class="inner">32</div>
       </div>
-      <input id="eq-slider-00" nr="0" class="slider bigger-sized" type="range" min="-30" max="30" value="0" step='1'>
+      <input id="eq-slider-00" nr="0" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>
       <div class="output"> <span class="slider-output" id="eq-slider-00-output">0</span> dB</div> 
     </div>
     
@@ -23,7 +44,7 @@
       <div class="output">
         <div class="inner">64</div>
       </div>
-      <input id="eq-slider-01" nr="1" class="slider bigger-sized" type="range" min="-30" max="30" value="0" step='1'>
+      <input id="eq-slider-01" nr="1" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>
       <div class="output"> <span class="slider-output" id="eq-slider-01-output">0</span> dB</div>  
     </div>
 
@@ -31,7 +52,7 @@
       <div class="output">
         <div class="inner">125</div>
       </div>
-      <input id="eq-slider-02" nr="2" class="slider bigger-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-02" nr="2" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-02-output">0</span> dB</div> 
     </div>
 
@@ -39,7 +60,7 @@
       <div class="output">
         <div class="inner">250</div>
       </div>
-      <input id="eq-slider-03" nr="3" class="slider bigger-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-03" nr="3" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-03-output">0</span> dB</div>  
     </div>
 
@@ -47,7 +68,7 @@
       <div class="output">
         <div class="inner">500</div>
       </div> 
-      <input id="eq-slider-04" nr="4" class="slider bigger-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-04" nr="4" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-04-output">0</span> dB</div>
     </div>
 
@@ -55,7 +76,7 @@
       <div class="output">
         <div class="inner">1k</div>
       </div>  
-      <input id="eq-slider-05" nr="5" class="slider bigger-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-05" nr="5" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-05-output">0</span> dB</div>             
     </div>
 
@@ -63,7 +84,7 @@
       <div class="output">
         <div class="inner">2k</div>
       </div>  
-      <input id="eq-slider-06" nr="6" class="slider bigger-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-06" nr="6" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-06-output">0</span> dB</div>             
     </div>
 
@@ -71,7 +92,7 @@
       <div class="output">
         <div class="inner">4k</div>
       </div>  
-      <input id="eq-slider-07" nr="7" class="slider bigger-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-07" nr="7" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-07-output">0</span> dB</div>             
     </div>
 
@@ -79,7 +100,7 @@
       <div class="output">
         <div class="inner">8k</div>
       </div>  
-      <input id="eq-slider-08" nr="8" class="slider bigger-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-08" nr="8" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-08-output">0</span> dB</div>             
     </div>
 
@@ -87,7 +108,7 @@
       <div class="output">
         <div class="inner">16k</div>
       </div>  
-      <input id="eq-slider-09" nr="9" class="slider bigger-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-09" nr="9" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-09-output">0</span> dB</div>             
     </div>   
 
@@ -95,42 +116,66 @@
       <div class="output">
         <div class="inner">gain</div>
       </div>  
-      <input id="eq-slider-gain" class="slider bigger-sized" type="range" min="0" max="1" value="0" step='.05'>  
-      <div class="output"> <span class="slider-output" id="eq-slider-gain-output">0</span> dB</div>             
+      <input id="eq-slider-gain" class="slider medium-sized" type="range" min="0" max="1" value=".5" step='.05'>  
+      <div class="output"> <span class="slider-output" id="eq-slider-gain-output">0.5</span></div>             
     </div>                    
 
   </div>   
 </div>
 
-<div class="effect-wrapper filter">
+<div class="effect-wrapper filter inactive">
     <div class="header">
-      <input id="filter-test-toggle" class="checkbox" name="effect-bass" value="0" type="checkbox">
-      filter types test
-
-      <select id="filter-select">
-        <option value="lowpass">lowpass</option>
-        <option value="highpass">highpass</option>
-        <option value="bandpass">bandpass</option>
-        <option value="lowshelf">lowshelf</option>
-        <option value="highshelf">highshelf</option>
-        <option value="peaking">peaking</option> 
-        <option value="notch">notch</option>
-        <option value="allpass">allpass</option>                
-      </select>    
+      <div class="head-left">
+        Filter
+      </div>
+      <div class="head-mid">
+        <select id="filter-select">
+          <option value="lowpass">lowpass</option>
+          <option value="highpass">highpass</option>
+          <option value="bandpass">bandpass</option>
+          <option value="lowshelf">lowshelf</option>
+          <option value="highshelf">highshelf</option>
+          <option value="peaking">peaking</option> 
+          <option value="notch">notch</option>
+          <option value="allpass">allpass</option>                
+        </select>         
+      </div>
+      <div class="head-right">
+        <div class="onoffswitch">
+          <input type="checkbox" name="filter-test-toggle" class="onoffswitch-checkbox" id="filter-test-toggle">
+          <label class="onoffswitch-label" for="filter-test-toggle">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </label>
+        </div>
+      </div>   
     </div>
 
     <div class="controls">
-      <input id="filter-frequency" nr="0" class="slider bigger-sized" type="range" min="0" max="20000" value="350" step='5'>
-      <div class="output">
-        <div class="inner">Freq. <span id="filter-frequency-output"> </span> </div>
+
+      <div class="slider-set">
+        <div class="output">
+          <div class="inner">Freq.</div>
+        </div>
+        <input id="filter-frequency" nr="0" class="slider medium-sized" type="range" min="0" max="20000" value="350" step='5'>
+        <div class="output"><span id="filter-frequency-output"></span> hz</div>
+      </div>
+
+      <div class="slider-set">
+        <div class="output">
+          <div class="inner">Gain</div>
+        </div>
+        <input id="filter-gain" nr="0" class="slider medium-sized" type="range" min="-30" max="30" value="1" step='1'>
+        <div class="output"><span id="filter-gain-output"> </span> dB</div>
       </div> 
-      <input id="filter-gain" nr="0" class="slider bigger-sized" type="range" min="-30" max="30" value="1" step='1'>
-      <div class="output">
-        <div class="inner">Gain <span id="filter-gain-output"> </span> </div>
+
+      <div class="slider-set">
+        <div class="output">
+          <div class="inner">Quality</div>
+        </div>
+        <input id="filter-quality" nr="0" class="slider medium-sized" type="range" min="0" max="3" value="1" step='.1'>
+        <div class="output"> <span id="filter-quality-output"> </span> </div>
       </div> 
-      <input id="filter-quality" nr="0" class="slider bigger-sized" type="range" min="0" max="3" value="1" step='.1'>
-      <div class="output">
-        <div class="inner">Quality <span id="filter-quality-output"> </span> </div>
-      </div> 
+
     </div> 
 </div>

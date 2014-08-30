@@ -1,7 +1,20 @@
-<div class="effect-wrapper wave">
+<div class="effect-wrapper wave inactive">
     <div class="header">
-      <input id="wave-effect-toggle" class="checkbox" name="effect-wave" value="0" type="checkbox">
-      activate wave
+
+     <div class="head-left">
+        Sine wave
+      </div>
+      <div class="head-right">
+        <div class="onoffswitch">
+          <input type="checkbox" name="wave-effect-toggle" class="onoffswitch-checkbox" id="wave-effect-toggle">
+          <label class="onoffswitch-label" for="wave-effect-toggle">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </label>
+        </div>
+      </div>
+
+
 <!--       <br><br>
       <input id="sinus-radio"  type="radio" name="wave" checked="checked" value="0"/>
       <label for = "sinus-radio">sinus</label>
@@ -13,9 +26,17 @@
       <label for="triangle-radio">triangle</label>     -->        
     </div>
     <div class="controls">
-      <input id="wave-effect-slider" class="slider bigger-sized" type="range" min="1" max="22000" value="400">
+    <div class="slider-set">
       <div class="output">
-        <div id="wave-effect-slider-output" class="inner"></div>
-      </div>
-    </div>     
+        <div class="inner">Freq.</div>
+      </div>  
+      <input id="wave-effect-slider" nr="8" class="slider medium-sized" type="range" min="0" max="20000" value="0" step='1'>  
+      <div class="output"> <span class="slider-output" id="wave-effect-slider-output">400</span> hz</div>       
+    </div>
+    </div>   
+
+
+
+
+
 </div>

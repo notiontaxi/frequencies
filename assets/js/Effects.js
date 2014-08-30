@@ -28,9 +28,7 @@ var Effects, _ref, module,
       this.musicplayer = musicplayer
       this.active = true
 
-      // this.container = $("#panel-right .content").append($(effectsTemplate))
       this.initialize()
-
     }
 
     Effects.prototype.initialize = function(){

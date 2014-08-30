@@ -81,32 +81,44 @@ var Equalizer, _ref, module,
       })            
 
       $("#equalizer-effect-toggle").on("change", function(event){
+          var wrapper = $(this).closest('.effect-wrapper')[0]
+          $(wrapper).toggleClass('inactive')          
+
           if(!!event.target.checked){
             that.equalizerEnabled = true
           }else{
             that.equalizerEnabled = false
           }
-          that.connect()
+
+          setTimeout(function(){that.connect();}, 400)        
         }
       )
 
       $("#equalizer-bass-toggle").on("change", function(event){
+          var wrapper = $(this).closest('.effect-wrapper')[0]
+          $(wrapper).toggleClass('inactive')
+
           if(!!event.target.checked){
             that.bbEnabled = true
           }else{
             that.bbEnabled = false
           }
-          that.connect()
+
+          setTimeout(function(){that.connect();}, 400)
         }
       )
 
       $("#filter-test-toggle").on("change", function(event){
+          var wrapper = $(this).closest('.effect-wrapper')[0]
+          $(wrapper).toggleClass('inactive')    
+
           if(!!event.target.checked){
             that.filterTestEnabled = true
           }else{
             that.filterTestEnabled = false
           }
-          that.connect()
+
+          setTimeout(function(){that.connect();}, 300)         
         }
       )      
       
@@ -119,6 +131,7 @@ var Equalizer, _ref, module,
 
     Equalizer.prototype.initGainNode = function(){
       this.gainNode = this.musicplayer.getContext().createGain() 
+      this.gainNode.gain.value = 0.5
     }
 
     Equalizer.prototype.initBassBoost = function(){

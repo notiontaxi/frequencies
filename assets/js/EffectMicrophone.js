@@ -36,8 +36,11 @@ var EffectMicrophone, _ref, module,
       var that = this
 
       $("#microphone-effect-toggle").on("change", function(event){
-          that.mute(!event.target.checked)
+          var wrapper = $(this).closest('.effect-wrapper')[0]
+          $(wrapper).toggleClass('inactive')  
+
           that.updateOutput()
+          setTimeout(function(){that.mute(!event.target.checked)}, 300)           
         })
     }
 

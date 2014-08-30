@@ -35,15 +35,17 @@ var EffectWave, _ref, module,
     EffectWave.prototype.initView = function(){
       var that = this
       $("#wave-effect-slider").on("input change", function(event){
-          if(!that.muted){
-            that.updateFrequency(parseInt(event.target.value))
-          }
+            var freq = parseInt(event.target.value)
+            that.updateFrequency(freq)
         }
       )
 
       $("#wave-effect-toggle").on("change", function(event){
-        that.mute(!event.target.checked)
-        that.updateOutput()
+        var wrapper = $(this).closest('.effect-wrapper')[0]
+        $(wrapper).toggleClass('inactive')   
+
+        that.updateOutput();
+        setTimeout(function(){that.mute(!event.target.checked)}, 400)        
         }
       )
 
@@ -52,8 +54,8 @@ var EffectWave, _ref, module,
       })           
     }
 
-    EffectWave.prototype.updateOutput = function(){
-      $("#wave-effect-slider-output").html(parseInt($("#wave-effect-slider")[0].value)+" hz") 
+    EffectWave.prototype.updateOutput = function(freq){
+      $("#wave-effect-slider-output").html(freq)
     }
 
     EffectWave.prototype.initEffect = function(){
@@ -70,7 +72,7 @@ var EffectWave, _ref, module,
 
     EffectWave.prototype.updateFrequency = function(frequency){
       this.sineWave.frequency.value = frequency
-      this.updateOutput()
+      this.updateOutput(frequency)
     }   
 
     EffectWave.prototype.switchTypeTo = function(type){
