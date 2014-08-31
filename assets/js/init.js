@@ -12,7 +12,8 @@
   require.config({
       baseUrl: 'assets/lib',
       paths: {
-            templates: '../templates'
+            data: '../data'
+          , templates: '../templates'
           , fragmentShader: '../shader/fragment'
           , vertexShader: '../shader/vertex'
           , js: '../js'

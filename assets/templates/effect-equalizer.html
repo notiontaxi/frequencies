@@ -20,6 +20,11 @@
     <div class="head-left">
       Euqalizer
     </div>
+    <div class="head-mid">
+      <select id="preset-select">
+          <!-- filled in JS (Equalizer.js)  -->              
+      </select>         
+    </div>    
     <div class="head-right">
       <div class="onoffswitch">
         <input type="checkbox" name="equalizer-effect-toggle" class="onoffswitch-checkbox" id="equalizer-effect-toggle">
@@ -36,7 +41,7 @@
       <div class="output">
         <div class="inner">32</div>
       </div>
-      <input id="eq-slider-00" nr="0" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>
+      <input id="eq-slider-00" nr="0" class="slider medium-sized" type="range" min="-20" max="20" value="0" step='1'>
       <div class="output"> <span class="slider-output" id="eq-slider-00-output">0</span> dB</div> 
     </div>
     
@@ -44,7 +49,7 @@
       <div class="output">
         <div class="inner">64</div>
       </div>
-      <input id="eq-slider-01" nr="1" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>
+      <input id="eq-slider-01" nr="1" class="slider medium-sized" type="range" min="-20" max="20" value="0" step='1'>
       <div class="output"> <span class="slider-output" id="eq-slider-01-output">0</span> dB</div>  
     </div>
 
@@ -52,7 +57,7 @@
       <div class="output">
         <div class="inner">125</div>
       </div>
-      <input id="eq-slider-02" nr="2" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-02" nr="2" class="slider medium-sized" type="range" min="-20" max="20" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-02-output">0</span> dB</div> 
     </div>
 
@@ -60,7 +65,7 @@
       <div class="output">
         <div class="inner">250</div>
       </div>
-      <input id="eq-slider-03" nr="3" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-03" nr="3" class="slider medium-sized" type="range" min="-20" max="20" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-03-output">0</span> dB</div>  
     </div>
 
@@ -68,7 +73,7 @@
       <div class="output">
         <div class="inner">500</div>
       </div> 
-      <input id="eq-slider-04" nr="4" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-04" nr="4" class="slider medium-sized" type="range" min="-20" max="20" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-04-output">0</span> dB</div>
     </div>
 
@@ -76,7 +81,7 @@
       <div class="output">
         <div class="inner">1k</div>
       </div>  
-      <input id="eq-slider-05" nr="5" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-05" nr="5" class="slider medium-sized" type="range" min="-20" max="20" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-05-output">0</span> dB</div>             
     </div>
 
@@ -84,7 +89,7 @@
       <div class="output">
         <div class="inner">2k</div>
       </div>  
-      <input id="eq-slider-06" nr="6" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-06" nr="6" class="slider medium-sized" type="range" min="-20" max="20" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-06-output">0</span> dB</div>             
     </div>
 
@@ -92,7 +97,7 @@
       <div class="output">
         <div class="inner">4k</div>
       </div>  
-      <input id="eq-slider-07" nr="7" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-07" nr="7" class="slider medium-sized" type="range" min="-20" max="20" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-07-output">0</span> dB</div>             
     </div>
 
@@ -100,7 +105,7 @@
       <div class="output">
         <div class="inner">8k</div>
       </div>  
-      <input id="eq-slider-08" nr="8" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-08" nr="8" class="slider medium-sized" type="range" min="-20" max="20" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-08-output">0</span> dB</div>             
     </div>
 
@@ -108,16 +113,16 @@
       <div class="output">
         <div class="inner">16k</div>
       </div>  
-      <input id="eq-slider-09" nr="9" class="slider medium-sized" type="range" min="-30" max="30" value="0" step='1'>  
+      <input id="eq-slider-09" nr="9" class="slider medium-sized" type="range" min="-20" max="20" value="0" step='1'>  
       <div class="output"> <span class="slider-output" id="eq-slider-09-output">0</span> dB</div>             
     </div>   
 
     <div class="slider-set">
       <div class="output">
-        <div class="inner">gain</div>
+        <div class="inner">Preamp</div>
       </div>  
-      <input id="eq-slider-gain" class="slider medium-sized" type="range" min="0" max="1" value=".5" step='.05'>  
-      <div class="output"> <span class="slider-output" id="eq-slider-gain-output">0.5</span></div>             
+      <input id="eq-slider-gain" class="slider medium-sized" type="range" min="0" max="4" value="1" step='.05'>  
+      <div class="output"> <span class="slider-output" id="eq-slider-gain-output">100%</span></div>             
     </div>                    
 
   </div>   
@@ -165,8 +170,8 @@
         <div class="output">
           <div class="inner">Gain</div>
         </div>
-        <input id="filter-gain" nr="0" class="slider medium-sized" type="range" min="-30" max="30" value="1" step='1'>
-        <div class="output"><span id="filter-gain-output"> </span> dB</div>
+        <input id="filter-gain" nr="0" class="slider medium-sized" type="range" min="-25" max="25" value="1" step='1'>
+        <div class="output"><span id="filter-gain-output"> </span>0 dB</div>
       </div> 
 
       <div class="slider-set">
@@ -174,7 +179,7 @@
           <div class="inner">Quality</div>
         </div>
         <input id="filter-quality" nr="0" class="slider medium-sized" type="range" min="0" max="3" value="1" step='.1'>
-        <div class="output"> <span id="filter-quality-output"> </span> </div>
+        <div class="output"> <span id="filter-quality-output"> </span>0.9 </div>
       </div> 
 
     </div> 

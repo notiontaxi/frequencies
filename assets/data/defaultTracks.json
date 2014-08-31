@@ -1,0 +1,102 @@
+{
+  "tracks": [
+    {
+        "title" :"Audiocheck", 
+        "fileName": "audiocheck",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/audiocheck.ogg"
+    },
+    {
+        "title" :"Icarus Grounded", 
+        "fileName": "02_icarus_grounded",
+        "extension": "ogg",
+        "length": "03:52",
+        "src": "./assets/media/audio/02_icarus_grounded.ogg"
+    }, 
+    {
+        "title" :"Monkey Bones", 
+        "fileName": "03_monkey_bones",
+        "extension": "ogg",
+        "length": "04:24",
+        "src": "./assets/media/audio/03_monkey_bones.ogg"
+    }, 
+    {
+        "title" :"George", 
+        "fileName": "04_george",
+        "extension": "ogg",
+        "length": "05:02",
+        "src": "./assets/media/audio/04_george.ogg"
+    },
+    {
+        "title" :"Inside", 
+        "fileName": "05_inside",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/05_inside.ogg"
+    },  
+    {
+        "title" :"Fallen Trees", 
+        "fileName": "06_fallen_trees",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/06_fallen_trees.ogg"
+    }, 
+    {
+        "title" :"Whispered", 
+        "fileName": "07_whispered",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/07_whispered.ogg"
+    }, 
+    {
+        "title" :"Mr Schwinn", 
+        "fileName": "08_mr_schwinn",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/08_mr_schwinn.ogg"
+    }, 
+    {
+        "title" :"Dance", 
+        "fileName": "09_dance",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/09_dance.ogg"
+    },
+    {
+        "title" :"The Coming Through", 
+        "fileName": "10_the_coming_through",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/10_the_coming_through.ogg"
+    },
+    {
+        "title" :"The March Of The Goblins", 
+        "fileName": "11_the_march_of_the_goblins",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/11_the_march_of_the_goblins.ogg" 
+    },
+    {
+        "title" :"Penguin Planet", 
+        "fileName": "12_penguin_planet",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/12_penguin_planet.ogg"
+    },
+    {
+        "title" :"The Wave", 
+        "fileName": "13_the_wave",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/13_the_wave.ogg"      
+    },
+    {
+        "title" :"Artificial Recreation", 
+        "fileName": "14_artificial_recreation",
+        "extension": "ogg",
+        "length": "04:02",
+        "src": "./assets/media/audio/14_artificial_recreation.ogg"      
+    }
+  ]
+}

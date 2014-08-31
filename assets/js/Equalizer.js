@@ -7,9 +7,11 @@ https://github.com/frequencies
 
 define([
     'text!templates/effect-equalizer.html',
+    'text!data/presets.json',
     'assets/js/Effect.js'
   ], function(
       effectTemplate,
+      presets,
       Effect
   ) {
 
@@ -24,6 +26,7 @@ var Equalizer, _ref, module,
 
     function Equalizer(musicplayer){   
 
+      this.presets = JSON.parse(presets).presets
       this.musicplayer = musicplayer
       this.equalizerEnabled = false
       this.bbEnabled = false
@@ -47,10 +50,29 @@ var Equalizer, _ref, module,
       this.initBassBoost()
       this.initTestFilter()
       this.initView()
+      this.initEventListeners()
     }
 
     Equalizer.prototype.initView = function(){
+
+      var select = $("#preset-select")
+
+      for(var i = 0; i < this.presets.length; i++){
+        var option = document.createElement('option')
+        option.text = this.presets[i].name
+        option.value = this.presets[i].name
+        select.append(option)
+      }
+      
+    }
+
+    Equalizer.prototype.initEventListeners = function(){
       var that = this
+
+      $("#preset-select").change(function(e){
+        var name = e.target.options[e.target.selectedIndex].text
+        that.changePreset(name)
+      })
 
       for(var i = 0; i < this.filterAmount; i++){
         $("#eq-slider-0"+i).on("input change", function(event){
@@ -64,7 +86,7 @@ var Equalizer, _ref, module,
 
       $("#eq-slider-gain").on("input change", function(event){
         that.updateGain(event.target.value, 'frequency')
-        $("#eq-slider-gain-output").html(event.target.value)
+        $("#eq-slider-gain-output").html(event.target.value*100+"%")
       })
 
       $("#filter-frequency").on("input change", function(event){
@@ -131,7 +153,7 @@ var Equalizer, _ref, module,
 
     Equalizer.prototype.initGainNode = function(){
       this.gainNode = this.musicplayer.getContext().createGain() 
-      this.gainNode.gain.value = 0.5
+      this.gainNode.gain.value = 1.0
     }
 
     Equalizer.prototype.initBassBoost = function(){
@@ -148,10 +170,10 @@ var Equalizer, _ref, module,
 
       this.testFilter = this.musicplayer.getContext().createBiquadFilter()
 
-      this.testFilter.Q.value = 1
-      this.testFilter.type = 'peaking'
-      this.testFilter.frequency.value = 5000
-      this.testFilter.gain.value = 30
+      this.testFilter.Q.value = .9
+      this.testFilter.type = 'lowpass'
+      this.testFilter.frequency.value = 350
+      this.testFilter.gain.value = 0
     } 
 
     Equalizer.prototype.initFilters = function(){
@@ -172,7 +194,7 @@ var Equalizer, _ref, module,
 
         if(i > 0){
           this.filters[i-1].connect(this.filters[i])
-          console.log("connected "+(i-1)+" to "+i)
+          // console.log("connected "+(i-1)+" to "+i)
         }
       }
     }    
@@ -213,6 +235,26 @@ var Equalizer, _ref, module,
       }
     }
 
+    Equalizer.prototype.changePreset = function(name){
+      
+      var currentPreset
+
+      for(var i = 0; i < this.presets.length; i++){
+        
+        if(this.presets[i].name == name){
+          currentPreset = this.presets[i]
+        }
+      }
+      
+      for(var i = 0; i < currentPreset.values.length; i++){
+        var val = parseInt(currentPreset.values[i])
+        $("#eq-slider-0"+i)[0].value = val
+        this.updateFilter(val, i)
+        $("#eq-slider-0"+i+"-output").html(val)    
+      }
+
+    }
+
     Equalizer.prototype.connect = function(){
 
       this.musicplayer.getNodeApi().disconnect(0)
@@ -220,12 +262,13 @@ var Equalizer, _ref, module,
       this.bassBoost.disconnect(0)
       this.testFilter.disconnect(0)
 
-      this.musicplayer.getNodeApi().connect(this.gainNode)
-      var lastFilter = this.gainNode
+      
+      var lastFilter = this.musicplayer.getNodeApi()
 
       // blug equalizer
       if(this.equalizerEnabled){
-        lastFilter.connect(this.getBandPassInterface().first)
+        lastFilter.connect(this.gainNode)
+        this.gainNode.connect(this.getBandPassInterface().first)
         lastFilter = this.getBandPassInterface().last
       }
 

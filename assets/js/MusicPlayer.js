@@ -7,9 +7,11 @@ https://github.com/frequencies
 
 define([
   'text!templates/playlist-item.html',
+  'text!data/defaultTracks.json',
   'assets/js/Equalizer.js',
   ], function(
     playlistItem,
+    defaultTracks,
     Equalizer
   ) {
 
@@ -23,6 +25,7 @@ define([
 
     function MusicPlayer(){   
       this.playlistItemTemplate = playlistItem
+      this.defaultTracks = JSON.parse(defaultTracks)
 
       this.playing = false
       this.shuffle = false
@@ -596,138 +599,8 @@ define([
       return template
     }
 
-    // TODO:
-    // save as JSON file and parse -> save/load playlists
     MusicPlayer.prototype.loadDefaultTracks = function(){
-      
-      var tracks = Array()
-      tracks.push({
-        title :"Audiocheck", 
-        fileName: "audiocheck",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "audiocheck" + "."+"ogg"
-      });
-
-      tracks.push({
-        title :"Icarus Grounded", 
-        fileName: "02_icarus_grounded",
-        extension: "ogg",
-        length: "03:52",
-        folder: this.mediaPath,
-        src: this.mediaPath + "02_icarus_grounded" + "."+"ogg"
-      });
-
-      tracks.push({
-        title :"Monkey Bones", 
-        fileName: "03_monkey_bones",
-        extension: "ogg",
-        length: "04:24",
-        folder: this.mediaPath,
-        src: this.mediaPath + "03_monkey_bones" + "."+"ogg"
-      });
-
-      tracks.push({
-        title :"George", 
-        fileName: "04_george",
-        extension: "ogg",
-        length: "05:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "04_george" + "."+"ogg"
-      });
-
-      tracks.push({
-        title :"Inside", 
-        fileName: "05_inside",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "05_inside" + "."+"ogg"
-      });     
-
-      tracks.push({
-        title :"Fallen Trees", 
-        fileName: "06_fallen_trees",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "06_fallen_trees" + "."+"ogg"
-      });
-
-      tracks.push({
-        title :"Whispered", 
-        fileName: "07_whispered",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "07_whispered" + "."+"ogg"
-      });
-
-      tracks.push({
-        title :"Mr Schwinn", 
-        fileName: "08_mr_schwinn",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "08_mr_schwinn" + "."+"ogg"
-      });
-
-      tracks.push({
-        title :"Dance", 
-        fileName: "09_dance",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "09_dance" + "."+"ogg"
-      });
-
-      tracks.push({
-        title :"The Coming Through", 
-        fileName: "10_the_coming_through",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "10_the_coming_through" + "."+"ogg"
-      });
-
-      tracks.push({
-        title :"The March Of The Goblins", 
-        fileName: "11_the_march_of_the_goblins",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "11_the_march_of_the_goblins" + "."+"ogg"
-      });    
-
-      tracks.push({
-        title :"Penguin Planet", 
-        fileName: "12_penguin_planet",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "12_penguin_planet" + "."+"ogg"
-      });   
-
-      tracks.push({
-        title :"The Wave", 
-        fileName: "13_the_wave",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "13_the_wave" + "."+"ogg"
-      });   
-
-      tracks.push({
-        title :"Artificial Recreation", 
-        fileName: "14_artificial_recreation",
-        extension: "ogg",
-        length: "04:02",
-        folder: this.mediaPath,
-        src: this.mediaPath + "14_artificial_recreation" + "."+"ogg"
-      });                  
-
-      this.setNewPlaylist(tracks)
+      this.setNewPlaylist(this.defaultTracks.tracks)
     }
 
     MusicPlayer.prototype.getContext = function(){
