@@ -167,7 +167,7 @@ var Equalizer, _ref, module,
       this.bassBoost.Q.value = .8
       this.bassBoost.type = 'peaking'
       this.bassBoost.frequency.value = 50
-      this.bassBoost.gain.value = 10      
+      this.bassBoost.gain.value = 7      
     }
 
 
