@@ -21,7 +21,7 @@ var Effect, _ref, module,
     //__extends(ImageProcessing, CanvasGui);
 // --------------------------------------
 
-    Effect.CONTAINER = "#effects-container";
+    Effect.CONTAINER = "#effects-content";
 
     function Effect(musicplayer){   
       this.muted = true

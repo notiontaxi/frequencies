@@ -19,12 +19,14 @@ var Visualization, _ref, module,
     //__extends(ImageProcessing, CanvasGui);
 // --------------------------------------
 
+    Visualization.prototype.FPS = 20
 
     function Visualization(containerIdentifier, musicPlayer, effects){ 
 
       this.musicPlayer = musicPlayer
       this.effects = effects
       this.container = $("#canvas-live-container")
+      this.renderer = this.getRenderer()
     }
 
 
@@ -40,8 +42,7 @@ var Visualization, _ref, module,
       this.timeout = setTimeout(function(){this.resize()}.bind(this),200);
     }
 
-    Visualization.prototype.initialize = function(){
-      this.initRenderer()
+    Visualization.prototype.initializeScene = function(){
       this.initScene()
       this.addSceneObjects()
     }
@@ -50,15 +51,34 @@ var Visualization, _ref, module,
       var that = this 
       this.intervalId = setInterval(function() {
         that.aniamationId = requestAnimationFrame(function(){that.renderScene()})
-      }, 25);       
+      }, 1000/Visualization.prototype.FPS);       
     }
 
     Visualization.prototype.resize = function(){
       console.error("Implement this function in child class!")
     }
 
-    Visualization.prototype.initRenderer = function(){
-      console.error("Implement this function in child class!")
+    Visualization.prototype.getRenderer = function(){
+
+      if(!Visualization.prototype._renderer){
+        console.log("create renderer")
+        if(!!this.canvas)
+          this.canvas.remove()
+
+        var rendererOptions = {
+            antialias: true
+          , 
+        }
+
+        Visualization.prototype._renderer = new THREE.WebGLRenderer(rendererOptions)
+        Visualization.prototype._renderer.setSize(window.innerWidth, window.innerHeight)
+
+        this.canvas = Visualization.prototype._renderer.domElement
+        this.canvas.id = "the-canvas"
+        this.container.append($(this.canvas))
+      }
+
+      return Visualization.prototype._renderer
     }
 
     Visualization.prototype.initScene = function(){
@@ -76,18 +96,18 @@ var Visualization, _ref, module,
     Visualization.prototype.renderScene = function(){
       if(this.musicPlayer.isPlaying() || this.effects.activity()){
         this.updateScene()
-        this.renderer.render(this.scene, this.camera)        
+        // console.log(this.camera)
+        this.renderer.render(this.scene, this.camera)  
       }
-      
     }
 
     Visualization.prototype.stop = function(){
-      console.log("stop")
+      console.log("stop animation")
       cancelAnimationFrame(this.animationId)
       clearInterval(this.intervalId)
-      this.renderer.domElement.addEventListener('dblclick', null, false)
-      $("#the-canvas").remove()
-      // this.scene = this.projector = this.camera = null
+      var that = this
+      setTimeout(function(){that.scene = that.projector = that.camera = null},200);
+      
     }
 
   

@@ -114,7 +114,7 @@ body {
   bottom: 40px;
 }
 .fade-over-panel.left-sided {
-  width: 465px;
+  width: 475px;
   left: -404px;
   -webkit-transition: left 1s;
   transition: left 1s;
@@ -159,12 +159,12 @@ body {
   border-top-left-radius: 20px;
   border-left: 2px solid #aaaaaa;
   float: right;
-  width: 330px;
+  width: 332px;
 }
 .quarter-button {
   z-index: 1010;
-  background-color: #aaaaaa;
-  color: #333333;
+  background-color: #316c74;
+  color: aliceblue;
   border: none;
   width: 65px;
   height: 40px;
@@ -215,6 +215,7 @@ body {
   min-height: 200px;
 }
 #effects-container select {
+  width: 100%;
   background-color: #A6B6B8;
   width: 100px;
   padding: 5px;
@@ -548,7 +549,7 @@ body {
 .onoffswitch-inner:after {
   content: "OFF";
   padding-right: 10px;
-  background-color: #A6B6B8;
+  background-color: #9B0000;
   color: #FFFFFF;
   text-align: right;
 }

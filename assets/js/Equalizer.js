@@ -112,7 +112,12 @@ var Equalizer, _ref, module,
             that.equalizerEnabled = false
           }
 
-          setTimeout(function(){that.connect();}, 400)        
+          setTimeout(function(){that.connect();}, 400)   
+
+          if(window.isTouchDevice){
+            setTimeout(function(){$("#effects-container").niceScroll({cursorborder:"",cursorcolor:"#FFF",cursorwidth:"8px",  autohidemode:true})   }, 1000)  
+          }   
+          
         }
       )
 

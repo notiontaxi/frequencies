@@ -32,17 +32,17 @@ var ShaderVisualization, _ref, module,
 
     ShaderVisualization.prototype.waitForPlayer = function(){
       if(!!this.musicPlayer.frequencies){
-        this.childInit()
+        this.initialize()
       }else{
         var that = this
-        setTimeout(function() {that.waitForPlayer()}, 100);
+        setTimeout(function() {that.waitForPlayer()}, 250);
       }
     }
 
-    ShaderVisualization.prototype.childInit = function(){
+    ShaderVisualization.prototype.initialize = function(){
       this.startTime = Date.now()
       this.initUniforms()
-      this.initialize()
+      this.initializeScene()
       this.activateResizeListener()
 
       this.oldBaseVal = 0
@@ -74,24 +74,6 @@ var ShaderVisualization, _ref, module,
 
       this.uniforms.resolution.value.x = window.innerWidth
       this.uniforms.resolution.value.y = window.innerHeight
-    }
-
-    ShaderVisualization.prototype.initRenderer = function(){
-
-      if(!!this.canvas)
-        this.canvas.remove()
-
-      var rendererOptions = {
-          antialias: true
-        , 
-      }
-
-      this.renderer = new THREE.WebGLRenderer(rendererOptions)
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
-
-      this.canvas = this.renderer.domElement
-      this.canvas.id = "the-canvas"
-      this.container.append($(this.canvas))
     }
 
     ShaderVisualization.prototype.initScene = function(){

@@ -285,7 +285,11 @@ define([
       if(this.playing){
         this.pauseAction()
       }else{
-        this.playAction()        
+        if(!this.buffer){
+          this.switchBuffer(0)
+        }else{
+          this.playAction() 
+        }       
       }
     }
 
@@ -296,7 +300,7 @@ define([
         $('.action-toggle-mute').removeClass("active")      
       }else{
         this.oldVolume = (this.gainMusicNode.gain.value)
-        this.changeVolume(-1)
+        this.changeVolume(0)
         this.muted = true
         $('.action-toggle-mute').addClass("active")  
       }

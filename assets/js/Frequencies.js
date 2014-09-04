@@ -40,7 +40,7 @@ var Frequencies, _ref, module,
       this.gui = new GUI(containerIdentifier)
       this.musicPlayer = new MusicPlayer()
       this.effects = new Effects(this.musicPlayer)
-      this.visualization = new ShaderVisualizationSimple(containerIdentifier, this.musicPlayer, this.effects)
+      this.visualization = new PlaneVisualization(containerIdentifier, this.musicPlayer, this.effects)
 
       this.initialize()
       
@@ -55,27 +55,31 @@ var Frequencies, _ref, module,
 
       var select = $("#visu-select");
 
-      var option = document.createElement('option')
-      option.innerHTML = "Visualization: Shader"
-      option.value = 0
-      select.append(option)
-
-      var option = document.createElement('option')
-      option.innerHTML = "Visualization: Plane"
-      option.value = 1
-      select.append(option)    
-
       if(!window.isTouchDevice){
         var option = document.createElement('option')
-        option.innerHTML = "Visualization: Shader with noise"
+        option.innerHTML = "Plane"
+        option.value = 0
+        select.append(option)   
+
+        var option = document.createElement('option')
+        option.innerHTML = "Ball"
+        option.value = 1
+        select.append(option)
+
+        var option = document.createElement('option')
+        option.innerHTML = "Morphing ball"
         option.value = 2
-        select.append(option)    
+        select.append(option)  
+
+        var that = this
+        select.change(function(e){
+          that.changeVisualization(this.selectedIndex)
+        })            
+      }else{
+        select.remove()
       }
       
-      var that = this
-      select.change(function(e){
-        that.changeVisualization(this.selectedIndex)
-      })  
+
 
 
     }
@@ -85,11 +89,11 @@ var Frequencies, _ref, module,
       switch(index){
         case 0:
             this.visualization.stop()
-            this.visualization = new ShaderVisualizationSimple(this.containerIdentifier, this.musicPlayer, this.effects)
+            this.visualization = new PlaneVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
             break
         case 1: 
             this.visualization.stop()
-            this.visualization = new PlaneVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
+            this.visualization = new ShaderVisualizationSimple(this.containerIdentifier, this.musicPlayer, this.effects)
             break
         case 2: 
             this.visualization.stop()

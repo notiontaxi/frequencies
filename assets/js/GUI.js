@@ -44,6 +44,10 @@ var GUI, _ref, module,
       $(containerIdentifier).append($(canvasContainer))
       
       this.initialize()
+      
+      if(window.isTouchDevice){
+        this.smartphoneOptions()
+      }
     }
 
     GUI.prototype.initialize = function(){
@@ -53,6 +57,10 @@ var GUI, _ref, module,
             $(refId).toggleClass("slide-out")
           }
         )
+    }
+
+    GUI.prototype.smartphoneOptions = function(){
+      $("#effects-container").css({'max-height': '377px'})
     }
 
 
