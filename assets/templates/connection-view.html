@@ -1,0 +1,220 @@
+<div id="connection-view">
+    <div id="audio-nodes">
+      <i id="link-button" style="left:170px; top:50px" class="button node source">Source source</i>
+      <i id="link-button" style="left:180px; top:85px" class="button node content">buffer</i>
+
+      <i id="link-button" style="left:340px; top:50px" class="button node">Gain node</i>
+
+      <!-- Equalizer -->
+      <i id="link-button" style="left:10px; top:185px" class="button node">Gain node</i>
+      <i id="link-button" style="left:15px; top:240px" class="button node filter">32 Hz</i>
+      <i id="link-button" style="left:15px; top:275px" class="button node filter">64 Hz</i>
+      <i id="link-button" style="left:15px; top:310px" class="button node filter">125 Hz</i>
+      <i id="link-button" style="left:15px; top:345px" class="button node filter">250 Hz</i>
+      <i id="link-button" style="left:15px; top:380px" class="button node filter">500 Hz</i>
+      <i id="link-button" style="left:15px; top:415px" class="button node filter">1 kHz</i>
+      <i id="link-button" style="left:15px; top:450px" class="button node filter">2 kHz</i>
+      <i id="link-button" style="left:15px; top:485px" class="button node filter">4 kHz</i>
+      <i id="link-button" style="left:15px; top:520px" class="button node filter">8 kHz</i>
+      <i id="link-button" style="left:15px; top:555px" class="button node filter">16 kHz</i>
+
+      <!-- Bass boost -->
+      <i id="link-button" style="left:185px; top:240px" class="button node filter">50 Hz</i>
+
+      <!-- Filter -->
+      <i id="link-button" style="left:350px; top:240px" class="button node filter">lowpass</i>
+      <i id="link-button" style="left:350px; top:275px" class="button node filter">highpass</i>
+      <i id="link-button" style="left:350px; top:310px" class="button node filter">bandpass</i>
+      <i id="link-button" style="left:350px; top:345px" class="button node filter">lowshelf</i>
+      <i id="link-button" style="left:350px; top:380px" class="button node filter">highshelf</i>
+      <i id="link-button" style="left:350px; top:415px" class="button node filter">peaking</i>
+      <i id="link-button" style="left:350px; top:450px" class="button node filter">notch</i>
+      <i id="link-button" style="left:350px; top:485px" class="button node filter">allpass</i>
+
+      <!-- Microphone -->
+      <i id="link-button" style="left:530px; top:185px" class="button node">Gain node</i>
+      <i id="link-button" style="left:535px; top:240px" class="button node filter">Media stream source</i>
+
+      <!-- Sine wave -->
+      <i id="link-button" style="left:710px; top:185px" class="button node">Gain node</i>
+      <i id="link-button" style="left:715px; top:240px" class="button node filter">Oscillator</i>          
+
+      <!-- Visual and acoustic output -->
+      <i id="link-button" style="left:310px; top:630px" class="button node analyser">Analyser</i>
+      <i id="link-button" style="left:425px; top:630px" class="button node destination">Destination</i>
+
+      <!-- links -->
+      <svg height="1000" width="1000">
+
+      <!-- Top connection -->
+        <line id="test" x1="280" y1="75" x2="450" y2="75" class="active"/>
+        <line id="test" x1="400" y1="70" x2="400" y2="170" class="active"/> 
+
+        <line id="test" x1="400" y1="170" x2="850" y2="170" class="direct"/>
+        <line id="test" x1="850" y1="170" x2="850" y2="610" class="direct"/>
+        <line id="test" x1="850" y1="610" x2="425" y2="610" class="direct"/>
+
+        <line id="test" x1="400" y1="170" x2="585" y2="170" class="microphone"/>
+        <line id="test" x1="585" y1="170" x2="585" y2="610" class="microphone"/>
+        <line id="test" x1="585" y1="610" x2="425" y2="610" class="microphone"/>
+
+        <line id="test" x1="400" y1="170" x2="770" y2="170" class="wave"/>
+        <line id="test" x1="770" y1="170" x2="770" y2="610" class="wave"/>
+        <line id="test" x1="770" y1="610" x2="425" y2="610" class="wave"/>  
+
+        <line id="test" x1="400" y1="170" x2="65" y2="170" class="equ"/>
+        <line id="test" x1="65" y1="170" x2="65" y2="610" class="equ"/>
+        <line id="test" x1="65" y1="610" x2="140" y2="610" class="equ"/> 
+        <line id="test" x1="140" y1="610" x2="425" y2="610" class="equ-direct"/> 
+
+        <line id="test" x1="160" y1="260" x2="200" y2="260" class="equ-to-bass"/>
+        <line id="test" x1="160" y1="260" x2="160" y2="610" class="equ-to-bass"/>
+
+        <line id="test" x1="140" y1="610" x2="370" y2="610" class="equ-to-filter"/>
+        <line id="test" x1="310" y1="380" x2="310" y2="610" class="equ-to-filter"/>    
+        <line id="test" x1="310" y1="380" x2="330" y2="380" class="equ-to-filter"/>
+
+        <line id="test" x1="250" y1="260" x2="310" y2="260" class="bass-to-filter"/>
+        <line id="test" x1="310" y1="260" x2="310" y2="380" class="bass-to-filter"/>
+
+        <line id="test" x1="400" y1="170" x2="310" y2="170" class="filter-direct"/>
+        <line id="test" x1="310" y1="170" x2="310" y2="380" class="filter-direct"/>
+
+        <line id="test" x1="510" y1="610" x2="370" y2="610" class="filter"/>
+        <line id="test" x1="510" y1="380" x2="510" y2="610" class="filter"/>
+        <line id="test" x1="510" y1="380" x2="480" y2="380" class="filter"/>
+
+        <line id="test" x1="330" y1="380" x2="330" y2="255" class="lowpass-in"/>
+        <line id="test" x1="330" y1="255" x2="360" y2="255" class="lowpass-in"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="255" class="lowpass-out"/>
+        <line id="test" x1="480" y1="255" x2="360" y2="255" class="lowpass-out"/>
+
+        <line id="test" x1="330" y1="380" x2="330" y2="290" class="highpass-in"/>
+        <line id="test" x1="330" y1="290" x2="360" y2="290" class="highpass-in"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="290" class="highpass-out"/>
+        <line id="test" x1="480" y1="290" x2="360" y2="290" class="highpass-out"/>
+
+        <line id="test" x1="330" y1="380" x2="330" y2="325" class="bandpass-in"/>
+        <line id="test" x1="330" y1="325" x2="360" y2="325" class="bandpass-in"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="325" class="bandpass-out"/>
+        <line id="test" x1="480" y1="325" x2="360" y2="325" class="bandpass-out"/>
+
+        <line id="test" x1="330" y1="380" x2="330" y2="360" class="lowshelf-in"/>
+        <line id="test" x1="330" y1="360" x2="360" y2="360" class="lowshelf-in"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="360" class="lowshelf-out"/>
+        <line id="test" x1="480" y1="360" x2="360" y2="360" class="lowshelf-out"/>                                               
+        <line id="test" x1="330" y1="380" x2="330" y2="395" class="highshelf-in"/>
+        <line id="test" x1="330" y1="395" x2="395" y2="395" class="highshelf-in"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="395" class="highshelf-out"/>
+        <line id="test" x1="480" y1="395" x2="395" y2="395" class="highshelf-out"/>
+
+        <line id="test" x1="330" y1="380" x2="330" y2="430" class="peaking-in"/>
+        <line id="test" x1="330" y1="430" x2="430" y2="430" class="peaking-in"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="430" class="peaking-out"/>
+        <line id="test" x1="480" y1="430" x2="430" y2="430" class="peaking-out"/>  
+
+        <line id="test" x1="330" y1="380" x2="330" y2="465" class="notch-in"/>
+        <line id="test" x1="330" y1="465" x2="465" y2="465" class="notch-in"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="465" class="notch-out"/>
+        <line id="test" x1="480" y1="465" x2="465" y2="465" class="notch-out"/>            
+
+        <line id="test" x1="330" y1="380" x2="330" y2="500" class="allpass-in"/>
+        <line id="test" x1="330" y1="500" x2="480" y2="500" class="allpass-in"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="500" class="allpass-out"/>
+        <line id="test" x1="480" y1="500" x2="480" y2="500" class="allpass-out"/>                                     
+
+        <line id="test" x1="400" y1="170" x2="240" y2="170" class="bass-direct"/>
+        <line id="test" x1="240" y1="170" x2="240" y2="610" class="bass-direct"/>
+        <line id="test" x1="240" y1="610" x2="425" y2="610" class="bass-direct"/> 
+
+        <!-- Bottom connection -->
+        <line id="test" x1="425" y1="610" x2="425" y2="625" class="active"/>
+        <line id="test" x1="360" y1="625" x2="490" y2="625" class="active"/>
+        <line id="test" x1="360" y1="625" x2="360" y2="650" class="active"/>
+        <line id="test" x1="490" y1="625" x2="490" y2="650" class="active"/>
+      
+
+        <!-- ACTIVES -->
+        <line id="test" x1="400" y1="170" x2="585" y2="170" class="microphone active-link"/>
+        <line id="test" x1="585" y1="170" x2="585" y2="610" class="microphone active-link"/>
+        <line id="test" x1="585" y1="610" x2="425" y2="610" class="microphone active-link"/>
+
+        <line id="test" x1="400" y1="170" x2="770" y2="170" class="wave active-link"/>
+        <line id="test" x1="770" y1="170" x2="770" y2="610" class="wave active-link"/>
+        <line id="test" x1="770" y1="610" x2="425" y2="610" class="wave active-link"/>
+
+        <line id="test" x1="400" y1="170" x2="65" y2="170" class="equ active-link"/>
+        <line id="test" x1="65" y1="170" x2="65" y2="610" class="equ active-link"/>
+        <line id="test" x1="65" y1="610" x2="140" y2="610" class="equ active-link"/>
+        <line id="test" x1="140" y1="610" x2="425" y2="610" class="equ-direct active-link"/>
+
+        <line id="test" x1="160" y1="260" x2="200" y2="260" class="equ-to-bass active-link"/>
+        <line id="test" x1="160" y1="260" x2="160" y2="610" class="equ-to-bass active-link"/>
+
+        <line id="test" x1="140" y1="610" x2="310" y2="610" class="equ-to-filter active-link"/>
+        <line id="test" x1="310" y1="380" x2="310" y2="610" class="equ-to-filter active-link"/>    
+
+        <line id="test" x1="250" y1="260" x2="310" y2="260" class="bass-to-filter active-link"/>
+        <line id="test" x1="310" y1="260" x2="310" y2="380" class="bass-to-filter active-link"/>
+
+        <line id="test" x1="310" y1="380" x2="330" y2="380" class="filter active-link"/>
+        <line id="test" x1="510" y1="610" x2="425" y2="610" class="filter active-link"/>
+        <line id="test" x1="510" y1="380" x2="510" y2="610" class="filter active-link"/>
+        <line id="test" x1="510" y1="380" x2="480" y2="380" class="filter active-link"/>   
+        
+        <line id="test" x1="280" y1="260" x2="310" y2="260" class="bass-to-destination active-link"/> 
+        <line id="test" x1="310" y1="260" x2="310" y2="610" class="bass-to-destination active-link"/> 
+        <line id="test" x1="310" y1="610" x2="425" y2="610" class="bass-to-destination active-link"/>  
+
+        <line id="test" x1="400" y1="170" x2="850" y2="170" class="direct active-link"/>
+        <line id="test" x1="850" y1="170" x2="850" y2="610" class="direct active-link"/>
+        <line id="test" x1="850" y1="610" x2="425" y2="610" class="direct active-link"/>   
+
+        <line id="test" x1="330" y1="380" x2="330" y2="255" class="lowpass-in active-link"/>
+        <line id="test" x1="330" y1="255" x2="360" y2="255" class="lowpass-in active-link"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="255" class="lowpass-out active-link"/>
+        <line id="test" x1="480" y1="255" x2="360" y2="255" class="lowpass-out active-link"/>
+
+        <line id="test" x1="330" y1="380" x2="330" y2="290" class="highpass-in active-link"/>
+        <line id="test" x1="330" y1="290" x2="360" y2="290" class="highpass-in active-link"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="290" class="highpass-out active-link"/>
+        <line id="test" x1="480" y1="290" x2="360" y2="290" class="highpass-out active-link"/>
+
+        <line id="test" x1="330" y1="380" x2="330" y2="325" class="bandpass-in active-link"/>
+        <line id="test" x1="330" y1="325" x2="360" y2="325" class="bandpass-in active-link"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="325" class="bandpass-out active-link"/>
+        <line id="test" x1="480" y1="325" x2="360" y2="325" class="bandpass-out active-link"/>
+
+        <line id="test" x1="330" y1="380" x2="330" y2="360" class="lowshelf-in active-link"/>
+        <line id="test" x1="330" y1="360" x2="360" y2="360" class="lowshelf-in active-link"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="360" class="lowshelf-out active-link"/>
+        <line id="test" x1="480" y1="360" x2="360" y2="360" class="lowshelf-out active-link"/>                                               
+        <line id="test" x1="330" y1="380" x2="330" y2="395" class="highshelf-in active-link"/>
+        <line id="test" x1="330" y1="395" x2="395" y2="395" class="highshelf-in active-link"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="395" class="highshelf-out active-link"/>
+        <line id="test" x1="480" y1="395" x2="395" y2="395" class="highshelf-out active-link"/>
+
+        <line id="test" x1="330" y1="380" x2="330" y2="430" class="peaking-in active-link"/>
+        <line id="test" x1="330" y1="430" x2="430" y2="430" class="peaking-in active-link"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="430" class="peaking-out active-link"/>
+        <line id="test" x1="480" y1="430" x2="430" y2="430" class="peaking-out active-link"/>  
+
+        <line id="test" x1="330" y1="380" x2="330" y2="465" class="notch-in active-link"/>
+        <line id="test" x1="330" y1="465" x2="465" y2="465" class="notch-in active-link"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="465" class="notch-out active-link"/>
+        <line id="test" x1="480" y1="465" x2="465" y2="465" class="notch-out active-link"/>            
+
+        <line id="test" x1="330" y1="380" x2="330" y2="500" class="allpass-in active-link"/>
+        <line id="test" x1="330" y1="500" x2="480" y2="500" class="allpass-in active-link"/>
+        <line id="test" x1="480" y1="380" x2="480" y2="500" class="allpass-out active-link"/>
+        <line id="test" x1="480" y1="500" x2="480" y2="500" class="allpass-out active-link"/>                   
+
+        <line id="test" x1="400" y1="170" x2="240" y2="170" class="source-bass active-link"/>
+        <line id="test" x1="240" y1="170" x2="240" y2="260" class="source-bass active-link"/>
+
+        <line id="test" x1="400" y1="170" x2="310" y2="170" class="source-filter active-link"/>
+        <line id="test" x1="310" y1="170" x2="310" y2="380" class="source-filter active-link"/>
+
+      </svg>
+    </div>
+</div>

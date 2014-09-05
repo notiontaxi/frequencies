@@ -31,7 +31,7 @@ var PlaneVisualization, _ref, module,
     }
 
     PlaneVisualization.prototype.resize = function(){
-      this.initialize()
+      this.initializeScene()
     }
 
     PlaneVisualization.prototype.initScene = function(){

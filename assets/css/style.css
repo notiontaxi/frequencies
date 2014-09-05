@@ -10,6 +10,32 @@ body {
 #page-container {
   min-width: 500px;
 }
+#connection-view {
+  margin-left: 30px;
+  margin-top: 5px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 50;
+  background-color: #333333;
+}
+line {
+  stroke: #ffffff;
+  stroke-width: 2;
+  z-index: 1;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+line.active {
+  z-index: 111;
+  stroke: #ff1414;
+}
+line.active-link {
+  z-index: 111;
+  stroke: #ff1414;
+}
 .canvas-container {
   z-index: 1;
   width: 100%;
@@ -439,6 +465,7 @@ body {
   transition: all 0.4s ease-out;
 }
 .button.link {
+  z-index: 100;
   background-color: whitesmoke;
   float: left;
   padding: 6px 4px 3px 4px;
@@ -460,6 +487,70 @@ body {
   padding: 0px;
   margin: 0px;
   font-size: 11pt;
+}
+.button.node {
+  background-color: #D0D0D0;
+  width: auto;
+  height: auto;
+  padding: 7px;
+  margin: 4px;
+  position: absolute;
+  font-size: 120%;
+}
+.button.node.content {
+  font-size: 100%;
+  padding: 8px;
+  background-color: #a0a0a0;
+}
+.button.node.destination {
+  background-color: #00856A;
+  color: whitesmoke;
+}
+.button.node.source {
+  background-color: #00856A;
+  color: whitesmoke;
+}
+.button.node.analyser {
+  background-color: #B48200;
+  color: whitesmoke;
+}
+.button.node.filter {
+  font-family: sans-serif;
+  width: 70px;
+  font-size: 90%;
+  padding: 4px 12px 4px 12px;
+}
+.button.node {
+  background-color: #D0D0D0;
+  width: auto;
+  height: auto;
+  padding: 7px;
+  margin: 4px;
+  position: absolute;
+  font-size: 120%;
+}
+.button.node.content {
+  font-size: 100%;
+  padding: 8px;
+  background-color: #a0a0a0;
+}
+.button.node.destination {
+  background-color: #00856A;
+  color: whitesmoke;
+}
+.button.node.source {
+  background-color: #00856A;
+  color: whitesmoke;
+}
+.button.node.analyser {
+  background-color: #B48200;
+  color: whitesmoke;
+}
+.button.node.filter {
+  font-family: sans-serif;
+  width: 70px;
+  font-size: 90%;
+  padding: 4px 12px 4px 12px;
 }
 .color-fade.button:hover {
   border: 2px solid #dddddd;

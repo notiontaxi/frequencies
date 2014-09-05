@@ -13,7 +13,8 @@ define([
   'js/ShaderVisualization',
   'js/ShaderVisualizationSimple',
   'js/Effects', 
-  'js/GUI'
+  'js/GUI',
+  'js/ConnectionView'
   ], function(
     Test,
     MusicPlayer,
@@ -22,7 +23,8 @@ define([
     ShaderVisualization,
     ShaderVisualizationSimple,
     Effects,
-    GUI
+    GUI,
+    ConnectionView
   ) {
 
 var Frequencies, _ref, module,
@@ -36,14 +38,25 @@ var Frequencies, _ref, module,
 
     function Frequencies(containerIdentifier){   
 
+      var jump = window.location.hash.substr(1)
+
       this.containerIdentifier = containerIdentifier
       this.gui = new GUI(containerIdentifier)
       this.musicPlayer = new MusicPlayer()
       this.effects = new Effects(this.musicPlayer)
-      this.visualization = new PlaneVisualization(containerIdentifier, this.musicPlayer, this.effects)
+      
+
+      new ConnectionView()
 
       this.initialize()
-      
+
+
+      if(!jump){
+        this.visualization = new PlaneVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
+      }else{
+        $("#visu-select")[0].selectedIndex = jump
+        this.changeVisualization(parseInt(jump))
+      }
     }
 
     Frequencies.prototype.initialize = function(){
@@ -71,6 +84,11 @@ var Frequencies, _ref, module,
         option.value = 2
         select.append(option)  
 
+        var option = document.createElement('option')
+        option.innerHTML = "Connection view"
+        option.value = 3
+        select.append(option)          
+
         var that = this
         select.change(function(e){
           that.changeVisualization(this.selectedIndex)
@@ -78,27 +96,33 @@ var Frequencies, _ref, module,
       }else{
         select.remove()
       }
-      
-
-
-
     }
 
     Frequencies.prototype.changeVisualization = function(index){
-      console.log("index: "+index)
+
+      if(!!this.visualization){
+        this.visualization.stop()
+      }
+
       switch(index){
         case 0:
-            this.visualization.stop()
+            $("#connection-view").hide()
+            $("#canvas-live-container").show()
             this.visualization = new PlaneVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
             break
         case 1: 
-            this.visualization.stop()
+            $("#connection-view").hide()
+            $("#canvas-live-container").show()
             this.visualization = new ShaderVisualizationSimple(this.containerIdentifier, this.musicPlayer, this.effects)
             break
         case 2: 
-            this.visualization.stop()
+            $("#connection-view").hide()
+            $("#canvas-live-container").show()
             this.visualization = new ShaderVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
             break
+        case 3:
+            $("#canvas-live-container").hide()
+            $("#connection-view").show()
       }
 
     }    
