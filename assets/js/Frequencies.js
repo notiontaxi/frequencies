@@ -10,8 +10,8 @@ define([
   'js/MusicPlayer',
   'js/Visualization',
   'js/PlaneVisualization',
-  'js/ShaderVisualization',
-  'js/ShaderVisualizationSimple',
+  'js/MorphingBallVisualization',
+  'js/BallVisualization',
   'js/Effects', 
   'js/GUI',
   'js/ConnectionView'
@@ -20,8 +20,8 @@ define([
     MusicPlayer,
     Visualization,
     PlaneVisualization,
-    ShaderVisualization,
-    ShaderVisualizationSimple,
+    MorphingBallVisualization,
+    BallVisualization,
     Effects,
     GUI,
     ConnectionView
@@ -113,12 +113,12 @@ var Frequencies, _ref, module,
         case 1: 
             $("#connection-view").hide()
             $("#canvas-live-container").show()
-            this.visualization = new ShaderVisualizationSimple(this.containerIdentifier, this.musicPlayer, this.effects)
+            this.visualization = new BallVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
             break
         case 2: 
             $("#connection-view").hide()
             $("#canvas-live-container").show()
-            this.visualization = new ShaderVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
+            this.visualization = new MorphingBallVisualization(this.containerIdentifier, this.musicPlayer, this.effects)
             break
         case 3:
             $("#canvas-live-container").hide()
