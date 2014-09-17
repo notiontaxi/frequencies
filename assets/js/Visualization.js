@@ -107,7 +107,6 @@ var Visualization, _ref, module,
       clearInterval(this.intervalId)
       var that = this
       setTimeout(function(){that.scene = that.projector = that.camera = null},200);
-      
     }
 
   

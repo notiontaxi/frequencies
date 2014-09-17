@@ -47,10 +47,13 @@ define([
 
       this.pausedAt = this.startedAt = 0
 
+
       this.frequenciesAmount = window.uniformAmount
 
       this.initialize()
       
+      this.frequencies =  new Uint8Array(this.analyser.frequencyBinCount)
+
       this.addEventListeners()
       this.addPlaylistListeners()
     }
@@ -132,9 +135,13 @@ define([
         // https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
         this.analyser = this.context.createAnalyser()
         // Is a double value representing the averaging constant with the last analysis frame.
-        this.analyser.smoothingTimeConstant = 0.8
+        this.analyser.smoothingTimeConstant = 0.5
         // Is an unsigned long value representing the size of the Fast Fourier Transform to be used to determine the frequency domain.
         this.analyser.fftSize = this.frequenciesAmount*2
+
+        // otherwise the max in the lower frequencies would be touched all the time
+        this.analyser.maxDecibels = -10
+        this.analyser.minDecibels = -100
 
         // create a buffer source node
         this.sourceNode = this.context.createBufferSource()
@@ -179,31 +186,15 @@ define([
 
     MusicPlayer.prototype.initAudioProcess = function(){
       var that = this
-
       this.javascriptNode.onaudioprocess = function() {
-        // get the average for the first channel
-        var array =  new Uint8Array(that.analyser.frequencyBinCount);
-        that.analyser.getByteFrequencyData(array);
-        that.frequencies = array
-        // drawSpectrum(array);
-        // console.log(array)
-        // [255, 255, 207, 201, 216, 213, 184, 165, 162, 154, 135, 115, 107, 97, 60, 0] 
-
+          that.analyser.getByteFrequencyData(that.frequencies);
       }      
-    }
-
-    MusicPlayer.prototype.addEventListenerToSourceNode = function(){
-      // var that = this
-      // this.sourceNode.onended = function(){
-      //   if(parseInt(that.sourceNode.context.currentTime) >= parseInt(that.sourceNode.buffer.duration))
-      //     that.endedAction()
-      // }
     }
 
     MusicPlayer.prototype.changeVolume = function(volume, maxVolume){
       if(maxVolume){
         var fraction = parseInt(volume) / parseInt(maxVolume)
-        // x*x curve (x-squared)  value between -1 and 1
+        // x*x curve (x-squared)  value between 0 and 1
         this.gainMusicNode.gain.value = (fraction * fraction )
       }else{
          this.gainMusicNode.gain.value = volume
@@ -233,7 +224,6 @@ define([
       // create new sourcenode and link to existing buffer
       this.sourceNode = this.context.createBufferSource()
       this.sourceNode.buffer = this.buffer
-      this.addEventListenerToSourceNode()
       this.connectNodes()
 
       if (!this.sourceNode.start){

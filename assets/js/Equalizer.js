@@ -164,10 +164,10 @@ var Equalizer, _ref, module,
     Equalizer.prototype.initBassBoost = function(){
       var context = this.musicplayer.getContext()
       this.bassBoost = context.createBiquadFilter()
-      this.bassBoost.Q.value = .8
+      this.bassBoost.Q.value = .2
       this.bassBoost.type = 'peaking'
-      this.bassBoost.frequency.value = 50
-      this.bassBoost.gain.value = 7      
+      this.bassBoost.frequency.value = 20
+      this.bassBoost.gain.value = 10      
     }
 
 
@@ -190,7 +190,7 @@ var Equalizer, _ref, module,
 
         var filter = context.createBiquadFilter()
 
-        filter.Q.value = .2
+        filter.Q.value = .7
         filter.type = 'peaking'
         filter.frequency.value = this.filterValues[i]*1000
         filter.gain.value = 0

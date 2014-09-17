@@ -52,7 +52,7 @@ var PlaneVisualization, _ref, module,
 
       var material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading, wireframe: true})
 
-      this.geometry = new THREE.PlaneGeometry(80,100, this.size, 25)
+      this.geometry = new THREE.PlaneGeometry(80,80, this.size, 25)
       this.mesh = new THREE.Mesh(this.geometry, material);
       this.mesh.rotation.x -= 1.3
 
